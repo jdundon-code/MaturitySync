@@ -302,3 +302,62 @@ Can you generate a readme file with the following information: [provided full RE
 
 [Message 37 - Assistant]
 Created README.md at the repository root with the user's provided content, formatted in clean Markdown with proper headings, bullet points, code blocks, and section dividers. Pushed to GitHub.
+
+
+---
+
+[Message 38 - User]
+Regarding all options, if a user takes them before the maturity date, or outside of the grace period, they are penalized, and this feature does not reflect that. It should allow you to schedule your decision to take place at maturity as opposed to appearing to take the action right now.
+
+Also consider certificate disclosure requirements and any other regulatory requirements associated with these actions.
+
+---
+
+[Message 39 - Assistant]
+Critical UX and regulatory fix applied:
+
+1. SCHEDULING (not immediate execution):
+- All confirm buttons now say "Schedule [Action]" or "Schedule [X] at Maturity"
+- Added info banner: "This action will be scheduled for your maturity date — September 15, 2026"
+- Success screens say "Scheduled" not "Complete" (Renewal Scheduled, Ladder Scheduled, etc.)
+- Added "Effective Date" field to all confirmations
+- Added cancellation language: "You can modify or cancel this decision anytime before the maturity date"
+- Transfer confirmation explicitly states "No early withdrawal penalty will apply" because it's at maturity
+
+2. REGULATORY DISCLOSURES (Reg DD / TISA / NCUA Part 707):
+- Added disclosure text blocks to ALL success/confirmation screens
+- APY accuracy disclaimer with date sensitivity ("accurate as of today, subject to change prior to effective date")
+- Early withdrawal penalty notice for renewal actions
+- Fund availability timeline for transfers
+- Individual Truth in Savings disclosure notice for ladder certificates (each certificate gets its own TIS at effective date)
+- NCUA insurance statement
+- "No penalty" confirmation for maturity-date transfers
+- All disclosures reference the specific effective date
+
+Key regulatory requirements addressed:
+- §1030.5: Pre-maturity disclosure (30 days before, or 20 days before grace period end)
+- Renewal terms disclosure: new maturity date, rate/APY, auto-renewal terms
+- Early withdrawal penalty disclosure at point of decision
+- Grace period disclosure and length
+
+---
+
+[Message 40 - User (steering)]
+Let's rename the solution MaturitySync. Replace all instances of CertificateIQ or CertIQ.
+
+---
+
+[Message 41 - Assistant]
+Complete rebrand from CertificateIQ/CertIQ to MaturitySync:
+
+Files updated (20 files):
+- Package names: certiq → maturity-sync, @certiq/* → @maturity-sync/*
+- Database: postgresql://localhost:5432/certiq → maturitysync
+- Spec directory: .kiro/specs/certificate-iq/ → .kiro/specs/maturity-sync/
+- README.md, design-standards.md, all spec files
+- API server name, health check service name
+- Demo HTML title and label
+- All source code comments
+- Architecture diagrams (CERTIFICATEIQ → MATURITYSYNC)
+
+Repository is now at: https://github.com/jdundon-code/MaturitySync
