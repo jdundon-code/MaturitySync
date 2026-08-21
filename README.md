@@ -8,6 +8,26 @@ MaturitySync is a proactive engagement layer that sits on top of a Digital Banki
 
 **The Solution:** FIs that treat maturity as an engagement opportunity outperform those that don't. MaturitySync provides a digital self-service decision hub, intelligent recommendations, and automated notification orchestration to engage users before their certificates auto-roll.
 
+### Pain Points
+
+**For the financial institution,** the pain isn't just a missed opportunity; it is an active threat to their balance sheet and liquidity.
+
+- **Core Systems Aren't Engagement Engines:** Legacy banking cores are built for ledger math, not human interaction. Relying on them for maturity handling guarantees a sterile, transactional experience that fails to defend against modern challenger banks.
+
+- **The Liquidity Hemorrhage:** In competitive rate environments, unengaged account holders aren't just passively rolling over—they are actively moving "hot money" to competitors with better digital experiences.
+
+- **The Cost of Acquisition:** Replacing a lost $50,000 CD by acquiring a brand-new depositor is exponentially more expensive than offering a targeted, proactive retention rate to an existing one. FIs are bleeding deposits they already own.
+
+- **Blind Spots in the Back Office:** Because maturity is treated as a batch process, FIs have zero visibility into *why* a customer withdrew funds. They lose the money and the data simultaneously.
+
+**For the consumer,** the current maturity process is anxiety-inducing and archaic.
+
+- **The Auto-Renew Trap:** Consumers live in fear of missing a mailed 30-day notice, resulting in their funds being automatically locked into a subpar, non-promotional default rate for another 12 to 60 months.
+
+- **High-Friction Hurdles:** To act on a maturing CD, consumers are often forced out of their preferred digital channels and made to call a support center or visit a physical branch during business hours.
+
+- **The Empathy Void:** Getting a system-generated paper letter feels cold. Consumers want their financial partner to proactively help them optimize their yield, build a laddering strategy, or adapt to a new life stage.
+
 **The Users:**
 
 - **The Account Holder (Member/Customer):** Digital banking users who need clear, self-serve options to renew, ladder, or withdraw maturing certificates.
