@@ -2,7 +2,7 @@
 
 ## What I Built and Why
 
-MaturitySync is a proactive engagement layer that sits on top of a Digital Banking Platform (DBP) to transform certificate (CD) maturity from a passive back-office transaction into a strategic growth opportunity.
+MaturitySync is a proactive engagement layer that sits on top of a Digital Banking Platform (DBP), turning certificate (CD) maturity from a passive back-office transaction into a strategic growth opportunity.
 
 **The Problem:** Financial Institutions (FIs) typically treat certificate maturity as a batch process, automatically rolling them over with little to no account holder interaction. This passive approach results in a massive loss of potential deposits (an estimated $45M gap per institution annually) due to attrition, missed cross-sell opportunities, and uncaptured external funds.
 
@@ -33,7 +33,7 @@ Rather than integrating directly with the banking core, MaturitySync integrates 
 
 ### Live Demo (No Setup Required)
 
-For immediate review on any device (including Chromebooks), a fully functional, dependency-free HTML demo is included.
+For immediate review on any device (including Chromebooks), this repository includes a fully functional, dependency-free HTML demo.
 
 1. Navigate to the `/demo` folder in the repository.
 2. Open `decision-hub.html` directly in your web browser. This file contains all UI flows, states, and the Nymbus Joy design system implementation.
@@ -69,15 +69,15 @@ npm run dev
 
 ## Product Decisions & Reasoning
 
-**Decoupling from the Core:** Decision: We built MaturitySync as an engagement layer on top of the DBP rather than integrating directly with the core processor. Reasoning: The DBP already houses the necessary maturity and balance data. Bypassing a direct core integration drastically reduces implementation friction, accelerates time-to-market, and creates a highly compelling "no core integration required" sales narrative for FIs.
+**Decoupling from the Core:** Decision: I built MaturitySync as an engagement layer on top of the DBP rather than integrating directly with the core processor. Reasoning: The DBP already houses the necessary maturity and balance data. Bypassing a direct core integration drastically reduces implementation friction, accelerates time-to-market, and creates a highly compelling "no core integration required" sales narrative for FIs.
 
-**Standalone HTML Demo for MVP Review:** Decision: Created a vanilla HTML/CSS/JS file alongside the React/Node stack. Reasoning: You needed to review the UX and functionality on a Chromebook immediately. A standalone file removed all local environment dependencies and compilation steps, allowing for instant stakeholder review.
+**Standalone HTML Demo for MVP Review:** Decision: Created a vanilla HTML/CSS/JS file alongside the React/Node stack. Reasoning: You needed to review the UX and functionality on a Chromebook immediately. A standalone file removed local environment dependencies and compilation steps, enabling instant stakeholder review.
 
-**Adopting the Nymbus Joy Design System:** Decision: Mapped custom CSS variables directly to Nymbus Joy primitive and semantic tokens (colors, typography, icons). Reasoning: Ensuring the UI looks native to the target digital banking ecosystem is critical for user trust. Strict adherence to WCAG 2.1 AA standards was also implemented to meet FI compliance requirements.
+**Adopting the Nymbus Joy Design System:** Decision: Mapped custom CSS variables directly to Nymbus Joy primitive and semantic tokens (colors, typography, icons). Reasoning: Ensuring the UI looks native to the target digital banking ecosystem is critical for user trust. We also implemented strict adherence to WCAG 2.1 AA standards to meet FI compliance requirements.
 
 ---
 
-## What We Would Change or Add With More Time
+## What I Would Change or Add With More Time
 
 If given more time to expand beyond the Phase 1 MVP, the following additions would be prioritized:
 
