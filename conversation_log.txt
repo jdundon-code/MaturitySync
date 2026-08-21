@@ -268,3 +268,37 @@ Design alignment:
 - Option card icons use --iconAction for consistent interactive styling
 
 Pushed to GitHub: https://github.com/jdundon-code/certIQ
+
+
+---
+
+[Message 34 - User]
+Clicking back to the Dashboard and then returning to the previous screen seems like incorrect behavior. Is there another option to infer that you return to the digital banking dashboard instead of the screen you were on with the same information?
+
+---
+
+[Message 35 - Assistant]
+You're right — once a member completes an action, the decision hub has served its purpose. Looping back to the same maturity screen is incorrect because the certificate is now resolved.
+
+Fixed by:
+1. Renamed "Back to Dashboard" → "Return to Accounts" (clearer intent)
+2. All success screens now navigate to a new 'screen-exit' endpoint
+3. screen-exit simulates the handoff back to the digital banking platform's account dashboard
+4. Shows: "You've returned to your accounts" with explanation that this is where the DBP takes over
+5. In production: this would be a navigation.back() or router.push to the DBP's account overview
+6. Demo includes a "Restart Demo" button for reviewers to loop through flows again
+
+This ensures the CertificateIQ flow has a clear terminal state and doesn't create a confusing UX loop.
+
+Pushed to GitHub.
+
+
+---
+
+[Message 36 - User]
+Can you generate a readme file with the following information: [provided full README content covering What We Built, APIs & Integrations, How to Run, Product Decisions, and Future Roadmap]
+
+---
+
+[Message 37 - Assistant]
+Created README.md at the repository root with the user's provided content, formatted in clean Markdown with proper headings, bullet points, code blocks, and section dividers. Pushed to GitHub.
