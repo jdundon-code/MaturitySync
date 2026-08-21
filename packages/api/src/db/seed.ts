@@ -43,7 +43,7 @@ function monthsAgo(months: number): Date {
 }
 
 async function seed() {
-  const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/certiq';
+  const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/maturitysync';
   
   console.log('🌱 Seeding database...');
   

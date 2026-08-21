@@ -1,5 +1,5 @@
 /**
- * CertificateIQ Database Schema — Drizzle ORM
+ * MaturitySync Database Schema — Drizzle ORM
  * PostgreSQL implementation of the data model from the design spec
  */
 import {

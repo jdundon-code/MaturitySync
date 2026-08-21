@@ -2,7 +2,7 @@ import { NotificationChannel } from './engagement.js';
 import { RecommendationType } from './recommendation.js';
 
 /**
- * All event types in the CertificateIQ analytics taxonomy
+ * All event types in the MaturitySync analytics taxonomy
  */
 export enum EventType {
   MATURITY_APPROACHING = 'maturity.approaching',

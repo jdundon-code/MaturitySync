@@ -1,5 +1,5 @@
 {
-  "name": "@certiq/api",
+  "name": "@maturity-sync/api",
   "version": "0.1.0",
   "private": true,
   "main": "./dist/index.js",
@@ -12,7 +12,7 @@
     "seed": "tsx src/db/seed.ts"
   },
   "dependencies": {
-    "@certiq/shared": "*",
+    "@maturity-sync/shared": "*",
     "fastify": "^4.28.0",
     "@fastify/cors": "^9.0.0",
     "pg": "^8.12.0",

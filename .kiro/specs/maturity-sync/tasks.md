@@ -1,4 +1,4 @@
-# CertificateIQ — Implementation Tasks
+# MaturitySync — Implementation Tasks
 
 ## Phase 1: MVP (Weeks 1–8)
 

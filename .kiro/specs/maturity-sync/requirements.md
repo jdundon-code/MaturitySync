@@ -1,8 +1,8 @@
-# CertificateIQ — Requirements Spec
+# MaturitySync — Requirements Spec
 
 ## Product Overview
 
-**Product Name:** CertificateIQ
+**Product Name:** MaturitySync
 **Problem:** FIs that treat certificate maturity as a back-office transaction are being outperformed by FIs that treat it as an engagement opportunity. ~$300B in deposits are at risk annually across the industry due to passive maturity handling.
 **Solution:** A digital banking engagement layer that transforms certificate maturity from a silent rollover into a personalized, guided decision moment — increasing deposit retention, growing balances, and deepening member relationships.
 

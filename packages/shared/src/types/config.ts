@@ -1,7 +1,7 @@
 import { NotificationChannel } from './engagement.js';
 
 /**
- * FI-level configuration for the CertificateIQ platform
+ * FI-level configuration for the MaturitySync platform
  */
 export interface FIConfiguration {
   configId: string;

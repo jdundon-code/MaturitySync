@@ -1,12 +1,12 @@
-# CertificateIQ
+# MaturitySync
 
 ## What I Built and Why
 
-CertificateIQ is a proactive engagement layer that sits on top of a Digital Banking Platform (DBP) to transform certificate (CD) maturity from a passive back-office transaction into a strategic growth opportunity.
+MaturitySync is a proactive engagement layer that sits on top of a Digital Banking Platform (DBP) to transform certificate (CD) maturity from a passive back-office transaction into a strategic growth opportunity.
 
 **The Problem:** Financial Institutions (FIs) typically treat certificate maturity as a batch process, automatically rolling them over with little to no account holder interaction. This passive approach results in a massive loss of potential deposits (an estimated $45M gap per institution annually) due to attrition, missed cross-sell opportunities, and uncaptured external funds.
 
-**The Solution:** FIs that treat maturity as an engagement opportunity outperform those that don't. CertificateIQ provides a digital self-service decision hub, intelligent recommendations, and automated notification orchestration to engage users before their certificates auto-roll.
+**The Solution:** FIs that treat maturity as an engagement opportunity outperform those that don't. MaturitySync provides a digital self-service decision hub, intelligent recommendations, and automated notification orchestration to engage users before their certificates auto-roll.
 
 **The Users:**
 
@@ -17,11 +17,11 @@ CertificateIQ is a proactive engagement layer that sits on top of a Digital Bank
 
 ## APIs & Integrations
 
-Rather than integrating directly with the banking core, CertificateIQ integrates with the Digital Banking Platform (DBP). This architectural choice serves the product by utilizing data the DBP already has access to.
+Rather than integrating directly with the banking core, MaturitySync integrates with the Digital Banking Platform (DBP). This architectural choice serves the product by utilizing data the DBP already has access to.
 
 - **Mock DBP Adapter:** Currently implemented as a mock service to simulate fetching account balances, maturity dates, and certificate details from the digital banking environment.
 
-- **CertificateIQ API Service:** Built with Node.js, Fastify, and Drizzle ORM (PostgreSQL). It includes:
+- **MaturitySync API Service:** Built with Node.js, Fastify, and Drizzle ORM (PostgreSQL). It includes:
 
   - **Recommendation Engine API:** Analyzes account holder data to serve personalized maturity options (e.g., laddering, high-yield cross-sells).
   - **State Machine API:** Manages the engagement lifecycle (approaching maturity, action taken, rolled over, withdrawn).
@@ -69,7 +69,7 @@ npm run dev
 
 ## Product Decisions & Reasoning
 
-**Decoupling from the Core:** Decision: We built CertificateIQ as an engagement layer on top of the DBP rather than integrating directly with the core processor. Reasoning: The DBP already houses the necessary maturity and balance data. Bypassing a direct core integration drastically reduces implementation friction, accelerates time-to-market, and creates a highly compelling "no core integration required" sales narrative for FIs.
+**Decoupling from the Core:** Decision: We built MaturitySync as an engagement layer on top of the DBP rather than integrating directly with the core processor. Reasoning: The DBP already houses the necessary maturity and balance data. Bypassing a direct core integration drastically reduces implementation friction, accelerates time-to-market, and creates a highly compelling "no core integration required" sales narrative for FIs.
 
 **Standalone HTML Demo for MVP Review:** Decision: Created a vanilla HTML/CSS/JS file alongside the React/Node stack. Reasoning: You needed to review the UX and functionality on a Chromebook immediately. A standalone file removed all local environment dependencies and compilation steps, allowing for instant stakeholder review.
 

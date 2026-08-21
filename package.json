@@ -1,8 +1,8 @@
 {
-  "name": "certiq",
+  "name": "maturity-sync",
   "version": "0.1.0",
   "private": true,
-  "description": "CertificateIQ — Certificate Maturity Engagement Platform",
+  "description": "MaturitySync — Certificate Maturity Engagement Platform",
   "workspaces": [
     "packages/shared",
     "packages/api",

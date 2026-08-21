@@ -1,4 +1,4 @@
-# Design Standards — CertificateIQ
+# Design Standards — MaturitySync
 
 ## Design System: Nymbus Joy
 
@@ -148,9 +148,9 @@ Use `size` prop or Tailwind classes.
 - **Decorative icons:** `aria-hidden="true"` (default behavior)
 - **Meaningful icons:** Add `aria-label` describing the icon's purpose
 
-### Icons Relevant to CertificateIQ
+### Icons Relevant to MaturitySync
 
-| Icon Name | Category | Usage in CertificateIQ |
+| Icon Name | Category | Usage in MaturitySync |
 |-----------|----------|----------------------|
 | Account CD | Account Types | Certificate account identifier |
 | Goals | Features | Savings goal / maturity target |

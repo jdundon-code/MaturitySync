@@ -11,7 +11,7 @@ import pg from 'pg';
 const { Pool } = pg;
 
 async function runMigrations() {
-  const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/certiq';
+  const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/maturitysync';
   
   console.log('🔄 Running migrations...');
   console.log(`   Database: ${connectionString.replace(/:[^:@]+@/, ':***@')}`);

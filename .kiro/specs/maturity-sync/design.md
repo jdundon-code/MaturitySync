@@ -1,8 +1,8 @@
-# CertificateIQ — Design Spec
+# MaturitySync — Design Spec
 
 ## Architecture Overview
 
-CertificateIQ is an engagement layer that sits on top of the existing digital banking platform (DBP). It does not replace or bypass the DBP — it enhances it with orchestration, decision UX, and intelligence capabilities around certificate maturity events.
+MaturitySync is an engagement layer that sits on top of the existing digital banking platform (DBP). It does not replace or bypass the DBP — it enhances it with orchestration, decision UX, and intelligence capabilities around certificate maturity events.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -14,7 +14,7 @@ CertificateIQ is an engagement layer that sits on top of the existing digital ba
 └───────┼────────────────┼────────────────┼───────────────┼───────────┘
         │                │                │               │
 ┌───────┴────────────────┴────────────────┴───────────────┴───────────┐
-│                     CERTIFICATEIQ PLATFORM                           │
+│                     MATURITYSYNC PLATFORM                           │
 │                                                                      │
 │  ┌────────────────┐  ┌─────────────────┐  ┌──────────────────────┐ │
 │  │  Orchestration │  │  Recommendation │  │   Analytics Engine   │ │
@@ -432,11 +432,11 @@ FIConfiguration.config_type:
 | Open new certificate(s) | Ladder creation | DBP Account Opening API |
 | Display in-app message/banner | Awareness during active sessions | DBP In-App Messaging SDK |
 
-### CertificateIQ Owns
+### MaturitySync Owns
 
 | Data/Service | Notes |
 |--------------|-------|
-| Engagement state per certificate | CertificateIQ's state machine |
+| Engagement state per certificate | MaturitySync's state machine |
 | Notification history & analytics | What was sent, opened, acted on |
 | Recommendation history | What was shown, accepted/dismissed |
 | FI configuration | Admin-defined rules, templates, thresholds |
@@ -447,7 +447,7 @@ FIConfiguration.config_type:
 
 ## Deployment Model
 
-CertificateIQ is designed to deploy as:
+MaturitySync is designed to deploy as:
 
 **Option A: Embedded Module** (preferred for tight DBP integrations)
 - Deployed within the DBP's infrastructure
@@ -465,7 +465,7 @@ CertificateIQ is designed to deploy as:
 
 ## Security Considerations
 
-- **No PII storage duplication:** CertificateIQ references member data by ID; PII (name, email, account numbers) is fetched from DBP at render/send time, not stored long-term in CertificateIQ's data store.
+- **No PII storage duplication:** MaturitySync references member data by ID; PII (name, email, account numbers) is fetched from DBP at render/send time, not stored long-term in MaturitySync's data store.
 - **Transactional authorization:** All financial actions (renew, transfer, open) are executed through the DBP's existing transaction APIs, inheriting the DBP's authorization controls (MFA, session validation, limits).
 - **Admin access control:** FI Admin Console access governed by role-based permissions within the DBP's admin framework.
 - **Audit trail:** All engagement events and actions logged with timestamps, member IDs, and session IDs for compliance.

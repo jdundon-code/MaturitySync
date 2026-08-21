@@ -1,5 +1,5 @@
 {
-  "name": "@certiq/web",
+  "name": "@maturity-sync/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,7 @@
     "test": "vitest --run"
   },
   "dependencies": {
-    "@certiq/shared": "*",
+    "@maturity-sync/shared": "*",
     "react": "^18.3.0",
     "react-dom": "^18.3.0"
   },

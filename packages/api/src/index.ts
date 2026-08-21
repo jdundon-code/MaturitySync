@@ -1,5 +1,5 @@
 /**
- * CertificateIQ API Server
+ * MaturitySync API Server
  * Fastify-based REST API for the certificate maturity engagement platform
  */
 import Fastify from 'fastify';
@@ -41,7 +41,7 @@ async function start() {
 
   try {
     await server.listen({ host, port });
-    server.log.info(`🚀 CertificateIQ API running at http://${host}:${port}`);
+    server.log.info(`🚀 MaturitySync API running at http://${host}:${port}`);
   } catch (err) {
     server.log.error(err);
     process.exit(1);

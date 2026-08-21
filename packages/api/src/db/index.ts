@@ -7,7 +7,7 @@ import * as schema from './schema.js';
 
 const { Pool } = pg;
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/certiq';
+const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/maturitysync';
 
 const pool = new Pool({
   connectionString,
