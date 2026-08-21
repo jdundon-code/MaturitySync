@@ -168,3 +168,31 @@ This also needs to follow Nymbus design standards: https://nymbus-joy.nymbus.com
 Acknowledged. Created .kiro/steering/design-standards.md documenting Nymbus Joy design system requirement and WCAG 2.1 AA compliance standards. The Nymbus Joy URL requires authentication so couldn't fetch specifics, but noted it as the foundational design system. Existing HTML demo already implements accessible patterns (semantic HTML, keyboard nav, contrast ratios, focus states). Will align with Nymbus Joy components in the React build.
 
 Pushed all code to GitHub on a feature branch.
+
+
+---
+
+[Message 28 - User]
+Shared the full Nymbus Joy Color Foundations PDF (44 pages, 735 tokens) from https://nymbus-joy.nymbus.com/design-system/foundations/color
+
+---
+
+[Message 29 - Assistant]
+Extracted and applied the Nymbus Joy color tokens to the project:
+
+1. Updated demo/decision-hub.html CSS variables to use official Nymbus Joy tokens:
+   - Primitive tier: UI Core (--ui-primary #2569EC, --ui-black #000714, --ui-white, --ui-trans)
+   - Primary scale: 9 steps from --ui-primary-000 (#0C224C) to --ui-primary-200 (#F4F7FE)
+   - Greys: 10 steps from --ui-grey-01 (#1B2028) to --ui-grey-07 (#F9F9F9)
+   - Status: Success (#08874A), Warning (#B45209), Error (#BF002E)
+   - Semantic mappings: Interactive, Text, Surfaces, Borders, Feedback tokens
+
+2. Updated .kiro/steering/design-standards.md with:
+   - Full token reference tables (primitive + semantic)
+   - Light/dark mode pairs for all semantic tokens
+   - Key design rules (no pure black, shadow base from --ui-black, alpha tokens)
+   - WCAG contrast validation for key color pairs
+
+3. Pushed to GitHub: https://github.com/jdundon-code/certIQ
+
+The demo HTML now renders with Nymbus Joy colors and is ready for Chromebook review.

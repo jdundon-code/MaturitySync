@@ -121,6 +121,88 @@ The Nymbus Joy system uses a two-tier token structure:
 
 ---
 
+## Icons: Nymbus Joy Icon Library
+
+Reference: https://nymbus-joy.nymbus.com/design-system/foundations/icons
+
+The Nymbus Joy design system includes 238 custom SVG icons organized by category.
+
+### Icon Guidelines
+
+#### Sizing
+| Size | Usage |
+|------|-------|
+| 16px | Inline with text |
+| 20px | Default |
+| 24px | Large / prominent |
+
+Use `size` prop or Tailwind classes.
+
+#### Color
+- Icons inherit text color via `currentColor`
+- Apply color using Tailwind text utilities: `text-[var(--text-primary)]`
+- For action icons, use `--iconAction` (#2569EC light / #6696F2 dark)
+- For secondary icons, use `--iconSecondary` (#5C6066 light / #8F9295 dark)
+
+#### Accessibility
+- **Decorative icons:** `aria-hidden="true"` (default behavior)
+- **Meaningful icons:** Add `aria-label` describing the icon's purpose
+
+### Icons Relevant to CertificateIQ
+
+| Icon Name | Category | Usage in CertificateIQ |
+|-----------|----------|----------------------|
+| Account CD | Account Types | Certificate account identifier |
+| Goals | Features | Savings goal / maturity target |
+| Goals Filled | Features | Active goal state |
+| Trend Up | Features | Rate/earnings indicators |
+| Transfers In | Arrows | Funds coming in (add funds) |
+| Transfers Out | Arrows | Funds going out (redirect) |
+| Split | Actions | Ladder builder (split balance) |
+| Refresh | Actions | Certificate renewal |
+| Done | Actions | Action completion |
+| Status Complete | Status | Success confirmations |
+| Status Complete Filled | Status | Strong success state |
+| Status Warning | Status | Maturity approaching alert |
+| Status Warning Filled | Status | Urgent maturity warning |
+| Status Info | Status | Information/recommendation |
+| Status Alert | Status | Grace period ending |
+| Notification bell | General UI | Notification management |
+| Notifications | General UI | Notification badge |
+| Insights | Features | Analytics dashboard |
+| Percent | Features | Rate display |
+| Add | Actions | Add funds action |
+| Budget | Features | Financial planning / summary |
+| One Time Transfer | Features | Redirect flow |
+| Recurring | Features | Auto-renewal indicator |
+| Settings | General UI | Admin configuration |
+| Chevron Right | Arrows | Navigation / drill-in |
+| Chevron Left / Back | Arrows | Back navigation |
+| Star | General UI | Recommendation highlight |
+| Date / Date Range | General UI | Maturity date display |
+| History | General UI | Engagement history |
+| Mail / Mail Unread | General UI | Email notifications |
+
+### Icon Usage in Component Mapping
+
+```
+Maturity Banner:        Status Warning (24px, --ui-warn)
+Recommendation Card:    Star (16px, --ui-primary)
+Renew Option:           Refresh (24px, --iconAction)
+Change Term Option:     Date Range (24px, --iconAction)
+Ladder Option:          Split (24px, --iconAction)
+Redirect Option:        Transfers Out (24px, --iconAction)
+Success Screen:         Status Complete Filled (48px, --ui-succ)
+Add Funds:              Add (20px, --iconAction)
+Rate Display:           Percent / Trend Up (16px, --ui-succ)
+Notification:           Notification bell (20px)
+Back Navigation:        Back (20px, --primaryText)
+Dashboard Analytics:    Insights (24px, --iconAction)
+Admin Config:           Settings (20px, --iconSecondary)
+```
+
+---
+
 ## Accessibility: WCAG 2.1 AA Compliance
 
 All UI must meet **WCAG 2.1 Level AA** standards:
