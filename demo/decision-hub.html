@@ -8,35 +8,126 @@
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --primary: #1a56db;
-  --primary-light: #e8f0fe;
-  --primary-dark: #0f3a8e;
-  --success: #059669;
-  --success-light: #d1fae5;
-  --warning: #d97706;
-  --warning-light: #fef3c7;
-  --danger: #dc2626;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
+  /* ===== NYMBUS JOY DESIGN SYSTEM — Color Tokens ===== */
+  /* Primitive: UI Core */
+  --ui-primary: #2569EC;
+  --ui-black: #000714;
+  --ui-white: #FFFFFF;
+  --ui-trans: #FFFFFF00;
+
+  /* Primitive: Primary Scale */
+  --ui-primary-000: #0C224C;
+  --ui-primary-020: #102E68;
+  --ui-primary-060: #163F8E;
+  --ui-primary-080: #1E54BD;
+  --ui-primary-120: #6696F2;
+  --ui-primary-160: #A8C3F7;
+  --ui-primary-180: #D3E1FB;
+  --ui-primary-200: #F4F7FE;
+
+  /* Primitive: Greys */
+  --ui-grey-01: #1B2028;
+  --ui-grey-01b: #37393D;
+  --ui-grey-02: #5C6066;
+  --ui-grey-03: #74777A;
+  --ui-grey-04: #8F9295;
+  --ui-grey-05: #A0A3A6;
+  --ui-grey-05b: #C7C9CB;
+  --ui-grey-05c: #DCDEE0;
+  --ui-grey-06: #F0F0F2;
+  --ui-grey-07: #F9F9F9;
+
+  /* Primitive: Status */
+  --ui-succ: #08874A;
+  --ui-succ-120: #28A76A;
+  --ui-succ-160: #58B387;
+  --ui-succ-200: #DAECE3;
+  --ui-warn: #B45209;
+  --ui-warn-120: #E08533;
+  --ui-warn-200: #FCF0E6;
+  --ui-err: #BF002E;
+  --ui-err-120: #FF2B44;
+  --ui-err-200: #FFF1F0;
+
+  /* Semantic: Interactive */
+  --primaryButtonFill: var(--ui-primary);
+  --primaryButtonLabel: var(--ui-white);
+  --primaryButtonHoverFill: var(--ui-primary-080);
+  --primaryButtonPressedFill: var(--ui-primary-060);
+  --primaryButtonDisabledBG: var(--ui-grey-05c);
+  --secondaryButtonFill: var(--ui-white);
+  --secondaryButtonBorder: var(--ui-primary);
+  --secondaryButtonLabel: var(--ui-primary);
+  --primaryActionText: var(--ui-primary);
+  --iconAction: var(--ui-primary);
+
+  /* Semantic: Text */
+  --primaryText: var(--ui-black);
+  --secondaryText: #37393D;
+  --tertiaryText: #5C6066;
+  --inputLabel: #37393D;
+  --inputEntryLabel: var(--ui-black);
+  --inputPlaceholderLabel: #5C6066;
+  --inputActiveLabel: var(--ui-primary);
+
+  /* Semantic: Surfaces */
+  --primaryPageBG: var(--ui-white);
+  --secondaryPageBG: var(--ui-grey-07);
+  --tertiaryPageBG: var(--ui-grey-06);
+  --tileBG: var(--ui-white);
+  --inputStaticBG: var(--ui-grey-07);
+
+  /* Semantic: Borders */
+  --dividerFill: var(--ui-grey-05c);
+  --inputStaticBorder: var(--ui-grey-04);
+  --inputActiveBorder: var(--ui-primary);
+  --quickActionBorder: var(--ui-grey-05c);
+
+  /* Semantic: Feedback */
+  --successStatusBG: var(--ui-succ-200);
+  --successStatusBorder: var(--ui-succ);
+  --successStatusLabel: #076D3C;
+  --successAmountLabel: #076D3C;
+  --warningStatusBG: var(--ui-warn-200);
+  --warningStatusBorder: var(--ui-warn);
+  --warningStatusLabel: #733700;
+  --dangerStatusBG: var(--ui-err-200);
+  --dangerStatusBorder: var(--ui-err);
+  --dangerStatusLabel: #730C25;
+  --infoStatusBG: var(--ui-primary-180);
+  --infoStatusBorder: var(--ui-primary);
+  --infoStatusLabel: var(--ui-primary-060);
+
+  /* ===== MAPPED ALIASES (for CSS below) ===== */
+  --primary: var(--ui-primary);
+  --primary-light: var(--ui-primary-200);
+  --primary-dark: var(--ui-primary-060);
+  --success: var(--ui-succ);
+  --success-light: var(--ui-succ-200);
+  --warning: var(--ui-warn);
+  --warning-light: var(--ui-warn-200);
+  --danger: var(--ui-err);
+  --gray-50: var(--ui-grey-07);
+  --gray-100: var(--ui-grey-06);
+  --gray-200: var(--ui-grey-05c);
+  --gray-300: var(--ui-grey-05b);
+  --gray-400: var(--ui-grey-04);
+  --gray-500: var(--ui-grey-02);
+  --gray-600: var(--ui-grey-01b);
+  --gray-700: var(--ui-grey-01b);
+  --gray-800: var(--ui-grey-01);
+  --gray-900: var(--ui-black);
   --radius: 12px;
   --radius-sm: 8px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
-  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+  --shadow: 0 1px 3px rgba(0,7,20,0.08), 0 1px 2px rgba(0,7,20,0.04);
+  --shadow-md: 0 4px 6px rgba(0,7,20,0.06), 0 2px 4px rgba(0,7,20,0.04);
+  --shadow-lg: 0 10px 15px rgba(0,7,20,0.08), 0 4px 6px rgba(0,7,20,0.04);
   --transition: all 0.2s ease;
 }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  background: var(--gray-100);
-  color: var(--gray-800);
+  background: var(--secondaryPageBG);
+  color: var(--primaryText);
   line-height: 1.5;
   min-height: 100vh;
 }
@@ -204,13 +295,13 @@ input, select { font-family: inherit; }
   transition: var(--transition);
   width: 100%;
 }
-.btn--primary { background: var(--primary); color: white; }
-.btn--primary:hover { background: var(--primary-dark); }
-.btn--secondary { background: white; color: var(--gray-700); border: 1px solid var(--gray-300); }
-.btn--secondary:hover { background: var(--gray-50); border-color: var(--gray-400); }
-.btn--success { background: var(--success); color: white; }
-.btn--success:hover { background: #047857; }
-.btn--ghost { background: transparent; color: var(--primary); padding: 8px 16px; }
+.btn--primary { background: var(--primaryButtonFill); color: var(--primaryButtonLabel); }
+.btn--primary:hover { background: var(--primaryButtonHoverFill); }
+.btn--secondary { background: var(--secondaryButtonFill); color: var(--secondaryButtonLabel); border: 1px solid var(--secondaryButtonBorder); }
+.btn--secondary:hover { background: var(--primary-light); border-color: var(--primaryButtonHoverFill); }
+.btn--success { background: var(--success); color: var(--ui-white); }
+.btn--success:hover { background: #076D3C; }
+.btn--ghost { background: transparent; color: var(--primaryActionText); padding: 8px 16px; }
 .btn--ghost:hover { background: var(--primary-light); }
 .btn--sm { padding: 8px 16px; font-size: 13px; }
 .btn-group { display: flex; gap: 12px; margin-top: 16px; }
