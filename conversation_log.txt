@@ -228,3 +228,43 @@ Mapped 30+ icons to CertificateIQ components:
 Added component-to-icon mapping showing exact icon usage per UI element (banner, cards, options, success screens, navigation, admin).
 
 Pushed to GitHub.
+
+
+---
+
+[Message 32 - User]
+Yes, replace the emoji icons. This should look professional and modern and align with the Nymbus brand.
+
+---
+
+[Message 33 - Assistant]
+Replaced all emoji icons with professional SVG icons throughout the Decision Hub demo:
+
+Icons replaced:
+- ⏰ → Clock SVG (maturity banner, using --ui-warn background)
+- 🔄 → Refresh/rotate SVG (Renew Same option)
+- 📅 → Calendar SVG (Change Term option)
+- 📊 → Split/fork SVG (Build a Ladder option)
+- ↗️ → Arrow-right SVG (Move Funds option)
+- 💡 → Info-circle SVG (Other Products option)
+- 💎 → Activity-line SVG (tier nudge)
+- 🏦 → Card/rectangle SVG (Money Market product)
+- 📈 → Activity-line SVG (High-Yield Savings product)
+- 🏡 → Layers SVG (IRA Certificate product)
+- 🎉 → Circular checkmark SVG in success-green (Certificate Renewed)
+- 💎 → Circular badge SVG in primary-blue (Premium Tier Unlocked)
+- 📊 → Circular lines SVG in primary-blue (Ladder Created)
+- ✅ → Circular checkmark SVG in success-green (Transfer Complete)
+- ← → Arrow-left SVG (all back navigation buttons)
+
+Design alignment:
+- All icons use stroke-based SVG style (2px stroke, round caps/joins)
+- Colors via currentColor or explicit Nymbus tokens (--iconAction, --ui-succ, --ui-primary)
+- All decorative icons have aria-hidden="true"
+- Updated maturity banner to use --warningStatusBG/Border tokens
+- Updated recommendation card gradient to use --infoStatusBG
+- Updated tier nudge to use --successStatus tokens
+- Header logo color updated to #2569EC (--ui-primary)
+- Option card icons use --iconAction for consistent interactive styling
+
+Pushed to GitHub: https://github.com/jdundon-code/certIQ
