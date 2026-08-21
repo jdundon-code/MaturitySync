@@ -112,3 +112,13 @@ If given more time to expand beyond the Phase 1 MVP, the following additions wou
 - **FI Admin Analytics Dashboard:** Build out the React frontend for the FI Admin persona, visualizing retention rates, dollar amounts saved, and campaign conversion metrics.
 
 - **Component Library Migration:** Convert the standalone HTML/CSS demo components into fully reusable React components utilizing the Nymbus Joy design tokens for the production web app.
+
+- **Commercial / SMB Digital Banking Variant:** Adapt MaturitySync for the business banking space. Key enhancements required:
+  - **Multi-signer authorization:** Business CDs often require multiple authorized signers to approve maturity decisions. The scheduling flow would need an approval workflow (initiate → route for co-signer approval → execute at maturity).
+  - **Entity-level account structures:** Businesses hold certificates under LLCs, trusts, or DBAs with complex ownership hierarchies. The Decision Hub must support entity-level views, not just individual accounts.
+  - **Cash flow integration:** Replace consumer-oriented "earnings" framing with business cash flow planning — show how maturity timing aligns with payroll cycles, tax obligations, or seasonal revenue patterns.
+  - **Bulk maturity management:** Businesses may hold dozens of certificates as part of a treasury strategy. Provide a portfolio-level dashboard for managing multiple maturities simultaneously, with batch scheduling.
+  - **Tone and UX simplification:** Remove gamification, celebration animations, and emotional engagement. Use a professional, data-driven UI focused on yield optimization, duration management, and liquidity planning.
+  - **Treasury/CFO reporting:** Export scheduled decisions, projected cash flows, and rate comparisons in formats compatible with accounting software and board reporting.
+  - **Delegation and roles:** Allow a business owner to delegate maturity management to a bookkeeper or CFO with appropriate permissions (view-only, recommend, execute).
+  - **Rate negotiation hooks:** Larger commercial deposits often have negotiated rates. The Decision Hub should surface "contact your relationship manager" for balances above a threshold, or integrate with an RM notification workflow.

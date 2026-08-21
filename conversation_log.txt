@@ -516,3 +516,27 @@ You're right — this was only noted verbally as a "future consideration" but ne
 Key design decision: Only notify on rate DECREASES (member is harmed). Rate increases benefit the member silently — no disruption needed.
 
 Pushed to GitHub.
+
+
+---
+
+[Message 54 - User]
+One additional future consideration: what enhancements would be required for this feature to be usable in the commercial or SMB digital banking space?
+
+---
+
+[Message 55 - Assistant]
+Added Commercial/SMB Digital Banking Variant to the "What We Would Add" section of the README. Key enhancements required:
+
+1. Multi-signer authorization — business CDs require multiple authorized signers; need approval workflow (initiate → co-signer approval → execute)
+2. Entity-level account structures — LLCs, trusts, DBAs with complex ownership; Decision Hub must support entity-level views
+3. Cash flow integration — replace consumer "earnings" framing with business cash flow planning tied to payroll, taxes, seasonal revenue
+4. Bulk maturity management — portfolio-level dashboard for managing dozens of certificates simultaneously with batch scheduling
+5. Tone and UX simplification — remove gamification/celebrations; professional data-driven UI focused on yield, duration, liquidity
+6. Treasury/CFO reporting — export in formats compatible with accounting software and board reporting
+7. Delegation and roles — business owner can delegate to bookkeeper/CFO with appropriate permissions
+8. Rate negotiation hooks — surface "contact your RM" for large balances or integrate with RM notification workflow
+
+This aligns with the earlier learning that SMB should be "less personalized, more professional — clean data-driven UI focused on cash flow planning, asset depreciation, and ROI rather than emotional engagement."
+
+Pushed to GitHub.
