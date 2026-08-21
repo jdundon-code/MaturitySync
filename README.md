@@ -103,6 +103,8 @@ If given more time to expand beyond the Phase 1 MVP, the following additions wou
 
 - **Live DBP Integrations:** Replace the Mock DBP Adapter with live API connectors.
 
+- **Rate Change Notifications:** If the FI changes the rate *after* a member has scheduled their maturity decision, notify the member (via push and/or email) that the rate underlying their scheduled action has changed. The notification returns them to the Decision Hub with updated figures, giving them the opportunity to revise, confirm, or cancel their selection before the maturity date. This is a critical trust feature — members must never feel surprised on their effective date by a rate they didn't agree to.
+
 - **Advanced Machine Learning Recommendations:** Upgrade the rule-based recommendation engine to a predictive ML model that analyzes a user's broader financial picture to suggest highly personalized wealth-building strategies (Phase 3 Intelligence).
 
 - **Omnichannel Notification Orchestration:** Integrate with an SMS/Email gateway (like Twilio or SendGrid) to actually trigger the external engagement alerts when the State Machine detects a certificate is 30 days from maturity.

@@ -452,3 +452,67 @@ Changes:
 Now the member clearly understands: their good rate is ending, doing nothing = 4.25%, adding funds = 4.50%. The recommendation is genuinely better than inaction.
 
 Pushed to GitHub.
+
+
+---
+
+[Message 48 - User]
+I also want to specifically call out pain points in the README: [provided FI pain points (core systems not engagement engines, liquidity hemorrhage, cost of acquisition, blind spots) and consumer pain points (auto-renew trap, high-friction hurdles, empathy void)]
+
+---
+
+[Message 49 - Assistant]
+Added Pain Points section to README.md under "What We Built and Why", between the Problem statement and the Solution statement. Includes:
+
+For the FI:
+- Core Systems Aren't Engagement Engines
+- The Liquidity Hemorrhage
+- The Cost of Acquisition
+- Blind Spots in the Back Office
+
+For the consumer:
+- The Auto-Renew Trap
+- High-Friction Hurdles
+- The Empathy Void
+
+Pushed to GitHub.
+
+
+---
+
+[Message 50 - User]
+I see it now.
+
+---
+
+[Message 51 - Assistant]
+Confirmed. Ready for any final items or to wrap.
+
+
+---
+
+[Message 52 - User]
+I don't see where we've addressed whether the rate changes to a lower rate after the consumer makes their decision before the maturity date. Are we notifying them so that they can return to this module to re-review their selection?
+
+---
+
+[Message 53 - Assistant]
+You're right — this was only noted verbally as a "future consideration" but never formalized. It's a critical trust feature. Fixed by adding it formally across three locations:
+
+1. README.md ("What We Would Add"): Full description of the rate change notification feature — if the FI changes the rate after a member schedules, notify them and return them to the Decision Hub to revise.
+
+2. requirements.md (US-3.3): Full user story with 8 acceptance criteria:
+   - System monitors rates against all scheduled decisions
+   - Notification within 24 hours of rate decrease
+   - Push + email with clear impact info (original rate, new rate, earnings impact)
+   - Direct link back to Decision Hub, pre-populated with current decision
+   - Member can: confirm at new rate, modify, or cancel
+   - Rate increases = no disruptive notification (member benefits)
+   - FI-configurable threshold (e.g., only notify if >= 0.10% drop)
+   - All events logged
+
+3. tasks.md (Phase 2 Epic): 10 implementation tasks covering monitoring service, detection logic, notification triggers, Decision Hub re-entry flow, admin config, and analytics.
+
+Key design decision: Only notify on rate DECREASES (member is harmed). Rate increases benefit the member silently — no disruption needed.
+
+Pushed to GitHub.

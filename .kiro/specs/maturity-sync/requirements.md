@@ -135,6 +135,21 @@
 - [ ] Member can add the suggested amount in one action (pull from linked account)
 - [ ] Nudge does not display if no linked account has sufficient available balance
 
+#### US-3.3: Rate change notification (post-scheduling)
+**As** a member who has already scheduled a maturity decision,
+**I want** to be notified if the rate underlying my scheduled action changes before my maturity date,
+**So that** I can review my decision with accurate information and revise it if the new rate no longer meets my expectations.
+
+**Acceptance Criteria:**
+- [ ] System monitors rate changes against all scheduled (but not yet executed) maturity decisions
+- [ ] If the rate associated with a member's scheduled action decreases, a notification is triggered within 24 hours
+- [ ] Notification is delivered via push and/or email (per member preference) and clearly states: which certificate, the original scheduled rate, the new rate, and the impact on projected earnings
+- [ ] Notification includes a direct link back to the Decision Hub for that certificate, pre-populated with the member's current scheduled action
+- [ ] Upon returning to the Decision Hub, the member sees their existing scheduled decision with the updated rate and can: confirm (keep the decision at the new rate), modify (choose a different term/action), or cancel (revert to no scheduled action)
+- [ ] If the rate *increases* after scheduling, no disruptive notification is sent (the member benefits); optionally, a positive confirmation can be shown on next login
+- [ ] The FI can configure the threshold for triggering notifications (e.g., only notify if rate decreases by ≥ 0.10%)
+- [ ] All rate change notifications and member responses are logged in the engagement event history
+
 ---
 
 ### Epic 4: FI Administration & Configuration

@@ -224,6 +224,18 @@
 - [ ] Trigger CRM workflows based on attrition risk score
 - [ ] Sync member engagement history for holistic view
 
+### Epic: Rate Change Notification (Post-Scheduling)
+- [ ] Rate monitoring service: compare current rates against all active scheduled decisions
+- [ ] Detect rate decreases that affect scheduled actions (configurable threshold, e.g., ≥ 0.10%)
+- [ ] Trigger push + email notification within 24 hours of rate change detection
+- [ ] Notification content: certificate ID, original scheduled rate, new rate, earnings impact, CTA to return to Decision Hub
+- [ ] Decision Hub re-entry: pre-populate with member's existing scheduled action, highlight what changed
+- [ ] Member actions on return: confirm at new rate, modify (different term/action), or cancel scheduled decision
+- [ ] Rate increase handling: no disruptive notification; optionally show positive confirmation on next login
+- [ ] FI admin configuration: enable/disable, set threshold, customize notification template
+- [ ] Event logging: capture rate_change_notified, member_returned, decision_revised, decision_confirmed events
+- [ ] Analytics: track how often rates change post-scheduling, member response rate, revision vs. confirmation ratio
+
 ---
 
 ## Phase 3: Intelligence (Weeks 17–24)
