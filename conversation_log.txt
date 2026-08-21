@@ -361,3 +361,60 @@ Files updated (20 files):
 - Architecture diagrams (CERTIFICATEIQ → MATURITYSYNC)
 
 Repository is now at: https://github.com/jdundon-code/MaturitySync
+
+
+---
+
+[Message 42 - User]
+Any other considerations before I wrap this project up?
+
+---
+
+[Message 43 - Assistant]
+Flagged 7 considerations:
+1. Rate lock/guarantee question
+2. What happens if member doesn't act (isn't Renew Same this?)
+3. Multiple certificates maturing simultaneously
+4. Grace period behavior
+5. Accessibility testing verification
+6. .env.example file missing
+7. Demo data currency (stale dates)
+
+---
+
+[Message 44 - User]
+1. Future consideration: notify member if rate changes after scheduling, giving opportunity to review
+2. Yes, Renew Same already addresses this
+3. Separate sync for each certificate. Need to discuss how this initiates from digital banking — could be icon next to cert or through push notification
+4. Grace period = same as maturity (no penalty)
+5. To do
+6. Can you address?
+7. Yes, dates should be dynamic
+
+---
+
+[Message 45 - Assistant]
+Addressed items 6 and 7:
+
+Created .env.example with:
+- DATABASE_URL, PORT, HOST, NODE_ENV, LOG_LEVEL
+- CORS_ORIGIN
+- DBP integration placeholders (BASE_URL, API_KEY, TENANT_ID)
+- Notification service placeholders (SMTP, Push) for Phase 2
+
+Made demo dates dynamic:
+- All dates now calculated relative to today via JavaScript
+- Maturity = today + 25 days (always current)
+- Renewal maturity = maturity + 12 months
+- Ladder dates = maturity + 6/12/24/36 months
+- Uses data-date attributes populated on page load
+- Disclosure text dates also dynamic
+- Demo will never look stale regardless of when opened
+
+Documented product decisions from feedback:
+1. Rate change notification = future consideration
+2. Renew Same = confirmed auto-renewal (explicit do-nothing choice)
+3. Multi-cert = separate MaturitySync per certificate, initiated via icon or push
+4. Grace period = same actions available, no penalty
+
+Pushed to https://github.com/jdundon-code/MaturitySync
