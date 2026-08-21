@@ -71,9 +71,9 @@ npm run dev
 
 **Decoupling from the Core:** Decision: I built MaturitySync as an engagement layer on top of the DBP rather than integrating directly with the core processor. Reasoning: The DBP already houses the necessary maturity and balance data. Bypassing a direct core integration drastically reduces implementation friction, accelerates time-to-market, and creates a highly compelling "no core integration required" sales narrative for FIs.
 
-**Standalone HTML Demo for MVP Review:** Decision: Created a vanilla HTML/CSS/JS file alongside the React/Node stack. Reasoning: You needed to review the UX and functionality on a Chromebook immediately. A standalone file removed local environment dependencies and compilation steps, enabling instant stakeholder review.
+**Standalone HTML Demo for MVP Review:** Decision: Created a vanilla HTML/CSS/JS file alongside the React/Node stack. Reasoning: I needed to review the UX and functionality on a Chromebook immediately. A standalone file removed local environment dependencies and compilation steps, enabling instant stakeholder review.
 
-**Adopting the Nymbus Joy Design System:** Decision: Mapped custom CSS variables directly to Nymbus Joy primitive and semantic tokens (colors, typography, icons). Reasoning: Ensuring the UI looks native to the target digital banking ecosystem is critical for user trust. We also implemented strict adherence to WCAG 2.1 AA standards to meet FI compliance requirements.
+**Adopting the Nymbus Joy Design System:** Decision: Mapped custom CSS variables directly to Nymbus Joy primitive and semantic tokens (colors, typography, icons). Reasoning: Ensuring the UI looks native to the target digital banking ecosystem is critical for user trust. We also strictly adhered to WCAG 2.1 AA standards to meet FI compliance requirements.
 
 ---
 
