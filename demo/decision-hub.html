@@ -553,6 +553,10 @@ input, select { font-family: inherit; }
     <button class="nav-back" onclick="showScreen('screen-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to options</button>
     <div class="confirm-panel">
       <div class="confirm-panel__title">Renew Same Term</div>
+      <div style="background: var(--infoStatusBG); border: 1px solid var(--ui-primary-160); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span style="font-size: 13px; color: var(--infoStatusLabel);">This action will be scheduled for your maturity date — <strong>September 15, 2026</strong></span>
+      </div>
       <div class="confirm-panel__row">
         <span class="confirm-panel__label">Balance</span>
         <span class="confirm-panel__value">$25,000.00</span>
@@ -566,6 +570,10 @@ input, select { font-family: inherit; }
         <span class="confirm-panel__value confirm-panel__value--highlight">4.25% APY</span>
       </div>
       <div class="confirm-panel__row">
+        <span class="confirm-panel__label">Effective Date</span>
+        <span class="confirm-panel__value">September 15, 2026</span>
+      </div>
+      <div class="confirm-panel__row">
         <span class="confirm-panel__label">New Maturity</span>
         <span class="confirm-panel__value">September 15, 2027</span>
       </div>
@@ -573,10 +581,10 @@ input, select { font-family: inherit; }
         <span class="confirm-panel__label">Projected Earnings</span>
         <span class="confirm-panel__value">$1,062.50</span>
       </div>
-      <p style="font-size: 12px; color: var(--gray-500); margin-top: 12px;">Rate decreased from 4.75% to 4.25% since your original certificate was opened.</p>
+      <p style="font-size: 12px; color: var(--gray-500); margin-top: 12px;">Rate decreased from 4.75% to 4.25% since your original certificate was opened. You can change or cancel this decision anytime before the maturity date.</p>
       <div class="btn-group">
         <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
-        <button class="btn btn--success" onclick="showScreen('screen-success-renew')">Confirm Renewal</button>
+        <button class="btn btn--success" onclick="showScreen('screen-success-renew')">Schedule Renewal</button>
       </div>
     </div>
   </div>
@@ -635,7 +643,7 @@ input, select { font-family: inherit; }
       </div>
       <div class="btn-group">
         <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
-        <button class="btn btn--success" id="btn-confirm-term" onclick="showScreen('screen-success-renew')" disabled>Confirm Selection</button>
+        <button class="btn btn--success" id="btn-confirm-term" onclick="showScreen('screen-success-renew')" disabled>Schedule Term Change</button>
       </div>
     </div>
   </div>
@@ -701,7 +709,7 @@ input, select { font-family: inherit; }
 
       <div class="btn-group">
         <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
-        <button class="btn btn--success" onclick="showScreen('screen-success-add')">Confirm & Renew</button>
+        <button class="btn btn--success" onclick="showScreen('screen-success-add')">Schedule Add & Renew</button>
       </div>
     </div>
   </div>
@@ -773,7 +781,7 @@ input, select { font-family: inherit; }
 
       <div class="btn-group">
         <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
-        <button class="btn btn--success" onclick="showScreen('screen-success-ladder')">Create Ladder</button>
+        <button class="btn btn--success" onclick="showScreen('screen-success-ladder')">Schedule Ladder at Maturity</button>
       </div>
     </div>
   </div>
@@ -820,7 +828,7 @@ input, select { font-family: inherit; }
 
       <div class="btn-group">
         <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
-        <button class="btn btn--success" onclick="showScreen('screen-success-redirect')">Confirm Transfer</button>
+        <button class="btn btn--success" onclick="showScreen('screen-success-redirect')">Schedule Transfer at Maturity</button>
       </div>
     </div>
   </div>
@@ -865,8 +873,8 @@ input, select { font-family: inherit; }
   <div id="screen-success-renew" class="screen">
     <div class="success-screen">
       <div class="success-screen__icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--ui-succ-200)" stroke="var(--ui-succ)" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="var(--ui-succ)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="success-screen__title">Certificate Renewed!</div>
-      <div class="success-screen__desc">Your certificate has been successfully renewed. You'll receive a confirmation email shortly.</div>
+      <div class="success-screen__title">Renewal Scheduled</div>
+      <div class="success-screen__desc">Your renewal will take effect on your maturity date. You can modify or cancel this decision anytime before then.</div>
       <div class="success-screen__details">
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Account</span>
@@ -875,6 +883,10 @@ input, select { font-family: inherit; }
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Balance</span>
           <span class="success-screen__detail-value">$25,000.00</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Effective Date</span>
+          <span class="success-screen__detail-value" style="font-weight: 700;">September 15, 2026</span>
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">New Rate</span>
@@ -889,6 +901,10 @@ input, select { font-family: inherit; }
           <span class="success-screen__detail-value">September 15, 2027</span>
         </div>
       </div>
+      <div style="background: var(--ui-grey-06); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; text-align: left;">
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> The Annual Percentage Yield (APY) is accurate as of today's date and is subject to change at the institution's discretion prior to the effective date. Early withdrawal penalties apply if funds are withdrawn before the new maturity date. Your certificate will earn interest at the disclosed rate beginning on the effective date. Federally insured by NCUA.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before September 15, 2026 without penalty.</p>
+      </div>
       <button class="btn btn--primary" onclick="showScreen('screen-exit')">Return to Accounts</button>
     </div>
   </div>
@@ -897,12 +913,16 @@ input, select { font-family: inherit; }
   <div id="screen-success-add" class="screen">
     <div class="success-screen">
       <div class="success-screen__icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--ui-primary-200)" stroke="var(--ui-primary)" stroke-width="1.5"/><path d="M12 8v4l2 2" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round"/><path d="M8 12l3 3 5-5" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="success-screen__title">Premium Tier Unlocked!</div>
-      <div class="success-screen__desc">Your certificate has been renewed with additional funds at the premium rate.</div>
+      <div class="success-screen__title">Premium Renewal Scheduled</div>
+      <div class="success-screen__desc">Your renewal with additional funds will take effect at maturity. The fund transfer will process on the effective date.</div>
       <div class="success-screen__details">
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Account</span>
           <span class="success-screen__detail-value">****1234</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Effective Date</span>
+          <span class="success-screen__detail-value" style="font-weight: 700;">September 15, 2026</span>
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">New Balance</span>
@@ -925,6 +945,10 @@ input, select { font-family: inherit; }
           <span class="success-screen__detail-value">Checking ****5678</span>
         </div>
       </div>
+      <div style="background: var(--ui-grey-06); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; text-align: left;">
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> The APY is accurate as of today and subject to change prior to the effective date. The $5,000 transfer from Checking ****5678 will process on September 15, 2026. Ensure sufficient funds are available on that date. Early withdrawal penalties apply after renewal. Federally insured by NCUA.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before September 15, 2026 without penalty.</p>
+      </div>
       <button class="btn btn--primary" onclick="showScreen('screen-exit')">Return to Accounts</button>
     </div>
   </div>
@@ -933,9 +957,13 @@ input, select { font-family: inherit; }
   <div id="screen-success-ladder" class="screen">
     <div class="success-screen">
       <div class="success-screen__icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--ui-primary-200)" stroke="var(--ui-primary)" stroke-width="1.5"/><path d="M8 8h8M8 12h8M8 16h5" stroke="var(--ui-primary)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-      <div class="success-screen__title">Ladder Created!</div>
-      <div class="success-screen__desc">Your certificate has been split into 4 new certificates. You'll have funds maturing every 6–12 months.</div>
+      <div class="success-screen__title">Ladder Scheduled</div>
+      <div class="success-screen__desc">Your certificate will be split into 4 new certificates at maturity. You'll have funds maturing every 6–12 months.</div>
       <div class="success-screen__details">
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Effective Date</span>
+          <span class="success-screen__detail-value" style="font-weight: 700;">September 15, 2026</span>
+        </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Certificates Created</span>
           <span class="success-screen__detail-value">4</span>
@@ -957,6 +985,10 @@ input, select { font-family: inherit; }
           <span class="success-screen__detail-value" style="color: var(--success);">$2,881.00</span>
         </div>
       </div>
+      <div style="background: var(--ui-grey-06); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; text-align: left;">
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> Each certificate in the ladder is subject to its own terms and early withdrawal penalties. APYs are accurate as of today and subject to change prior to the effective date. Individual Truth in Savings disclosures for each new certificate will be provided at the effective date. Federally insured by NCUA.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before September 15, 2026 without penalty.</p>
+      </div>
       <button class="btn btn--primary" onclick="showScreen('screen-exit')">Return to Accounts</button>
     </div>
   </div>
@@ -965,11 +997,15 @@ input, select { font-family: inherit; }
   <div id="screen-success-redirect" class="screen">
     <div class="success-screen">
       <div class="success-screen__icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--ui-succ-200)" stroke="var(--ui-succ)" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="var(--ui-succ)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="success-screen__title">Transfer Complete!</div>
-      <div class="success-screen__desc">Your funds have been successfully moved. The transfer will be reflected in your account within 1 business day.</div>
+      <div class="success-screen__title">Transfer Scheduled</div>
+      <div class="success-screen__desc">Your funds will be transferred on the maturity date. No early withdrawal penalty will apply.</div>
       <div class="success-screen__details">
         <div class="success-screen__detail">
-          <span class="success-screen__detail-label">Amount Transferred</span>
+          <span class="success-screen__detail-label">Effective Date</span>
+          <span class="success-screen__detail-value" style="font-weight: 700;">September 15, 2026</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Amount</span>
           <span class="success-screen__detail-value">$25,000.00</span>
         </div>
         <div class="success-screen__detail">
@@ -980,6 +1016,10 @@ input, select { font-family: inherit; }
           <span class="success-screen__detail-label">To</span>
           <span class="success-screen__detail-value">Checking ****5678</span>
         </div>
+      </div>
+      <div style="background: var(--ui-grey-06); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; text-align: left;">
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> Funds will be available in your destination account within 1 business day of the maturity date. No early withdrawal penalty applies because the transfer is scheduled for the maturity date. Interest earned through September 15, 2026 will be included in the transferred amount. Federally insured by NCUA.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before September 15, 2026 without penalty.</p>
       </div>
       <button class="btn btn--primary" onclick="showScreen('screen-exit')">Return to Accounts</button>
     </div>
