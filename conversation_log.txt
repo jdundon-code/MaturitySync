@@ -196,3 +196,35 @@ Extracted and applied the Nymbus Joy color tokens to the project:
 3. Pushed to GitHub: https://github.com/jdundon-code/certIQ
 
 The demo HTML now renders with Nymbus Joy colors and is ready for Chromebook review.
+
+
+---
+
+[Message 30 - User]
+Shared the Nymbus Joy Icons Foundations PDF (6 pages, 238 icons) from https://nymbus-joy.nymbus.com/design-system/foundations/icons
+
+---
+
+[Message 31 - Assistant]
+Documented icon guidelines and mapped relevant icons to CertificateIQ features:
+
+Guidelines extracted:
+- Sizing: 16px (inline), 20px (default), 24px (large)
+- Color: inherit via currentColor, apply with Tailwind text utilities
+- Accessibility: decorative = aria-hidden="true", meaningful = add aria-label
+
+Mapped 30+ icons to CertificateIQ components:
+- Account CD → certificate identifier
+- Status Warning → maturity approaching
+- Refresh → renewal action
+- Split → ladder builder
+- Transfers In/Out → fund movements
+- Goals → savings targets
+- Trend Up → rate/earnings
+- Status Complete → success confirmations
+- Insights → analytics dashboard
+- And more...
+
+Added component-to-icon mapping showing exact icon usage per UI element (banner, cards, options, success screens, navigation, admin).
+
+Pushed to GitHub.

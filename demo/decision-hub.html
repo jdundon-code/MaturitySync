@@ -173,8 +173,8 @@ input, select { font-family: inherit; }
 
 /* ===== MATURITY BANNER ===== */
 .maturity-banner {
-  background: linear-gradient(135deg, var(--warning-light) 0%, #fff7ed 100%);
-  border: 1px solid #fbbf24;
+  background: linear-gradient(135deg, var(--warningStatusBG) 0%, #FEFAF5 100%);
+  border: 1px solid var(--warningStatusBorder);
   border-radius: var(--radius);
   padding: 16px 20px;
   margin-bottom: 24px;
@@ -184,9 +184,9 @@ input, select { font-family: inherit; }
 }
 .maturity-banner__icon {
   width: 40px; height: 40px; border-radius: 50%;
-  background: #f59e0b; color: white;
+  background: var(--ui-warn); color: white;
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; font-size: 20px;
+  flex-shrink: 0;
 }
 .maturity-banner__text h3 { font-size: 15px; font-weight: 600; color: var(--gray-800); }
 .maturity-banner__text p { font-size: 13px; color: var(--gray-600); margin-top: 2px; }
@@ -228,8 +228,8 @@ input, select { font-family: inherit; }
 
 /* ===== RECOMMENDATION CARD ===== */
 .rec-card {
-  background: linear-gradient(135deg, var(--primary-light) 0%, #f0f4ff 100%);
-  border: 1px solid #93b4f5;
+  background: linear-gradient(135deg, var(--infoStatusBG) 0%, var(--ui-primary-200) 100%);
+  border: 1px solid var(--ui-primary-160);
   border-radius: var(--radius);
   padding: 20px;
   margin-bottom: 20px;
@@ -281,7 +281,7 @@ input, select { font-family: inherit; }
 .option-card:hover { border-color: var(--primary); box-shadow: var(--shadow-md); transform: translateY(-1px); }
 .option-card:active { transform: translateY(0); }
 .option-card--selected { border-color: var(--primary); background: var(--primary-light); }
-.option-card__icon { font-size: 24px; margin-bottom: 8px; }
+.option-card__icon { margin-bottom: 8px; color: var(--iconAction); display: flex; align-items: center; justify-content: center; }
 .option-card__title { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
 .option-card__desc { font-size: 12px; color: var(--gray-500); }
 
@@ -359,7 +359,7 @@ input, select { font-family: inherit; }
 
 /* ===== CONFIRMATION / SUCCESS ===== */
 .success-screen { text-align: center; padding: 40px 20px; }
-.success-screen__icon { font-size: 56px; margin-bottom: 16px; }
+.success-screen__icon { margin-bottom: 16px; display: flex; align-items: center; justify-content: center; }
 .success-screen__title { font-size: 22px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
 .success-screen__desc { font-size: 15px; color: var(--gray-600); margin-bottom: 24px; }
 .success-screen__details {
@@ -391,12 +391,12 @@ input, select { font-family: inherit; }
 
 /* ===== TIER NUDGE ===== */
 .tier-nudge {
-  background: var(--success-light); border: 1px solid #6ee7b7;
+  background: var(--successStatusBG); border: 1px solid var(--successStatusBorder);
   border-radius: var(--radius-sm); padding: 12px 16px;
-  margin-top: 8px; font-size: 13px; color: #065f46;
+  margin-top: 8px; font-size: 13px; color: var(--successStatusLabel);
   display: flex; align-items: center; gap: 8px;
 }
-.tier-nudge__icon { font-size: 16px; }
+.tier-nudge__icon { display: flex; align-items: center; }
 
 /* ===== ACCOUNT SELECTOR ===== */
 .account-list { display: grid; gap: 10px; }
@@ -440,7 +440,7 @@ input, select { font-family: inherit; }
 <!-- HEADER -->
 <header class="app-header">
   <div class="app-header__brand">
-    <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a56db"/><path d="M8 14a6 6 0 1 1 12 0" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#fff"/><path d="M14 12v-4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+    <svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#2569EC"/><path d="M8 14a6 6 0 1 1 12 0" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#fff"/><path d="M14 12v-4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
     Your Credit Union
   </div>
   <div class="app-header__user">
@@ -454,7 +454,7 @@ input, select { font-family: inherit; }
   <div id="screen-home" class="screen screen--active">
     <!-- Maturity Banner -->
     <div class="maturity-banner">
-      <div class="maturity-banner__icon">⏰</div>
+      <div class="maturity-banner__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
       <div class="maturity-banner__text">
         <h3>Your certificate matures in 25 days</h3>
         <p>Review your options below — no branch visit needed.</p>
@@ -520,27 +520,27 @@ input, select { font-family: inherit; }
       <div class="options-section__title">Other Options</div>
       <div class="options-grid options-grid--3col">
         <div class="option-card" onclick="showScreen('screen-renew-same')">
-          <div class="option-card__icon">🔄</div>
+          <div class="option-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></div>
           <div class="option-card__title">Renew Same</div>
           <div class="option-card__desc">12 mo @ 4.25%</div>
         </div>
         <div class="option-card" onclick="showScreen('screen-change-term')">
-          <div class="option-card__icon">📅</div>
+          <div class="option-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
           <div class="option-card__title">Change Term</div>
           <div class="option-card__desc">See all rates</div>
         </div>
         <div class="option-card" onclick="showScreen('screen-ladder')">
-          <div class="option-card__icon">📊</div>
+          <div class="option-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M14 14l7 7M4 4l5 5"/></svg></div>
           <div class="option-card__title">Build a Ladder</div>
           <div class="option-card__desc">Split & diversify</div>
         </div>
         <div class="option-card" onclick="showScreen('screen-redirect')">
-          <div class="option-card__icon">↗️</div>
+          <div class="option-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
           <div class="option-card__title">Move Funds</div>
           <div class="option-card__desc">Transfer out</div>
         </div>
         <div class="option-card" onclick="showScreen('screen-explore')">
-          <div class="option-card__icon">💡</div>
+          <div class="option-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
           <div class="option-card__title">Other Products</div>
           <div class="option-card__desc">Money Market & more</div>
         </div>
@@ -550,7 +550,7 @@ input, select { font-family: inherit; }
 
   <!-- ===== SCREEN: RENEW SAME TERM ===== -->
   <div id="screen-renew-same" class="screen">
-    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <button class="nav-back" onclick="showScreen('screen-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to options</button>
     <div class="confirm-panel">
       <div class="confirm-panel__title">Renew Same Term</div>
       <div class="confirm-panel__row">
@@ -583,7 +583,7 @@ input, select { font-family: inherit; }
 
   <!-- ===== SCREEN: CHANGE TERM ===== -->
   <div id="screen-change-term" class="screen">
-    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <button class="nav-back" onclick="showScreen('screen-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to options</button>
     <div class="cert-card">
       <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">Select a New Term</h3>
       <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 16px;">Choose the term that best fits your goals. Rates shown for a $25,000 balance.</p>
@@ -642,7 +642,7 @@ input, select { font-family: inherit; }
 
   <!-- ===== SCREEN: ADD FUNDS ===== -->
   <div id="screen-add-funds" class="screen">
-    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <button class="nav-back" onclick="showScreen('screen-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to options</button>
     <div class="cert-card">
       <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">Add Funds & Renew</h3>
       
@@ -650,7 +650,7 @@ input, select { font-family: inherit; }
         <label>Amount to Add</label>
         <input type="text" class="form-input" id="add-funds-amount" value="$5,000" oninput="updateAddFunds()">
         <div class="tier-nudge">
-          <span class="tier-nudge__icon">💎</span>
+          <span class="tier-nudge__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
           Add $5,000 to reach the $30,000+ Premium tier at <strong>&nbsp;4.50% APY</strong>
         </div>
       </div>
@@ -708,7 +708,7 @@ input, select { font-family: inherit; }
 
   <!-- ===== SCREEN: LADDER BUILDER ===== -->
   <div id="screen-ladder" class="screen">
-    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <button class="nav-back" onclick="showScreen('screen-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to options</button>
     <div class="cert-card">
       <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px;">Build a Certificate Ladder</h3>
       <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 20px;">Split your $25,000 across multiple terms for regular access to funds at competitive rates.</p>
@@ -780,7 +780,7 @@ input, select { font-family: inherit; }
 
   <!-- ===== SCREEN: REDIRECT / MOVE FUNDS ===== -->
   <div id="screen-redirect" class="screen">
-    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <button class="nav-back" onclick="showScreen('screen-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to options</button>
     <div class="cert-card">
       <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px;">Move Funds</h3>
       <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 20px;">Transfer your maturing certificate balance to another account.</p>
@@ -827,14 +827,14 @@ input, select { font-family: inherit; }
 
   <!-- ===== SCREEN: EXPLORE OTHER PRODUCTS ===== -->
   <div id="screen-explore" class="screen">
-    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <button class="nav-back" onclick="showScreen('screen-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to options</button>
     <div class="cert-card">
       <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px;">Explore Other Products</h3>
       <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 20px;">Looking for more flexibility? Consider these alternatives for your maturing funds.</p>
 
       <div class="options-grid">
         <div class="option-card" style="grid-column: span 2; text-align: left; display: flex; gap: 14px; align-items: flex-start;">
-          <div style="font-size: 32px;">🏦</div>
+          <div style="color: var(--ui-primary); flex-shrink: 0;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
           <div>
             <div class="option-card__title" style="text-align: left; font-size: 15px;">Money Market Account</div>
             <div class="option-card__desc" style="text-align: left; margin-bottom: 8px;">Earn 3.90% APY with unlimited access to your funds. No lock-up period.</div>
@@ -842,7 +842,7 @@ input, select { font-family: inherit; }
           </div>
         </div>
         <div class="option-card" style="grid-column: span 2; text-align: left; display: flex; gap: 14px; align-items: flex-start;">
-          <div style="font-size: 32px;">📈</div>
+          <div style="color: var(--ui-succ); flex-shrink: 0;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
           <div>
             <div class="option-card__title" style="text-align: left; font-size: 15px;">High-Yield Savings</div>
             <div class="option-card__desc" style="text-align: left; margin-bottom: 8px;">Earn 4.10% APY with 6 transactions/month. Great for emergency funds.</div>
@@ -850,7 +850,7 @@ input, select { font-family: inherit; }
           </div>
         </div>
         <div class="option-card" style="grid-column: span 2; text-align: left; display: flex; gap: 14px; align-items: flex-start;">
-          <div style="font-size: 32px;">🏡</div>
+          <div style="color: var(--ui-primary-060); flex-shrink: 0;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
           <div>
             <div class="option-card__title" style="text-align: left; font-size: 15px;">IRA Certificate</div>
             <div class="option-card__desc" style="text-align: left; margin-bottom: 8px;">Tax-advantaged growth at 4.55% APY. Ideal for retirement savings.</div>
@@ -864,7 +864,7 @@ input, select { font-family: inherit; }
   <!-- ===== SCREEN: SUCCESS — RENEWAL ===== -->
   <div id="screen-success-renew" class="screen">
     <div class="success-screen">
-      <div class="success-screen__icon">🎉</div>
+      <div class="success-screen__icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--ui-succ-200)" stroke="var(--ui-succ)" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="var(--ui-succ)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="success-screen__title">Certificate Renewed!</div>
       <div class="success-screen__desc">Your certificate has been successfully renewed. You'll receive a confirmation email shortly.</div>
       <div class="success-screen__details">
@@ -896,7 +896,7 @@ input, select { font-family: inherit; }
   <!-- ===== SCREEN: SUCCESS — ADD FUNDS ===== -->
   <div id="screen-success-add" class="screen">
     <div class="success-screen">
-      <div class="success-screen__icon">💎</div>
+      <div class="success-screen__icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--ui-primary-200)" stroke="var(--ui-primary)" stroke-width="1.5"/><path d="M12 8v4l2 2" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round"/><path d="M8 12l3 3 5-5" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="success-screen__title">Premium Tier Unlocked!</div>
       <div class="success-screen__desc">Your certificate has been renewed with additional funds at the premium rate.</div>
       <div class="success-screen__details">
@@ -932,7 +932,7 @@ input, select { font-family: inherit; }
   <!-- ===== SCREEN: SUCCESS — LADDER ===== -->
   <div id="screen-success-ladder" class="screen">
     <div class="success-screen">
-      <div class="success-screen__icon">📊</div>
+      <div class="success-screen__icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--ui-primary-200)" stroke="var(--ui-primary)" stroke-width="1.5"/><path d="M8 8h8M8 12h8M8 16h5" stroke="var(--ui-primary)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
       <div class="success-screen__title">Ladder Created!</div>
       <div class="success-screen__desc">Your certificate has been split into 4 new certificates. You'll have funds maturing every 6–12 months.</div>
       <div class="success-screen__details">
@@ -964,7 +964,7 @@ input, select { font-family: inherit; }
   <!-- ===== SCREEN: SUCCESS — REDIRECT ===== -->
   <div id="screen-success-redirect" class="screen">
     <div class="success-screen">
-      <div class="success-screen__icon">✅</div>
+      <div class="success-screen__icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--ui-succ-200)" stroke="var(--ui-succ)" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="var(--ui-succ)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="success-screen__title">Transfer Complete!</div>
       <div class="success-screen__desc">Your funds have been successfully moved. The transfer will be reflected in your account within 1 business day.</div>
       <div class="success-screen__details">
