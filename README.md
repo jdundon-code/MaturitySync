@@ -81,7 +81,7 @@ npm run dev
 
 If given more time to expand beyond the Phase 1 MVP, the following additions would be prioritized:
 
-- **Live DBP Integrations:** Replace the Mock DBP Adapter with live API connectors for major digital banking providers (e.g., Q2, Alkami, NCR).
+- **Live DBP Integrations:** Replace the Mock DBP Adapter with live API connectors.
 
 - **Advanced Machine Learning Recommendations:** Upgrade the rule-based recommendation engine to a predictive ML model that analyzes a user's broader financial picture to suggest highly personalized wealth-building strategies (Phase 3 Intelligence).
 
