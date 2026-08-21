@@ -468,7 +468,7 @@ input, select { font-family: inherit; }
           <div class="cert-card__title">Share Certificate</div>
           <div class="cert-card__account">Account ****1234</div>
         </div>
-        <span class="cert-card__badge">Maturing Sep 15</span>
+        <span class="cert-card__badge" data-date="maturity-short">Maturing Sep 15</span>
       </div>
       <div class="cert-card__details">
         <div class="cert-detail">
@@ -485,7 +485,7 @@ input, select { font-family: inherit; }
         </div>
         <div class="cert-detail">
           <div class="cert-detail__label">Days Left</div>
-          <div class="cert-detail__value">25</div>
+          <div class="cert-detail__value" data-date="days-left">25</div>
         </div>
       </div>
     </div>
@@ -555,7 +555,7 @@ input, select { font-family: inherit; }
       <div class="confirm-panel__title">Renew Same Term</div>
       <div style="background: var(--infoStatusBG); border: 1px solid var(--ui-primary-160); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        <span style="font-size: 13px; color: var(--infoStatusLabel);">This action will be scheduled for your maturity date — <strong>September 15, 2026</strong></span>
+        <span style="font-size: 13px; color: var(--infoStatusLabel);">This action will be scheduled for your maturity date — <strong data-date="maturity">September 15, 2026</strong></span>
       </div>
       <div class="confirm-panel__row">
         <span class="confirm-panel__label">Balance</span>
@@ -571,11 +571,11 @@ input, select { font-family: inherit; }
       </div>
       <div class="confirm-panel__row">
         <span class="confirm-panel__label">Effective Date</span>
-        <span class="confirm-panel__value">September 15, 2026</span>
+        <span class="confirm-panel__value" data-date="maturity">September 15, 2026</span>
       </div>
       <div class="confirm-panel__row">
         <span class="confirm-panel__label">New Maturity</span>
-        <span class="confirm-panel__value">September 15, 2027</span>
+        <span class="confirm-panel__value"data-date="renewal-maturity">September 15, 2027</span>
       </div>
       <div class="confirm-panel__row">
         <span class="confirm-panel__label">Projected Earnings</span>
@@ -726,7 +726,7 @@ input, select { font-family: inherit; }
           <div class="ladder-item__dot"></div>
           <div class="ladder-item__detail">
             <div class="ladder-item__term">6-Month Certificate</div>
-            <div class="ladder-item__meta">Matures Mar 2027 · 4.00% APY</div>
+            <div class="ladder-item__meta" data-date="ladder-6mo">Matures Mar 2027 · 4.00% APY</div>
           </div>
           <div class="ladder-item__amount">$5,000</div>
         </div>
@@ -734,7 +734,7 @@ input, select { font-family: inherit; }
           <div class="ladder-item__dot" style="background: #3b82f6;"></div>
           <div class="ladder-item__detail">
             <div class="ladder-item__term">12-Month Certificate</div>
-            <div class="ladder-item__meta">Matures Sep 2027 · 4.25% APY</div>
+            <div class="ladder-item__meta" data-date="ladder-12mo">Matures Sep 2027 · 4.25% APY</div>
           </div>
           <div class="ladder-item__amount">$5,000</div>
         </div>
@@ -742,7 +742,7 @@ input, select { font-family: inherit; }
           <div class="ladder-item__dot" style="background: #6366f1;"></div>
           <div class="ladder-item__detail">
             <div class="ladder-item__term">24-Month Certificate</div>
-            <div class="ladder-item__meta">Matures Sep 2028 · 4.40% APY</div>
+            <div class="ladder-item__meta" data-date="ladder-24mo">Matures Sep 2028 · 4.40% APY</div>
           </div>
           <div class="ladder-item__amount">$7,500</div>
         </div>
@@ -750,7 +750,7 @@ input, select { font-family: inherit; }
           <div class="ladder-item__dot" style="background: #8b5cf6;"></div>
           <div class="ladder-item__detail">
             <div class="ladder-item__term">36-Month Certificate</div>
-            <div class="ladder-item__meta">Matures Sep 2029 · 4.45% APY</div>
+            <div class="ladder-item__meta" data-date="ladder-36mo">Matures Sep 2029 · 4.45% APY</div>
           </div>
           <div class="ladder-item__amount">$7,500</div>
         </div>
@@ -886,7 +886,7 @@ input, select { font-family: inherit; }
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Effective Date</span>
-          <span class="success-screen__detail-value" style="font-weight: 700;">September 15, 2026</span>
+          <span class="success-screen__detail-value" style="font-weight: 700;" data-date="maturity" data-date="maturity">September 15, 2026</span>
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">New Rate</span>
@@ -898,12 +898,12 @@ input, select { font-family: inherit; }
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">New Maturity</span>
-          <span class="success-screen__detail-value">September 15, 2027</span>
+          <span class="success-screen__detail-value"data-date="renewal-maturity">September 15, 2027</span>
         </div>
       </div>
       <div style="background: var(--ui-grey-06); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; text-align: left;">
         <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> The Annual Percentage Yield (APY) is accurate as of today's date and is subject to change at the institution's discretion prior to the effective date. Early withdrawal penalties apply if funds are withdrawn before the new maturity date. Your certificate will earn interest at the disclosed rate beginning on the effective date. Federally insured by NCUA.</p>
-        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before September 15, 2026 without penalty.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before <span data-date="maturity">September 15, 2026</span> without penalty.</p>
       </div>
       <button class="btn btn--primary" onclick="showScreen('screen-exit')">Return to Accounts</button>
     </div>
@@ -922,7 +922,7 @@ input, select { font-family: inherit; }
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Effective Date</span>
-          <span class="success-screen__detail-value" style="font-weight: 700;">September 15, 2026</span>
+          <span class="success-screen__detail-value" style="font-weight: 700;" data-date="maturity" data-date="maturity">September 15, 2026</span>
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">New Balance</span>
@@ -946,8 +946,8 @@ input, select { font-family: inherit; }
         </div>
       </div>
       <div style="background: var(--ui-grey-06); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; text-align: left;">
-        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> The APY is accurate as of today and subject to change prior to the effective date. The $5,000 transfer from Checking ****5678 will process on September 15, 2026. Ensure sufficient funds are available on that date. Early withdrawal penalties apply after renewal. Federally insured by NCUA.</p>
-        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before September 15, 2026 without penalty.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> The APY is accurate as of today and subject to change prior to the effective date. The $5,000 transfer from Checking ****5678 will process on <span data-date="maturity">September 15, 2026</span>. Ensure sufficient funds are available on that date. Early withdrawal penalties apply after renewal. Federally insured by NCUA.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before <span data-date="maturity">September 15, 2026</span> without penalty.</p>
       </div>
       <button class="btn btn--primary" onclick="showScreen('screen-exit')">Return to Accounts</button>
     </div>
@@ -962,7 +962,7 @@ input, select { font-family: inherit; }
       <div class="success-screen__details">
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Effective Date</span>
-          <span class="success-screen__detail-value" style="font-weight: 700;">September 15, 2026</span>
+          <span class="success-screen__detail-value" style="font-weight: 700;" data-date="maturity" data-date="maturity">September 15, 2026</span>
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Certificates Created</span>
@@ -978,7 +978,7 @@ input, select { font-family: inherit; }
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Next Maturity</span>
-          <span class="success-screen__detail-value">March 2027 (6 mo)</span>
+          <span class="success-screen__detail-value" data-date="ladder-next">March 2027 (6 mo)</span>
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Total Projected Earnings</span>
@@ -987,7 +987,7 @@ input, select { font-family: inherit; }
       </div>
       <div style="background: var(--ui-grey-06); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; text-align: left;">
         <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> Each certificate in the ladder is subject to its own terms and early withdrawal penalties. APYs are accurate as of today and subject to change prior to the effective date. Individual Truth in Savings disclosures for each new certificate will be provided at the effective date. Federally insured by NCUA.</p>
-        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before September 15, 2026 without penalty.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before <span data-date="maturity">September 15, 2026</span> without penalty.</p>
       </div>
       <button class="btn btn--primary" onclick="showScreen('screen-exit')">Return to Accounts</button>
     </div>
@@ -1002,7 +1002,7 @@ input, select { font-family: inherit; }
       <div class="success-screen__details">
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Effective Date</span>
-          <span class="success-screen__detail-value" style="font-weight: 700;">September 15, 2026</span>
+          <span class="success-screen__detail-value" style="font-weight: 700;" data-date="maturity" data-date="maturity">September 15, 2026</span>
         </div>
         <div class="success-screen__detail">
           <span class="success-screen__detail-label">Amount</span>
@@ -1018,8 +1018,8 @@ input, select { font-family: inherit; }
         </div>
       </div>
       <div style="background: var(--ui-grey-06); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; text-align: left;">
-        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> Funds will be available in your destination account within 1 business day of the maturity date. No early withdrawal penalty applies because the transfer is scheduled for the maturity date. Interest earned through September 15, 2026 will be included in the transferred amount. Federally insured by NCUA.</p>
-        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before September 15, 2026 without penalty.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> Funds will be available in your destination account within 1 business day of the maturity date. No early withdrawal penalty applies because the transfer is scheduled for the maturity date. Interest earned through <span data-date="maturity">September 15, 2026</span> will be included in the transferred amount. Federally insured by NCUA.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before <span data-date="maturity">September 15, 2026</span> without penalty.</p>
       </div>
       <button class="btn btn--primary" onclick="showScreen('screen-exit')">Return to Accounts</button>
     </div>
@@ -1042,6 +1042,49 @@ input, select { font-family: inherit; }
 <div class="demo-label">MaturitySync Demo v0.1</div>
 
 <script>
+// ===== DYNAMIC DATES =====
+// Calculate all dates relative to today so the demo always feels current
+(function() {
+  const DAYS_TO_MATURITY = 25;
+  const GRACE_PERIOD_DAYS = 10;
+  const today = new Date();
+  
+  const maturityDate = new Date(today);
+  maturityDate.setDate(maturityDate.getDate() + DAYS_TO_MATURITY);
+  
+  const renewalMaturityDate = new Date(maturityDate);
+  renewalMaturityDate.setFullYear(renewalMaturityDate.getFullYear() + 1);
+
+  const formatDate = (d) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const formatShort = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const formatMonthYear = (d) => d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+  const maturityStr = formatDate(maturityDate);
+  const maturityShort = formatShort(maturityDate);
+  const renewalMaturityStr = formatDate(renewalMaturityDate);
+
+  // Ladder dates
+  const ladder6mo = new Date(maturityDate); ladder6mo.setMonth(ladder6mo.getMonth() + 6);
+  const ladder12mo = new Date(maturityDate); ladder12mo.setMonth(ladder12mo.getMonth() + 12);
+  const ladder24mo = new Date(maturityDate); ladder24mo.setMonth(ladder24mo.getMonth() + 24);
+  const ladder36mo = new Date(maturityDate); ladder36mo.setMonth(ladder36mo.getMonth() + 36);
+
+  // Populate all dynamic date elements
+  document.querySelectorAll('[data-date="maturity"]').forEach(el => el.textContent = maturityStr);
+  document.querySelectorAll('[data-date="maturity-short"]').forEach(el => el.textContent = 'Maturing ' + maturityShort);
+  document.querySelectorAll('[data-date="days-left"]').forEach(el => el.textContent = DAYS_TO_MATURITY);
+  document.querySelectorAll('[data-date="renewal-maturity"]').forEach(el => el.textContent = renewalMaturityStr);
+  document.querySelectorAll('[data-date="ladder-6mo"]').forEach(el => el.textContent = 'Matures ' + formatMonthYear(ladder6mo) + ' · 4.00% APY');
+  document.querySelectorAll('[data-date="ladder-12mo"]').forEach(el => el.textContent = 'Matures ' + formatMonthYear(ladder12mo) + ' · 4.25% APY');
+  document.querySelectorAll('[data-date="ladder-24mo"]').forEach(el => el.textContent = 'Matures ' + formatMonthYear(ladder24mo) + ' · 4.40% APY');
+  document.querySelectorAll('[data-date="ladder-36mo"]').forEach(el => el.textContent = 'Matures ' + formatMonthYear(ladder36mo) + ' · 4.45% APY');
+  document.querySelectorAll('[data-date="ladder-next"]').forEach(el => el.textContent = formatMonthYear(ladder6mo) + ' (6 mo)');
+
+  // Update banner text
+  const banner = document.querySelector('.maturity-banner__text h3');
+  if (banner) banner.textContent = 'Your certificate matures in ' + DAYS_TO_MATURITY + ' days';
+})();
+
 // ===== SCREEN NAVIGATION =====
 function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('screen--active'));
