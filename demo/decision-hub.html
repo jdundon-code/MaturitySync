@@ -488,6 +488,10 @@ input, select { font-family: inherit; }
           <div class="cert-detail__value" data-date="days-left">25</div>
         </div>
       </div>
+      <div style="background: var(--warningStatusBG); border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 16px; display: flex; align-items: flex-start; gap: 10px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ui-warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <span style="font-size: 13px; color: var(--warningStatusLabel); line-height: 1.4;">Your <strong>4.75% rate expires</strong> at maturity. If no action is taken, your certificate will auto-renew at the current standard rate of <strong>4.25% APY</strong>.</span>
+      </div>
     </div>
 
     <!-- Recommendation -->
@@ -496,23 +500,24 @@ input, select { font-family: inherit; }
         <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
         Recommended for you
       </div>
-      <div class="rec-card__title">Add $5,000 to reach our Premium tier</div>
-      <div class="rec-card__desc">Unlock a higher rate by adding funds from your checking account at renewal.</div>
+      <div class="rec-card__title">Beat your rollover rate — add $5,000 for Premium</div>
+      <div class="rec-card__desc">Your current 4.75% rate expires at maturity. Without action, you'll auto-renew at <strong>4.25%</strong>. Add funds to unlock <strong>4.50%</strong> instead.</div>
       <div class="rec-card__highlight">
         <div class="rec-card__highlight-item">
-          <div class="rec-card__highlight-label">New Balance</div>
-          <div class="rec-card__highlight-value">$30,000</div>
+          <div class="rec-card__highlight-label">Auto-Roll Rate</div>
+          <div class="rec-card__highlight-value" style="color: var(--ui-warn);">4.25%</div>
         </div>
         <div class="rec-card__highlight-item">
           <div class="rec-card__highlight-label">Premium Rate</div>
-          <div class="rec-card__highlight-value rec-card__highlight-value--accent">4.50% APY</div>
+          <div class="rec-card__highlight-value rec-card__highlight-value--accent">4.50%</div>
         </div>
         <div class="rec-card__highlight-item">
-          <div class="rec-card__highlight-label">12-Mo Earnings</div>
-          <div class="rec-card__highlight-value">$1,350</div>
+          <div class="rec-card__highlight-label">Extra Earnings</div>
+          <div class="rec-card__highlight-value" style="color: var(--ui-succ);">+$288/yr</div>
         </div>
       </div>
-      <button class="btn btn--primary" onclick="showScreen('screen-add-funds')">Add Funds & Renew</button>
+      <p style="font-size: 12px; color: var(--tertiaryText); margin-bottom: 12px;">$30,000 × 4.50% = $1,350/yr vs. $25,000 × 4.25% = $1,062/yr</p>
+      <button class="btn btn--primary" onclick="showScreen('screen-add-funds')">Add Funds & Renew at 4.50%</button>
     </div>
 
     <!-- Other Options -->
@@ -522,7 +527,7 @@ input, select { font-family: inherit; }
         <div class="option-card" onclick="showScreen('screen-renew-same')">
           <div class="option-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></div>
           <div class="option-card__title">Renew Same</div>
-          <div class="option-card__desc">12 mo @ 4.25%</div>
+          <div class="option-card__desc">12 mo @ 4.25% (rollover rate)</div>
         </div>
         <div class="option-card" onclick="showScreen('screen-change-term')">
           <div class="option-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
@@ -581,7 +586,7 @@ input, select { font-family: inherit; }
         <span class="confirm-panel__label">Projected Earnings</span>
         <span class="confirm-panel__value">$1,062.50</span>
       </div>
-      <p style="font-size: 12px; color: var(--gray-500); margin-top: 12px;">Rate decreased from 4.75% to 4.25% since your original certificate was opened. You can change or cancel this decision anytime before the maturity date.</p>
+      <p style="font-size: 12px; color: var(--gray-500); margin-top: 12px;">Your original rate of 4.75% was locked when you opened this certificate. The rollover rate of 4.25% reflects today's market. You can change or cancel this decision anytime before the maturity date.</p>
       <div class="btn-group">
         <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
         <button class="btn btn--success" onclick="showScreen('screen-success-renew')">Schedule Renewal</button>
