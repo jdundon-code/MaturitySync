@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CertificateIQ — Decision Hub Demo</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #1a56db;
+  --primary-light: #e8f0fe;
+  --primary-dark: #0f3a8e;
+  --success: #059669;
+  --success-light: #d1fae5;
+  --warning: #d97706;
+  --warning-light: #fef3c7;
+  --danger: #dc2626;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+  --transition: all 0.2s ease;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+button { cursor: pointer; font-family: inherit; }
+input, select { font-family: inherit; }
+
+/* ===== LAYOUT ===== */
+.app-header {
+  background: white;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--primary);
+}
+.app-header__brand svg { width: 28px; height: 28px; }
+.app-header__user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--gray-600);
+}
+.app-header__avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--primary-light); color: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 13px;
+}
+
+.container { max-width: 680px; margin: 0 auto; padding: 24px 16px; }
+
+/* ===== MATURITY BANNER ===== */
+.maturity-banner {
+  background: linear-gradient(135deg, var(--warning-light) 0%, #fff7ed 100%);
+  border: 1px solid #fbbf24;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.maturity-banner__icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #f59e0b; color: white;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 20px;
+}
+.maturity-banner__text h3 { font-size: 15px; font-weight: 600; color: var(--gray-800); }
+.maturity-banner__text p { font-size: 13px; color: var(--gray-600); margin-top: 2px; }
+
+/* ===== CERTIFICATE CARD ===== */
+.cert-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.cert-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.cert-card__title { font-size: 13px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.cert-card__account { font-size: 15px; color: var(--gray-700); margin-top: 4px; }
+.cert-card__badge {
+  background: var(--warning-light);
+  color: var(--warning);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.cert-card__details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (min-width: 480px) { .cert-card__details { grid-template-columns: repeat(4, 1fr); } }
+.cert-detail { }
+.cert-detail__label { font-size: 12px; color: var(--gray-500); margin-bottom: 4px; }
+.cert-detail__value { font-size: 18px; font-weight: 700; color: var(--gray-900); }
+.cert-detail__value--rate { color: var(--success); }
+
+/* ===== RECOMMENDATION CARD ===== */
+.rec-card {
+  background: linear-gradient(135deg, var(--primary-light) 0%, #f0f4ff 100%);
+  border: 1px solid #93b4f5;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.rec-card__badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; color: var(--primary);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+.rec-card__badge svg { width: 14px; height: 14px; }
+.rec-card__title { font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: 6px; }
+.rec-card__desc { font-size: 14px; color: var(--gray-600); margin-bottom: 14px; }
+.rec-card__highlight {
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.rec-card__highlight-item { text-align: center; }
+.rec-card__highlight-label { font-size: 11px; color: var(--gray-500); }
+.rec-card__highlight-value { font-size: 16px; font-weight: 700; color: var(--gray-900); }
+.rec-card__highlight-value--accent { color: var(--primary); }
+
+/* ===== OPTIONS GRID ===== */
+.options-section { margin-bottom: 24px; }
+.options-section__title {
+  font-size: 13px; font-weight: 600; color: var(--gray-500);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 480px) { .options-grid--3col { grid-template-columns: repeat(3, 1fr); } }
+
+.option-card {
+  background: white;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: center;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.option-card:hover { border-color: var(--primary); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.option-card:active { transform: translateY(0); }
+.option-card--selected { border-color: var(--primary); background: var(--primary-light); }
+.option-card__icon { font-size: 24px; margin-bottom: 8px; }
+.option-card__title { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
+.option-card__desc { font-size: 12px; color: var(--gray-500); }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 600;
+  border: none;
+  transition: var(--transition);
+  width: 100%;
+}
+.btn--primary { background: var(--primary); color: white; }
+.btn--primary:hover { background: var(--primary-dark); }
+.btn--secondary { background: white; color: var(--gray-700); border: 1px solid var(--gray-300); }
+.btn--secondary:hover { background: var(--gray-50); border-color: var(--gray-400); }
+.btn--success { background: var(--success); color: white; }
+.btn--success:hover { background: #047857; }
+.btn--ghost { background: transparent; color: var(--primary); padding: 8px 16px; }
+.btn--ghost:hover { background: var(--primary-light); }
+.btn--sm { padding: 8px 16px; font-size: 13px; }
+.btn-group { display: flex; gap: 12px; margin-top: 16px; }
+.btn-group .btn { flex: 1; }
+
+/* ===== FORMS ===== */
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
+.form-input {
+  width: 100%; padding: 10px 14px;
+  border: 1px solid var(--gray-300); border-radius: var(--radius-sm);
+  font-size: 15px; color: var(--gray-800);
+  transition: var(--transition);
+}
+.form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1); }
+.form-select { appearance: none; background: white url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b7280'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 12px center; padding-right: 36px; }
+.form-hint { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+.form-hint--success { color: var(--success); font-weight: 600; }
+
+/* ===== TERM SELECTOR ===== */
+.term-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (min-width: 480px) { .term-grid { grid-template-columns: repeat(3, 1fr); } }
+.term-option {
+  background: white; border: 2px solid var(--gray-200); border-radius: var(--radius-sm);
+  padding: 14px 12px; text-align: center; cursor: pointer; transition: var(--transition);
+}
+.term-option:hover { border-color: var(--primary); }
+.term-option--selected { border-color: var(--primary); background: var(--primary-light); }
+.term-option__months { font-size: 16px; font-weight: 700; color: var(--gray-800); }
+.term-option__rate { font-size: 14px; color: var(--success); font-weight: 600; margin-top: 2px; }
+.term-option__earnings { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+
+/* ===== LADDER BUILDER ===== */
+.ladder-timeline { position: relative; padding: 20px 0; }
+.ladder-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px; margin-bottom: 10px;
+  background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-sm);
+}
+.ladder-item__dot { width: 12px; height: 12px; border-radius: 50%; background: var(--primary); flex-shrink: 0; }
+.ladder-item__detail { flex: 1; }
+.ladder-item__term { font-size: 14px; font-weight: 600; }
+.ladder-item__meta { font-size: 12px; color: var(--gray-500); }
+.ladder-item__amount { font-size: 15px; font-weight: 700; color: var(--gray-900); }
+.ladder-item__remove { background: none; border: none; color: var(--gray-400); font-size: 18px; padding: 4px; }
+.ladder-item__remove:hover { color: var(--danger); }
+.ladder-summary {
+  background: var(--gray-50); border-radius: var(--radius-sm);
+  padding: 14px 16px; margin-top: 12px;
+  display: flex; justify-content: space-between;
+}
+.ladder-summary__item { text-align: center; }
+.ladder-summary__label { font-size: 11px; color: var(--gray-500); }
+.ladder-summary__value { font-size: 15px; font-weight: 700; }
+
+/* ===== CONFIRMATION / SUCCESS ===== */
+.success-screen { text-align: center; padding: 40px 20px; }
+.success-screen__icon { font-size: 56px; margin-bottom: 16px; }
+.success-screen__title { font-size: 22px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
+.success-screen__desc { font-size: 15px; color: var(--gray-600); margin-bottom: 24px; }
+.success-screen__details {
+  background: var(--gray-50); border-radius: var(--radius-sm);
+  padding: 16px; text-align: left; margin-bottom: 24px;
+  display: grid; gap: 8px;
+}
+.success-screen__detail { display: flex; justify-content: space-between; font-size: 14px; }
+.success-screen__detail-label { color: var(--gray-500); }
+.success-screen__detail-value { font-weight: 600; color: var(--gray-800); }
+
+/* ===== NAVIGATION / BACK ===== */
+.nav-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; color: var(--primary); font-weight: 500;
+  background: none; border: none; padding: 8px 0; margin-bottom: 16px;
+}
+.nav-back:hover { text-decoration: underline; }
+
+/* ===== SLIDER ===== */
+.slider-container { padding: 8px 0; }
+.slider { width: 100%; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 3px; background: var(--gray-200); outline: none; }
+.slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); cursor: pointer; }
+
+/* ===== SCREEN MANAGEMENT ===== */
+.screen { display: none; }
+.screen--active { display: block; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== TIER NUDGE ===== */
+.tier-nudge {
+  background: var(--success-light); border: 1px solid #6ee7b7;
+  border-radius: var(--radius-sm); padding: 12px 16px;
+  margin-top: 8px; font-size: 13px; color: #065f46;
+  display: flex; align-items: center; gap: 8px;
+}
+.tier-nudge__icon { font-size: 16px; }
+
+/* ===== ACCOUNT SELECTOR ===== */
+.account-list { display: grid; gap: 10px; }
+.account-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; background: white;
+  border: 2px solid var(--gray-200); border-radius: var(--radius-sm);
+  cursor: pointer; transition: var(--transition);
+}
+.account-item:hover { border-color: var(--primary); }
+.account-item--selected { border-color: var(--primary); background: var(--primary-light); }
+.account-item__info { }
+.account-item__name { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+.account-item__number { font-size: 12px; color: var(--gray-500); }
+.account-item__balance { font-size: 15px; font-weight: 700; color: var(--gray-900); }
+
+/* ===== CONFIRMATION PANEL ===== */
+.confirm-panel {
+  background: white; border-radius: var(--radius);
+  box-shadow: var(--shadow-md); padding: 24px;
+}
+.confirm-panel__title { font-size: 17px; font-weight: 700; margin-bottom: 16px; }
+.confirm-panel__row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--gray-100); font-size: 14px; }
+.confirm-panel__row:last-of-type { border-bottom: none; }
+.confirm-panel__label { color: var(--gray-500); }
+.confirm-panel__value { font-weight: 600; color: var(--gray-800); }
+.confirm-panel__value--highlight { color: var(--success); font-size: 16px; }
+
+/* ===== DEMO LABEL ===== */
+.demo-label {
+  position: fixed; bottom: 16px; right: 16px;
+  background: var(--gray-800); color: white;
+  font-size: 11px; font-weight: 600;
+  padding: 6px 12px; border-radius: 20px;
+  opacity: 0.8; z-index: 999;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="app-header__brand">
+    <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#1a56db"/><path d="M8 14a6 6 0 1 1 12 0" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#fff"/><path d="M14 12v-4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+    Your Credit Union
+  </div>
+  <div class="app-header__user">
+    <span>Alex M.</span>
+    <div class="app-header__avatar">AM</div>
+  </div>
+</header>
+
+<main class="container">
+  <!-- ===== SCREEN: DECISION HUB (HOME) ===== -->
+  <div id="screen-home" class="screen screen--active">
+    <!-- Maturity Banner -->
+    <div class="maturity-banner">
+      <div class="maturity-banner__icon">⏰</div>
+      <div class="maturity-banner__text">
+        <h3>Your certificate matures in 25 days</h3>
+        <p>Review your options below — no branch visit needed.</p>
+      </div>
+    </div>
+
+    <!-- Certificate Details -->
+    <div class="cert-card">
+      <div class="cert-card__header">
+        <div>
+          <div class="cert-card__title">Share Certificate</div>
+          <div class="cert-card__account">Account ****1234</div>
+        </div>
+        <span class="cert-card__badge">Maturing Sep 15</span>
+      </div>
+      <div class="cert-card__details">
+        <div class="cert-detail">
+          <div class="cert-detail__label">Balance</div>
+          <div class="cert-detail__value">$25,000</div>
+        </div>
+        <div class="cert-detail">
+          <div class="cert-detail__label">Current Rate</div>
+          <div class="cert-detail__value cert-detail__value--rate">4.75%</div>
+        </div>
+        <div class="cert-detail">
+          <div class="cert-detail__label">Term</div>
+          <div class="cert-detail__value">12 mo</div>
+        </div>
+        <div class="cert-detail">
+          <div class="cert-detail__label">Days Left</div>
+          <div class="cert-detail__value">25</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recommendation -->
+    <div class="rec-card">
+      <div class="rec-card__badge">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
+        Recommended for you
+      </div>
+      <div class="rec-card__title">Add $5,000 to reach our Premium tier</div>
+      <div class="rec-card__desc">Unlock a higher rate by adding funds from your checking account at renewal.</div>
+      <div class="rec-card__highlight">
+        <div class="rec-card__highlight-item">
+          <div class="rec-card__highlight-label">New Balance</div>
+          <div class="rec-card__highlight-value">$30,000</div>
+        </div>
+        <div class="rec-card__highlight-item">
+          <div class="rec-card__highlight-label">Premium Rate</div>
+          <div class="rec-card__highlight-value rec-card__highlight-value--accent">4.50% APY</div>
+        </div>
+        <div class="rec-card__highlight-item">
+          <div class="rec-card__highlight-label">12-Mo Earnings</div>
+          <div class="rec-card__highlight-value">$1,350</div>
+        </div>
+      </div>
+      <button class="btn btn--primary" onclick="showScreen('screen-add-funds')">Add Funds & Renew</button>
+    </div>
+
+    <!-- Other Options -->
+    <div class="options-section">
+      <div class="options-section__title">Other Options</div>
+      <div class="options-grid options-grid--3col">
+        <div class="option-card" onclick="showScreen('screen-renew-same')">
+          <div class="option-card__icon">🔄</div>
+          <div class="option-card__title">Renew Same</div>
+          <div class="option-card__desc">12 mo @ 4.25%</div>
+        </div>
+        <div class="option-card" onclick="showScreen('screen-change-term')">
+          <div class="option-card__icon">📅</div>
+          <div class="option-card__title">Change Term</div>
+          <div class="option-card__desc">See all rates</div>
+        </div>
+        <div class="option-card" onclick="showScreen('screen-ladder')">
+          <div class="option-card__icon">📊</div>
+          <div class="option-card__title">Build a Ladder</div>
+          <div class="option-card__desc">Split & diversify</div>
+        </div>
+        <div class="option-card" onclick="showScreen('screen-redirect')">
+          <div class="option-card__icon">↗️</div>
+          <div class="option-card__title">Move Funds</div>
+          <div class="option-card__desc">Transfer out</div>
+        </div>
+        <div class="option-card" onclick="showScreen('screen-explore')">
+          <div class="option-card__icon">💡</div>
+          <div class="option-card__title">Other Products</div>
+          <div class="option-card__desc">Money Market & more</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: RENEW SAME TERM ===== -->
+  <div id="screen-renew-same" class="screen">
+    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <div class="confirm-panel">
+      <div class="confirm-panel__title">Renew Same Term</div>
+      <div class="confirm-panel__row">
+        <span class="confirm-panel__label">Balance</span>
+        <span class="confirm-panel__value">$25,000.00</span>
+      </div>
+      <div class="confirm-panel__row">
+        <span class="confirm-panel__label">New Term</span>
+        <span class="confirm-panel__value">12 months</span>
+      </div>
+      <div class="confirm-panel__row">
+        <span class="confirm-panel__label">New Rate</span>
+        <span class="confirm-panel__value confirm-panel__value--highlight">4.25% APY</span>
+      </div>
+      <div class="confirm-panel__row">
+        <span class="confirm-panel__label">New Maturity</span>
+        <span class="confirm-panel__value">September 15, 2027</span>
+      </div>
+      <div class="confirm-panel__row">
+        <span class="confirm-panel__label">Projected Earnings</span>
+        <span class="confirm-panel__value">$1,062.50</span>
+      </div>
+      <p style="font-size: 12px; color: var(--gray-500); margin-top: 12px;">Rate decreased from 4.75% to 4.25% since your original certificate was opened.</p>
+      <div class="btn-group">
+        <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
+        <button class="btn btn--success" onclick="showScreen('screen-success-renew')">Confirm Renewal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: CHANGE TERM ===== -->
+  <div id="screen-change-term" class="screen">
+    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <div class="cert-card">
+      <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">Select a New Term</h3>
+      <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 16px;">Choose the term that best fits your goals. Rates shown for a $25,000 balance.</p>
+      <div class="term-grid" id="term-grid">
+        <div class="term-option" onclick="selectTerm(this, 6, '4.00', '500')">
+          <div class="term-option__months">6 mo</div>
+          <div class="term-option__rate">4.00% APY</div>
+          <div class="term-option__earnings">Earn ~$500</div>
+        </div>
+        <div class="term-option" onclick="selectTerm(this, 12, '4.25', '1,062')">
+          <div class="term-option__months">12 mo</div>
+          <div class="term-option__rate">4.25% APY</div>
+          <div class="term-option__earnings">Earn ~$1,062</div>
+        </div>
+        <div class="term-option" onclick="selectTerm(this, 18, '4.35', '1,631')">
+          <div class="term-option__months">18 mo</div>
+          <div class="term-option__rate">4.35% APY</div>
+          <div class="term-option__earnings">Earn ~$1,631</div>
+        </div>
+        <div class="term-option" onclick="selectTerm(this, 24, '4.40', '2,200')">
+          <div class="term-option__months">24 mo</div>
+          <div class="term-option__rate">4.40% APY</div>
+          <div class="term-option__earnings">Earn ~$2,200</div>
+        </div>
+        <div class="term-option" onclick="selectTerm(this, 36, '4.45', '3,337')">
+          <div class="term-option__months">36 mo</div>
+          <div class="term-option__rate">4.45% APY</div>
+          <div class="term-option__earnings">Earn ~$3,337</div>
+        </div>
+        <div class="term-option" onclick="selectTerm(this, 60, '4.50', '5,625')">
+          <div class="term-option__months">60 mo</div>
+          <div class="term-option__rate">4.50% APY</div>
+          <div class="term-option__earnings">Earn ~$5,625</div>
+        </div>
+      </div>
+      <div id="term-selection-summary" style="display:none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-200);">
+        <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px;">
+          <span style="color: var(--gray-500);">Selected Term</span>
+          <span id="selected-term-text" style="font-weight: 600;"></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px;">
+          <span style="color: var(--gray-500);">Rate</span>
+          <span id="selected-rate-text" style="font-weight: 600; color: var(--success);"></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 14px;">
+          <span style="color: var(--gray-500);">Projected Earnings</span>
+          <span id="selected-earnings-text" style="font-weight: 600;"></span>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
+        <button class="btn btn--success" id="btn-confirm-term" onclick="showScreen('screen-success-renew')" disabled>Confirm Selection</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: ADD FUNDS ===== -->
+  <div id="screen-add-funds" class="screen">
+    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <div class="cert-card">
+      <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">Add Funds & Renew</h3>
+      
+      <div class="form-group">
+        <label>Amount to Add</label>
+        <input type="text" class="form-input" id="add-funds-amount" value="$5,000" oninput="updateAddFunds()">
+        <div class="tier-nudge">
+          <span class="tier-nudge__icon">💎</span>
+          Add $5,000 to reach the $30,000+ Premium tier at <strong>&nbsp;4.50% APY</strong>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Transfer From</label>
+        <div class="account-list">
+          <div class="account-item account-item--selected">
+            <div class="account-item__info">
+              <div class="account-item__name">Primary Checking</div>
+              <div class="account-item__number">****5678</div>
+            </div>
+            <div class="account-item__balance">$12,450.32</div>
+          </div>
+          <div class="account-item">
+            <div class="account-item__info">
+              <div class="account-item__name">Savings</div>
+              <div class="account-item__number">****9012</div>
+            </div>
+            <div class="account-item__balance">$8,200.00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Renewal Term</label>
+        <select class="form-input form-select">
+          <option>12 months — 4.50% APY (Premium)</option>
+          <option>18 months — 4.60% APY (Premium)</option>
+          <option>24 months — 4.65% APY (Premium)</option>
+        </select>
+      </div>
+
+      <div style="background: var(--gray-50); border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 12px;">
+        <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px;">
+          <span style="color: var(--gray-500);">Current Balance</span>
+          <span style="font-weight: 600;">$25,000.00</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px;">
+          <span style="color: var(--gray-500);">Adding</span>
+          <span style="font-weight: 600; color: var(--success);">+ $5,000.00</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 15px; padding-top: 8px; border-top: 1px solid var(--gray-200);">
+          <span style="font-weight: 700;">New Balance</span>
+          <span style="font-weight: 700;">$30,000.00</span>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
+        <button class="btn btn--success" onclick="showScreen('screen-success-add')">Confirm & Renew</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: LADDER BUILDER ===== -->
+  <div id="screen-ladder" class="screen">
+    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <div class="cert-card">
+      <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px;">Build a Certificate Ladder</h3>
+      <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 20px;">Split your $25,000 across multiple terms for regular access to funds at competitive rates.</p>
+
+      <div class="ladder-timeline">
+        <div class="ladder-item">
+          <div class="ladder-item__dot"></div>
+          <div class="ladder-item__detail">
+            <div class="ladder-item__term">6-Month Certificate</div>
+            <div class="ladder-item__meta">Matures Mar 2027 · 4.00% APY</div>
+          </div>
+          <div class="ladder-item__amount">$5,000</div>
+        </div>
+        <div class="ladder-item">
+          <div class="ladder-item__dot" style="background: #3b82f6;"></div>
+          <div class="ladder-item__detail">
+            <div class="ladder-item__term">12-Month Certificate</div>
+            <div class="ladder-item__meta">Matures Sep 2027 · 4.25% APY</div>
+          </div>
+          <div class="ladder-item__amount">$5,000</div>
+        </div>
+        <div class="ladder-item">
+          <div class="ladder-item__dot" style="background: #6366f1;"></div>
+          <div class="ladder-item__detail">
+            <div class="ladder-item__term">24-Month Certificate</div>
+            <div class="ladder-item__meta">Matures Sep 2028 · 4.40% APY</div>
+          </div>
+          <div class="ladder-item__amount">$7,500</div>
+        </div>
+        <div class="ladder-item">
+          <div class="ladder-item__dot" style="background: #8b5cf6;"></div>
+          <div class="ladder-item__detail">
+            <div class="ladder-item__term">36-Month Certificate</div>
+            <div class="ladder-item__meta">Matures Sep 2029 · 4.45% APY</div>
+          </div>
+          <div class="ladder-item__amount">$7,500</div>
+        </div>
+      </div>
+
+      <div class="ladder-summary">
+        <div class="ladder-summary__item">
+          <div class="ladder-summary__label">Total Invested</div>
+          <div class="ladder-summary__value">$25,000</div>
+        </div>
+        <div class="ladder-summary__item">
+          <div class="ladder-summary__label">Avg Rate</div>
+          <div class="ladder-summary__value" style="color: var(--success);">4.30%</div>
+        </div>
+        <div class="ladder-summary__item">
+          <div class="ladder-summary__label">First Access</div>
+          <div class="ladder-summary__value">6 mo</div>
+        </div>
+        <div class="ladder-summary__item">
+          <div class="ladder-summary__label">Total Earnings</div>
+          <div class="ladder-summary__value">$2,881</div>
+        </div>
+      </div>
+
+      <p style="font-size: 12px; color: var(--gray-500); margin-top: 12px; text-align: center;">
+        ↕ Adjust amounts and terms to customize your ladder
+      </p>
+
+      <div class="btn-group">
+        <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
+        <button class="btn btn--success" onclick="showScreen('screen-success-ladder')">Create Ladder</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: REDIRECT / MOVE FUNDS ===== -->
+  <div id="screen-redirect" class="screen">
+    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <div class="cert-card">
+      <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px;">Move Funds</h3>
+      <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 20px;">Transfer your maturing certificate balance to another account.</p>
+
+      <div class="form-group">
+        <label>Amount to Move</label>
+        <input type="text" class="form-input" value="$25,000.00">
+        <div class="form-hint">Available: $25,000.00 (full balance). You can enter a partial amount.</div>
+      </div>
+
+      <div class="form-group">
+        <label>Transfer To</label>
+        <div class="account-list">
+          <div class="account-item account-item--selected" onclick="selectAccount(this)">
+            <div class="account-item__info">
+              <div class="account-item__name">Primary Checking</div>
+              <div class="account-item__number">****5678</div>
+            </div>
+            <div class="account-item__balance">$12,450.32</div>
+          </div>
+          <div class="account-item" onclick="selectAccount(this)">
+            <div class="account-item__info">
+              <div class="account-item__name">Savings</div>
+              <div class="account-item__number">****9012</div>
+            </div>
+            <div class="account-item__balance">$8,200.00</div>
+          </div>
+          <div class="account-item" onclick="selectAccount(this)">
+            <div class="account-item__info">
+              <div class="account-item__name">Money Market</div>
+              <div class="account-item__number">****3456</div>
+            </div>
+            <div class="account-item__balance">$42,100.00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
+        <button class="btn btn--success" onclick="showScreen('screen-success-redirect')">Confirm Transfer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: EXPLORE OTHER PRODUCTS ===== -->
+  <div id="screen-explore" class="screen">
+    <button class="nav-back" onclick="showScreen('screen-home')">← Back to options</button>
+    <div class="cert-card">
+      <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px;">Explore Other Products</h3>
+      <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 20px;">Looking for more flexibility? Consider these alternatives for your maturing funds.</p>
+
+      <div class="options-grid">
+        <div class="option-card" style="grid-column: span 2; text-align: left; display: flex; gap: 14px; align-items: flex-start;">
+          <div style="font-size: 32px;">🏦</div>
+          <div>
+            <div class="option-card__title" style="text-align: left; font-size: 15px;">Money Market Account</div>
+            <div class="option-card__desc" style="text-align: left; margin-bottom: 8px;">Earn 3.90% APY with unlimited access to your funds. No lock-up period.</div>
+            <button class="btn btn--sm btn--primary" onclick="showScreen('screen-success-redirect')">Move Funds Here</button>
+          </div>
+        </div>
+        <div class="option-card" style="grid-column: span 2; text-align: left; display: flex; gap: 14px; align-items: flex-start;">
+          <div style="font-size: 32px;">📈</div>
+          <div>
+            <div class="option-card__title" style="text-align: left; font-size: 15px;">High-Yield Savings</div>
+            <div class="option-card__desc" style="text-align: left; margin-bottom: 8px;">Earn 4.10% APY with 6 transactions/month. Great for emergency funds.</div>
+            <button class="btn btn--sm btn--primary" onclick="showScreen('screen-success-redirect')">Move Funds Here</button>
+          </div>
+        </div>
+        <div class="option-card" style="grid-column: span 2; text-align: left; display: flex; gap: 14px; align-items: flex-start;">
+          <div style="font-size: 32px;">🏡</div>
+          <div>
+            <div class="option-card__title" style="text-align: left; font-size: 15px;">IRA Certificate</div>
+            <div class="option-card__desc" style="text-align: left; margin-bottom: 8px;">Tax-advantaged growth at 4.55% APY. Ideal for retirement savings.</div>
+            <button class="btn btn--sm btn--secondary">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: SUCCESS — RENEWAL ===== -->
+  <div id="screen-success-renew" class="screen">
+    <div class="success-screen">
+      <div class="success-screen__icon">🎉</div>
+      <div class="success-screen__title">Certificate Renewed!</div>
+      <div class="success-screen__desc">Your certificate has been successfully renewed. You'll receive a confirmation email shortly.</div>
+      <div class="success-screen__details">
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Account</span>
+          <span class="success-screen__detail-value">****1234</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Balance</span>
+          <span class="success-screen__detail-value">$25,000.00</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">New Rate</span>
+          <span class="success-screen__detail-value" style="color: var(--success);">4.25% APY</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">New Term</span>
+          <span class="success-screen__detail-value">12 months</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">New Maturity</span>
+          <span class="success-screen__detail-value">September 15, 2027</span>
+        </div>
+      </div>
+      <button class="btn btn--primary" onclick="showScreen('screen-home')">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: SUCCESS — ADD FUNDS ===== -->
+  <div id="screen-success-add" class="screen">
+    <div class="success-screen">
+      <div class="success-screen__icon">💎</div>
+      <div class="success-screen__title">Premium Tier Unlocked!</div>
+      <div class="success-screen__desc">Your certificate has been renewed with additional funds at the premium rate.</div>
+      <div class="success-screen__details">
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Account</span>
+          <span class="success-screen__detail-value">****1234</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">New Balance</span>
+          <span class="success-screen__detail-value">$30,000.00</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Premium Rate</span>
+          <span class="success-screen__detail-value" style="color: var(--success);">4.50% APY</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Term</span>
+          <span class="success-screen__detail-value">12 months</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Projected Earnings</span>
+          <span class="success-screen__detail-value" style="color: var(--success);">$1,350.00</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Funds Added From</span>
+          <span class="success-screen__detail-value">Checking ****5678</span>
+        </div>
+      </div>
+      <button class="btn btn--primary" onclick="showScreen('screen-home')">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: SUCCESS — LADDER ===== -->
+  <div id="screen-success-ladder" class="screen">
+    <div class="success-screen">
+      <div class="success-screen__icon">📊</div>
+      <div class="success-screen__title">Ladder Created!</div>
+      <div class="success-screen__desc">Your certificate has been split into 4 new certificates. You'll have funds maturing every 6–12 months.</div>
+      <div class="success-screen__details">
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Certificates Created</span>
+          <span class="success-screen__detail-value">4</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Total Invested</span>
+          <span class="success-screen__detail-value">$25,000.00</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Weighted Avg Rate</span>
+          <span class="success-screen__detail-value" style="color: var(--success);">4.30% APY</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Next Maturity</span>
+          <span class="success-screen__detail-value">March 2027 (6 mo)</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Total Projected Earnings</span>
+          <span class="success-screen__detail-value" style="color: var(--success);">$2,881.00</span>
+        </div>
+      </div>
+      <button class="btn btn--primary" onclick="showScreen('screen-home')">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: SUCCESS — REDIRECT ===== -->
+  <div id="screen-success-redirect" class="screen">
+    <div class="success-screen">
+      <div class="success-screen__icon">✅</div>
+      <div class="success-screen__title">Transfer Complete!</div>
+      <div class="success-screen__desc">Your funds have been successfully moved. The transfer will be reflected in your account within 1 business day.</div>
+      <div class="success-screen__details">
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Amount Transferred</span>
+          <span class="success-screen__detail-value">$25,000.00</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">From</span>
+          <span class="success-screen__detail-value">Certificate ****1234</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">To</span>
+          <span class="success-screen__detail-value">Checking ****5678</span>
+        </div>
+      </div>
+      <button class="btn btn--primary" onclick="showScreen('screen-home')">Back to Dashboard</button>
+    </div>
+  </div>
+</main>
+
+<div class="demo-label">CertificateIQ Demo v0.1</div>
+
+<script>
+// ===== SCREEN NAVIGATION =====
+function showScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('screen--active'));
+  document.getElementById(screenId).classList.add('screen--active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== TERM SELECTOR =====
+function selectTerm(el, months, rate, earnings) {
+  document.querySelectorAll('.term-option').forEach(t => t.classList.remove('term-option--selected'));
+  el.classList.add('term-option--selected');
+  
+  document.getElementById('term-selection-summary').style.display = 'block';
+  document.getElementById('selected-term-text').textContent = months + ' months';
+  document.getElementById('selected-rate-text').textContent = rate + '% APY';
+  document.getElementById('selected-earnings-text').textContent = '~$' + earnings;
+  document.getElementById('btn-confirm-term').disabled = false;
+}
+
+// ===== ACCOUNT SELECTOR =====
+function selectAccount(el) {
+  const parent = el.closest('.account-list');
+  parent.querySelectorAll('.account-item').forEach(a => a.classList.remove('account-item--selected'));
+  el.classList.add('account-item--selected');
+}
+
+// ===== ADD FUNDS UPDATE =====
+function updateAddFunds() {
+  // Simplified demo — in production this would recalculate rates, tiers, etc.
+}
+
+// ===== KEYBOARD NAVIGATION =====
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    showScreen('screen-home');
+  }
+});
+</script>
+</body>
+</html>

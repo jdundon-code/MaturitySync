@@ -1,0 +1,25 @@
+{
+  "name": "certiq",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CertificateIQ — Certificate Maturity Engagement Platform",
+  "workspaces": [
+    "packages/shared",
+    "packages/api",
+    "packages/web",
+    "packages/admin"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "dev:api": "npm run dev --workspace=packages/api",
+    "dev:web": "npm run dev --workspace=packages/web",
+    "dev:admin": "npm run dev --workspace=packages/admin",
+    "lint": "eslint packages/*/src/**/*.ts",
+    "test": "npm run test --workspaces",
+    "db:migrate": "npm run migrate --workspace=packages/api",
+    "db:seed": "npm run seed --workspace=packages/api"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
