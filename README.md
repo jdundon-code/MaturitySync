@@ -1,6 +1,6 @@
 # CertificateIQ
 
-## What We Built and Why
+## What I Built and Why
 
 CertificateIQ is a proactive engagement layer that sits on top of a Digital Banking Platform (DBP) to transform certificate (CD) maturity from a passive back-office transaction into a strategic growth opportunity.
 
