@@ -418,3 +418,37 @@ Documented product decisions from feedback:
 4. Grace period = same actions available, no penalty
 
 Pushed to https://github.com/jdundon-code/MaturitySync
+
+
+---
+
+[Message 46 - User]
+When I see the current rate at 4.75 and the Premier tier rate at 4.5, it's confusing to me as a consumer why I wouldn't keep the current rate. The current rate is not a rollover rate, so don't I need to understand the benefit of the Premier tier over letting it roll over?
+
+---
+
+[Message 47 - Assistant]
+Critical UX clarity fix. The demo didn't distinguish between:
+- Current rate (4.75%) = what you earned on the existing term, NOW EXPIRING
+- Rollover rate (4.25%) = what you'll get if you do nothing (auto-renew)
+- Premium tier rate (4.50%) = what you get if you add funds
+
+The recommendation must be framed as "Premium vs Rollover" not "Premium vs Current."
+
+Changes:
+1. Added rate expiration warning to certificate card: "Your 4.75% rate expires at maturity. If no action is taken, your certificate will auto-renew at 4.25% APY."
+
+2. Reframed recommendation card entirely:
+   - Title: "Beat your rollover rate — add $5,000 for Premium"
+   - Description explicitly states: "Your current 4.75% expires. Without action, you'll auto-renew at 4.25%. Add funds to unlock 4.50% instead."
+   - Highlight shows: Auto-Roll Rate (4.25% in warning color) vs Premium Rate (4.50% in primary) vs Extra Earnings (+$288/yr in success green)
+   - Math breakdown shown: $30K × 4.50% = $1,350/yr vs $25K × 4.25% = $1,062/yr
+   - CTA: "Add Funds & Renew at 4.50%"
+
+3. Updated Renew Same option description: "12 mo @ 4.25% (rollover rate)"
+
+4. Updated Renew Same confirmation text: "Your original rate of 4.75% was locked when you opened this certificate. The rollover rate of 4.25% reflects today's market."
+
+Now the member clearly understands: their good rate is ending, doing nothing = 4.25%, adding funds = 4.50%. The recommendation is genuinely better than inaction.
+
+Pushed to GitHub.
