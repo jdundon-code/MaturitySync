@@ -25,6 +25,7 @@
     "tsx": "^4.7.0",
     "vitest": "^1.6.0",
     "@types/pg": "^8.11.0",
-    "drizzle-kit": "^0.28.0"
+    "drizzle-kit": "^0.28.0",
+    "pino-pretty": "^11.0.0"
   }
 }
