@@ -4,9 +4,34 @@
  *
  * Usage: npm run migrate --workspace=packages/api
  */
+import { readFileSync, existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import pg from 'pg';
+
+// Load .env file (check local, then root)
+function loadEnv() {
+  const paths = [
+    resolve(process.cwd(), '.env'),
+    resolve(process.cwd(), '../../.env'),
+  ];
+  for (const p of paths) {
+    if (existsSync(p)) {
+      const lines = readFileSync(p, 'utf-8').split('\n');
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('#')) continue;
+        const [key, ...rest] = trimmed.split('=');
+        if (key && !process.env[key]) {
+          process.env[key] = rest.join('=');
+        }
+      }
+      break;
+    }
+  }
+}
+loadEnv();
 
 const { Pool } = pg;
 
