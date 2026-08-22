@@ -6,10 +6,13 @@
  */
 import { drizzle } from 'drizzle-orm/node-postgres';
 import pg from 'pg';
-import { v4 as uuidv4 } from 'uuid';
+import crypto from 'node:crypto';
 import * as schema from './schema.js';
 
 const { Pool } = pg;
+
+// UUID generator using built-in Node.js crypto
+const uuidv4 = () => crypto.randomUUID();
 
 // ===== SAMPLE DATA =====
 
