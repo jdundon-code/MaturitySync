@@ -16,7 +16,9 @@
     "dev:admin": "npm run dev --workspace=packages/admin",
     "lint": "eslint packages/*/src/**/*.ts",
     "test": "npm run test --workspaces",
-    "db:migrate": "npm run migrate --workspace=packages/api",
+    "db:migrate": "npm run db:migrate --workspace=packages/api",
+    "db:push": "npm run db:push --workspace=packages/api",
+    "db:generate": "npm run db:generate --workspace=packages/api",
     "db:seed": "npm run seed --workspace=packages/api"
   },
   "engines": {

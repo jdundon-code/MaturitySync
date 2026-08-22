@@ -167,9 +167,11 @@ The default `.env` values should work out of the box if you followed the Postgre
 #### Step 7: Set up the database schema and seed data
 
 ```bash
-npm run db:migrate
+npm run db:push
 npm run db:seed
 ```
+
+> **Note:** `db:push` applies the Drizzle schema directly to your database (ideal for development). For production-style versioned migrations, use `npm run db:generate` followed by `npm run db:migrate`.
 
 #### Step 8: Start the development server
 
