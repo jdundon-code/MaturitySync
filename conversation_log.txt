@@ -627,3 +627,46 @@ Update log. Thank you!
 Conversation log updated. Project complete.
 
 Final repository: https://github.com/jdundon-code/MaturitySync
+
+
+---
+
+[Message 68 - User]
+To keep a human always available, can we add a tile under Other Options to schedule an appointment to talk to someone, integrated with a scheduling system like Outlook or Calendly (whatever the FI uses).
+
+---
+
+[Message 69 - Assistant]
+Added "Talk to Someone" as a 6th tile under Other Options with a full appointment scheduling flow:
+
+Option tile: "Talk to Someone" — "Schedule an appointment" (person + calendar SVG icon)
+
+Scheduling screen includes:
+- Topic selector: Help me decide, rate negotiation, laddering strategy, large deposit, other
+- Meeting type: Phone / Video / In Branch (selectable cards)
+- Time slot picker: next 5 business days with available times (grid of selectable slots)
+- Confirm button → success screen
+
+Confirmation screen shows:
+- When, type, topic, certificate reference
+- Reassurance: "Your certificate will not auto-renew until you've had a chance to speak with us"
+- Calendar invite + reminder notification promised
+- "Return to Accounts" exit button
+
+Integration note: In production, time slots connect to the FI's scheduling system (Outlook/Exchange, Calendly, Coconut, TimeTrade, etc.). Certificate context is passed so the team member has full background.
+
+JavaScript additions: selectMeetingType() and selectTimeSlot() functions for interactive selection.
+
+Fills out the 3x2 grid nicely (6 tiles total: Renew, Change Term, Build a Ladder, Move Funds, Other Products, Talk to Someone).
+
+Pushed to GitHub.
+
+---
+
+[Message 70 - User]
+Update the log
+
+---
+
+[Message 71 - Assistant]
+Conversation log updated.
