@@ -129,11 +129,12 @@ npm --version    # should show 10.x.x
 sudo apt install -y postgresql postgresql-client
 ```
 
-Start the service and create the database:
+Start the service, create a user with a password, and create the database:
 
 ```bash
 sudo service postgresql start
 sudo -u postgres createuser --superuser $USER
+sudo -u postgres psql -c "ALTER USER $USER WITH PASSWORD 'maturitysync';"
 createdb maturitysync
 ```
 
@@ -162,7 +163,19 @@ npm install
 cp .env.example .env
 ```
 
-The default `.env` values should work out of the box if you followed the PostgreSQL setup above. If you used a different database name or password, update `DATABASE_URL` in `.env`.
+Update the `DATABASE_URL` in `.env` with your Linux username and the password you set in Step 4:
+
+```bash
+sed -i "s|postgresql://postgres:postgres@localhost:5432/maturitysync|postgresql://$USER:maturitysync@localhost:5432/maturitysync|" .env
+```
+
+Verify it's correct:
+
+```bash
+grep DATABASE_URL .env
+```
+
+You should see: `DATABASE_URL=postgresql://yourusername:maturitysync@localhost:5432/maturitysync`
 
 #### Step 7: Set up the database schema and seed data
 
@@ -201,6 +214,9 @@ The standalone HTML demo works directly in your Chrome browser without any serve
 |-------|-----|
 | `nvm: command not found` | Close and reopen Terminal after installing nvm |
 | `psql: could not connect` | Run `sudo service postgresql start` |
+| `password authentication failed` | Check `DATABASE_URL` in `.env` matches your user/password from Step 4. Verify with: `psql maturitysync -c "SELECT current_user;"` |
+| `relation does not exist` (seed fails) | Schema not pushed yet. Run `npm run db:push` before `npm run db:seed` |
+| `unable to determine transport target for "pino-pretty"` | Run `npm install -D pino-pretty --workspace=packages/api` |
 | `npm install` fails on native modules | Run `sudo apt install -y python3 g++ make` |
 | Port 3001 not accessible from Chrome | Chromebook automatically forwards Linux ports to Chrome — just navigate to `http://localhost:3001` |
 | Low disk space | Go to Settings → Developers → Linux → Disk size, and increase allocation |

@@ -705,3 +705,47 @@ Added comprehensive "Full Dev Environment on Chromebook" section to README with 
 Plus troubleshooting table for common issues (nvm not found, postgres not starting, native modules, port forwarding, disk space).
 
 Pushed to GitHub.
+
+
+---
+
+[Messages 76–89 - User/Assistant]
+Chromebook dev environment setup troubleshooting session:
+
+Issues encountered and resolved:
+1. npm run db:migrate failed → Fixed: use db:push instead (drizzle-kit push applies schema directly)
+2. drizzle-kit "unknown command push" → Fixed: upgraded drizzle-kit from ^0.21.0 to ^0.28.0
+3. "please install drizzle-orm" → Fixed: npm install drizzle-orm --workspace=packages/api (workspace hoisting issue)
+4. password authentication failed for user "postgres" → Fixed: .env had wrong DATABASE_URL; updated to postgresql://jennifercdundon:maturitysync@localhost:5432/maturitysync
+5. SASL client password must be a string → Fixed: set password for PostgreSQL user with ALTER USER
+6. relation "engagement_events" does not exist → Fixed: needed to run db:push before seed
+7. .env not loading automatically → Fixed: added loadEnv() function to seed.ts and migrate.ts
+8. uuid package missing → Fixed: replaced with built-in crypto.randomUUID()
+9. pino-pretty not found → Fixed: npm install -D pino-pretty --workspace=packages/api
+
+Final working flow:
+```
+cd ~/MaturitySync
+npm install
+npm run db:push
+npm run db:seed
+npm run dev:api
+curl http://localhost:3001/api/health  ✓
+```
+
+---
+
+[Message 90 - User]
+Update README necessary? Any other documentation updates needed? Update the log.
+
+---
+
+[Message 91 - Assistant]
+Updated README Chromebook instructions based on real troubleshooting:
+- Step 4: Now includes setting a password for the PostgreSQL user
+- Step 6: Now includes sed command to automatically update DATABASE_URL with correct user/password
+- Troubleshooting table: Added 3 new entries (password auth, relation not exists, pino-pretty)
+
+Also committed: pino-pretty added to package.json, drizzle-kit version bump, .env auto-loading in scripts, uuid→crypto.randomUUID().
+
+All pushed to GitHub.
