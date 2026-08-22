@@ -551,3 +551,42 @@ All good
 
 [Message 57 - Assistant]
 Project complete. Final repository: https://github.com/jdundon-code/MaturitySync
+
+
+---
+
+[Message 58 - User]
+Minor tweak. Need to use consistent language. I see auto-renew and auto-roll. Let's use "renew" consistently. Also, review for any other language inconsistencies, and let's decide on the language if they exist.
+
+---
+
+[Message 59 - Assistant]
+Language consistency audit completed. Found and fixed:
+
+1. "rollover" → "renewal" (4 instances):
+   - "Beat your rollover rate" → "Beat your auto-renewal rate"
+   - "Auto-Roll Rate" → "Auto-Renewal Rate"
+   - "(rollover rate)" → "(renewal rate)"
+   - "The rollover rate of 4.25%" → "The renewal rate of 4.25%"
+
+2. "Transfer out" → "To another account" (less redundant with "Move Funds" title)
+
+Language decisions confirmed (no change needed):
+- "certificate" / "Share Certificate" = consistent CU terminology
+- "maturity date" vs "Effective Date" = correct contextual usage (different concepts)
+- "Move Funds" = plain-language card title (member-friendly), "Transfer" = formal action verb
+- "auto-renew" / "auto-renewal" = standard throughout (no "roll")
+
+Pushed to GitHub.
+
+---
+
+[Message 60 - User]
+Update conversation log. Good to go.
+
+---
+
+[Message 61 - Assistant]
+Conversation log updated. Project complete.
+
+Final repository: https://github.com/jdundon-code/MaturitySync
