@@ -85,6 +85,124 @@ npm run db:seed
 npm run dev
 ```
 
+### Full Dev Environment on Chromebook
+
+Chromebooks support a full Linux development environment via ChromeOS's built-in Linux container (Crostini). Here's how to set up everything from scratch:
+
+#### Step 1: Enable Linux on ChromeOS
+
+1. Click the clock (bottom-right) → **Settings**
+2. Go to **About ChromeOS** → **Developers**
+3. Next to "Linux development environment," click **Set up**
+4. Follow the prompts (allocate at least **10 GB** of disk space; 20 GB recommended)
+5. A Terminal app will appear in your launcher when complete
+
+#### Step 2: Update the system and install essentials
+
+Open the **Terminal** app and run:
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y git curl build-essential
+```
+
+#### Step 3: Install Node.js via nvm
+
+nvm lets you manage multiple Node.js versions without sudo:
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+```
+
+Close and reopen Terminal, then:
+
+```bash
+nvm install 22
+nvm use 22
+node --version   # should show v22.x.x
+npm --version    # should show 10.x.x
+```
+
+#### Step 4: Install PostgreSQL
+
+```bash
+sudo apt install -y postgresql postgresql-client
+```
+
+Start the service and create the database:
+
+```bash
+sudo service postgresql start
+sudo -u postgres createuser --superuser $USER
+createdb maturitysync
+```
+
+Verify it works:
+
+```bash
+psql maturitysync -c "SELECT version();"
+```
+
+> **Tip:** PostgreSQL won't auto-start on Chromebook reboot. Run `sudo service postgresql start` each time you open a new Linux session, or add it to your `~/.bashrc`:
+> ```bash
+> echo "sudo service postgresql start" >> ~/.bashrc
+> ```
+
+#### Step 5: Clone and install MaturitySync
+
+```bash
+git clone https://github.com/jdundon-code/MaturitySync.git
+cd MaturitySync
+npm install
+```
+
+#### Step 6: Configure environment
+
+```bash
+cp .env.example .env
+```
+
+The default `.env` values should work out of the box if you followed the PostgreSQL setup above. If you used a different database name or password, update `DATABASE_URL` in `.env`.
+
+#### Step 7: Set up the database schema and seed data
+
+```bash
+npm run db:migrate
+npm run db:seed
+```
+
+#### Step 8: Start the development server
+
+```bash
+npm run dev:api
+```
+
+The API will be available at `http://localhost:3001`. Test it:
+
+```bash
+curl http://localhost:3001/api/health
+```
+
+You should see: `{"status":"ok","service":"maturitysync-api","version":"0.1.0",...}`
+
+#### Step 9 (Optional): Open the demo in Chrome
+
+The standalone HTML demo works directly in your Chrome browser without any server:
+
+1. Open the Chrome file manager
+2. Navigate to **Linux files** → `MaturitySync/demo/`
+3. Double-click `decision-hub.html` — it opens directly in Chrome
+
+#### Troubleshooting
+
+| Issue | Fix |
+|-------|-----|
+| `nvm: command not found` | Close and reopen Terminal after installing nvm |
+| `psql: could not connect` | Run `sudo service postgresql start` |
+| `npm install` fails on native modules | Run `sudo apt install -y python3 g++ make` |
+| Port 3001 not accessible from Chrome | Chromebook automatically forwards Linux ports to Chrome — just navigate to `http://localhost:3001` |
+| Low disk space | Go to Settings → Developers → Linux → Disk size, and increase allocation |
+
 ---
 
 ## Product Decisions & Reasoning
