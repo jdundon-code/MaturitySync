@@ -670,3 +670,38 @@ Update the log
 
 [Message 71 - Assistant]
 Conversation log updated.
+
+
+---
+
+[Message 72 - User]
+Can you provide chromebook setup instructions?
+
+---
+
+[Message 73 - Assistant]
+Clarified: full dev environment needed (not just demo).
+
+---
+
+[Message 74 - User]
+Full dev environment
+
+---
+
+[Message 75 - Assistant]
+Added comprehensive "Full Dev Environment on Chromebook" section to README with 9 steps:
+
+1. Enable Linux on ChromeOS (Settings → About ChromeOS → Developers → Linux development environment)
+2. Update system + install git, curl, build-essential
+3. Install Node.js 22 via nvm
+4. Install PostgreSQL + create maturitysync database
+5. Clone repo + npm install
+6. Configure .env from .env.example
+7. Run database migrations and seed
+8. Start dev server (npm run dev:api) + verify with curl
+9. Optional: open demo HTML directly in Chrome file manager
+
+Plus troubleshooting table for common issues (nvm not found, postgres not starting, native modules, port forwarding, disk space).
+
+Pushed to GitHub.
