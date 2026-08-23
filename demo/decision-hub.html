@@ -655,13 +655,35 @@ input, select { font-family: inherit; }
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
           <label style="font-size: 13px; font-weight: 600; color: var(--gray-700); margin: 0;">Add funds to this certificate? <span style="font-weight: 400; color: var(--tertiaryText);">(optional)</span></label>
         </div>
-        <div style="display: flex; gap: 10px; align-items: center;">
-          <input type="text" class="form-input money-input" id="term-add-amount" placeholder="$0" value="$0" style="max-width: 140px; margin: 0;" oninput="updateTermAddFunds()">
-          <select class="form-input form-select" id="term-fund-source" style="flex: 1; margin: 0;" onchange="showExternalFlowFor('term-external-setup', this.value === 'external')">
-            <option value="checking">Checking ****5678</option>
-            <option value="savings">Savings ****9012</option>
-            <option value="external">External account (ACH)</option>
-          </select>
+        <div class="form-group" style="margin-bottom: 8px;">
+          <label style="font-size: 12px; font-weight: 600; color: var(--gray-700);">Amount</label>
+          <input type="text" class="form-input money-input" id="term-add-amount" placeholder="$0" value="$0" style="max-width: 180px;" oninput="updateTermAddFunds()">
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label style="font-size: 12px; font-weight: 600; color: var(--gray-700);">Transfer From</label>
+          <div class="account-list" id="term-account-list">
+            <div class="account-item account-item--selected" onclick="selectTermSource(this, 'checking')">
+              <div class="account-item__info">
+                <div class="account-item__name">Primary Checking</div>
+                <div class="account-item__number">****5678</div>
+              </div>
+              <div class="account-item__balance">$12,450.32</div>
+            </div>
+            <div class="account-item" onclick="selectTermSource(this, 'savings')">
+              <div class="account-item__info">
+                <div class="account-item__name">Savings</div>
+                <div class="account-item__number">****9012</div>
+              </div>
+              <div class="account-item__balance">$8,200.00</div>
+            </div>
+            <div class="account-item" onclick="selectTermSource(this, 'external')">
+              <div class="account-item__info">
+                <div class="account-item__name" style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> External Account (ACH)</div>
+                <div class="account-item__number">Pull from another institution</div>
+              </div>
+              <div class="account-item__balance" style="font-size: 12px; color: var(--ui-primary);">Link account →</div>
+            </div>
+          </div>
         </div>
         <!-- External account setup for Change Term -->
         <div id="term-external-setup" style="display: none; margin-top: 10px; background: var(--infoStatusBG); border: 1px solid var(--ui-primary-160); border-radius: var(--radius-sm); padding: 14px;">
@@ -910,13 +932,35 @@ input, select { font-family: inherit; }
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
           <label style="font-size: 13px; font-weight: 600; color: var(--gray-700); margin: 0;">Increase total invested? <span style="font-weight: 400; color: var(--tertiaryText);">(optional)</span></label>
         </div>
-        <div style="display: flex; gap: 10px; align-items: center;">
-          <input type="text" class="form-input money-input" id="ladder-add-amount" placeholder="$0" value="$0" style="max-width: 140px; margin: 0;" oninput="updateLadderAddFunds()">
-          <select class="form-input form-select" id="ladder-fund-source" style="flex: 1; margin: 0;" onchange="showExternalFlowFor('ladder-external-setup', this.value === 'external')">
-            <option value="checking">Checking ****5678</option>
-            <option value="savings">Savings ****9012</option>
-            <option value="external">External account (ACH)</option>
-          </select>
+        <div class="form-group" style="margin-bottom: 8px;">
+          <label style="font-size: 12px; font-weight: 600; color: var(--gray-700);">Amount</label>
+          <input type="text" class="form-input money-input" id="ladder-add-amount" placeholder="$0" value="$0" style="max-width: 180px;" oninput="updateLadderAddFunds()">
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label style="font-size: 12px; font-weight: 600; color: var(--gray-700);">Transfer From</label>
+          <div class="account-list" id="ladder-account-list">
+            <div class="account-item account-item--selected" onclick="selectLadderSource(this, 'checking')">
+              <div class="account-item__info">
+                <div class="account-item__name">Primary Checking</div>
+                <div class="account-item__number">****5678</div>
+              </div>
+              <div class="account-item__balance">$12,450.32</div>
+            </div>
+            <div class="account-item" onclick="selectLadderSource(this, 'savings')">
+              <div class="account-item__info">
+                <div class="account-item__name">Savings</div>
+                <div class="account-item__number">****9012</div>
+              </div>
+              <div class="account-item__balance">$8,200.00</div>
+            </div>
+            <div class="account-item" onclick="selectLadderSource(this, 'external')">
+              <div class="account-item__info">
+                <div class="account-item__name" style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> External Account (ACH)</div>
+                <div class="account-item__number">Pull from another institution</div>
+              </div>
+              <div class="account-item__balance" style="font-size: 12px; color: var(--ui-primary);">Link account →</div>
+            </div>
+          </div>
         </div>
         <!-- External account setup for Ladder -->
         <div id="ladder-external-setup" style="display: none; margin-top: 10px; background: var(--infoStatusBG); border: 1px solid var(--ui-primary-160); border-radius: var(--radius-sm); padding: 14px;">
@@ -1416,21 +1460,27 @@ function showExternalFlowFor(elementId, show) {
   if (el) el.style.display = show ? 'block' : 'none';
 }
 
-// Attach change listeners after DOM is ready (backup for onchange attributes)
-document.addEventListener('DOMContentLoaded', function() {
-  const termSource = document.getElementById('term-fund-source');
-  if (termSource) {
-    termSource.addEventListener('change', function() {
-      showExternalFlowFor('term-external-setup', this.value === 'external');
-    });
-  }
-  const ladderSource = document.getElementById('ladder-fund-source');
-  if (ladderSource) {
-    ladderSource.addEventListener('change', function() {
-      showExternalFlowFor('ladder-external-setup', this.value === 'external');
-    });
-  }
-});
+// ===== TERM SOURCE ACCOUNT SELECTOR =====
+var termSelectedSource = 'checking';
+function selectTermSource(el, source) {
+  const parent = el.closest('.account-list');
+  parent.querySelectorAll('.account-item').forEach(a => a.classList.remove('account-item--selected'));
+  el.classList.add('account-item--selected');
+  termSelectedSource = source;
+  showExternalFlowFor('term-external-setup', source === 'external');
+  updateTermAddFunds();
+}
+
+// ===== LADDER SOURCE ACCOUNT SELECTOR =====
+var ladderSelectedSource = 'checking';
+function selectLadderSource(el, source) {
+  const parent = el.closest('.account-list');
+  parent.querySelectorAll('.account-item').forEach(a => a.classList.remove('account-item--selected'));
+  el.classList.add('account-item--selected');
+  ladderSelectedSource = source;
+  showExternalFlowFor('ladder-external-setup', source === 'external');
+  updateLadderAddFunds();
+}
 
 // ===== ROUTING NUMBER VALIDATION =====
 function validateRoutingNumber(input) {
@@ -1542,8 +1592,8 @@ function confirmTermChange() {
   const fundsValue = document.getElementById('term-success-funds');
   if (addAmount > 0) {
     fundsRow.style.display = 'flex';
-    const source = document.getElementById('term-fund-source');
-    const sourceLabel = source ? source.options[source.selectedIndex].text : 'Internal account';
+    const sourceLabels = { checking: 'Primary Checking ****5678', savings: 'Savings ****9012', external: 'External Account (ACH)' };
+    const sourceLabel = sourceLabels[termSelectedSource] || 'Internal account';
     fundsValue.textContent = '$' + addAmount.toLocaleString() + ' from ' + sourceLabel;
   } else {
     fundsRow.style.display = 'none';
@@ -1678,9 +1728,8 @@ const INTERNAL_BALANCES = { checking: 12450, savings: 8200 };
 
 function updateTermAddFunds() {
   const input = document.getElementById('term-add-amount');
-  const sourceSelect = document.getElementById('term-fund-source');
   const addAmount = parseMoney(input.value);
-  const source = sourceSelect ? sourceSelect.value : 'checking';
+  const source = termSelectedSource || 'checking';
 
   // Balance cap for internal accounts
   if (source !== 'external') {
@@ -1735,9 +1784,8 @@ function updateTermAddFunds() {
 // ===== LADDER: ADD FUNDS RECALC =====
 function updateLadderAddFunds() {
   const input = document.getElementById('ladder-add-amount');
-  const sourceSelect = document.getElementById('ladder-fund-source');
   const addAmount = parseMoney(input.value);
-  const source = sourceSelect ? sourceSelect.value : 'checking';
+  const source = ladderSelectedSource || 'checking';
 
   // Balance cap for internal accounts
   if (source !== 'external') {
