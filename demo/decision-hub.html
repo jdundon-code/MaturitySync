@@ -657,11 +657,24 @@ input, select { font-family: inherit; }
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
           <input type="text" class="form-input money-input" id="term-add-amount" placeholder="$0" value="$0" style="max-width: 140px; margin: 0;" oninput="updateTermAddFunds()">
-          <select class="form-input form-select" style="flex: 1; margin: 0;">
-            <option>Checking ****5678</option>
-            <option>Savings ****9012</option>
-            <option>External account (ACH)</option>
+          <select class="form-input form-select" id="term-fund-source" style="flex: 1; margin: 0;" onchange="showExternalFlowFor('term-external-setup', this.value === 'external')">
+            <option value="checking">Checking ****5678</option>
+            <option value="savings">Savings ****9012</option>
+            <option value="external">External account (ACH)</option>
           </select>
+        </div>
+        <!-- External account setup for Change Term -->
+        <div id="term-external-setup" style="display: none; margin-top: 10px; background: var(--infoStatusBG); border: 1px solid var(--ui-primary-160); border-radius: var(--radius-sm); padding: 14px;">
+          <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span style="font-size: 12px; color: var(--infoStatusLabel);"><strong>Link an external account</strong> to transfer funds from another institution.</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+            <input type="text" class="form-input" placeholder="Routing #" style="font-size: 13px; padding: 8px 10px;">
+            <input type="text" class="form-input" placeholder="Account #" style="font-size: 13px; padding: 8px 10px;">
+          </div>
+          <p style="font-size: 11px; color: var(--tertiaryText); margin-bottom: 8px;">Two micro-deposits will verify this account (1–2 business days). ACH pull initiates on your maturity date.</p>
+          <button class="btn btn--sm btn--primary" style="width: auto;" onclick="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;gap:8px;\'><svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'var(--ui-succ)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M8 12l3 3 5-5\'/></svg><span style=\'font-size:12px;color:var(--successStatusLabel);font-weight:600;\'>External account linked — verification pending</span></div>'">Link Account</button>
         </div>
         <div id="term-add-funds-feedback" style="margin-top: 8px;">
           <div class="tier-nudge">
@@ -847,11 +860,24 @@ input, select { font-family: inherit; }
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
           <input type="text" class="form-input money-input" id="ladder-add-amount" placeholder="$0" value="$0" style="max-width: 140px; margin: 0;" oninput="updateLadderAddFunds()">
-          <select class="form-input form-select" style="flex: 1; margin: 0;">
-            <option>Checking ****5678</option>
-            <option>Savings ****9012</option>
-            <option>External account (ACH)</option>
+          <select class="form-input form-select" id="ladder-fund-source" style="flex: 1; margin: 0;" onchange="showExternalFlowFor('ladder-external-setup', this.value === 'external')">
+            <option value="checking">Checking ****5678</option>
+            <option value="savings">Savings ****9012</option>
+            <option value="external">External account (ACH)</option>
           </select>
+        </div>
+        <!-- External account setup for Ladder -->
+        <div id="ladder-external-setup" style="display: none; margin-top: 10px; background: var(--infoStatusBG); border: 1px solid var(--ui-primary-160); border-radius: var(--radius-sm); padding: 14px;">
+          <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span style="font-size: 12px; color: var(--infoStatusLabel);"><strong>Link an external account</strong> to transfer funds from another institution.</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+            <input type="text" class="form-input" placeholder="Routing #" style="font-size: 13px; padding: 8px 10px;">
+            <input type="text" class="form-input" placeholder="Account #" style="font-size: 13px; padding: 8px 10px;">
+          </div>
+          <p style="font-size: 11px; color: var(--tertiaryText); margin-bottom: 8px;">Two micro-deposits will verify this account (1–2 business days). ACH pull initiates on your maturity date.</p>
+          <button class="btn btn--sm btn--primary" style="width: auto;" onclick="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;gap:8px;\'><svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'var(--ui-succ)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M8 12l3 3 5-5\'/></svg><span style=\'font-size:12px;color:var(--successStatusLabel);font-weight:600;\'>External account linked — verification pending</span></div>'">Link Account</button>
         </div>
         <div id="ladder-add-funds-feedback" style="margin-top: 8px; display: none;">
           <div style="background: var(--infoStatusBG); border: 1px solid var(--ui-primary-160); border-radius: var(--radius-sm); padding: 10px 14px; display: flex; align-items: center; gap: 8px;">
@@ -1309,6 +1335,11 @@ function selectMeetingType(el) {
 // ===== EXTERNAL ACCOUNT FLOW =====
 function showExternalFlow(show) {
   const el = document.getElementById('external-account-setup');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+
+function showExternalFlowFor(elementId, show) {
+  const el = document.getElementById(elementId);
   if (el) el.style.display = show ? 'block' : 'none';
 }
 
