@@ -695,8 +695,52 @@ input, select { font-family: inherit; }
 
       <div class="btn-group">
         <button class="btn btn--secondary" onclick="showScreen('screen-home')">Cancel</button>
-        <button class="btn btn--success" id="btn-confirm-term" onclick="showScreen('screen-success-renew')" disabled>Schedule Term Change</button>
+        <button class="btn btn--success" id="btn-confirm-term" onclick="confirmTermChange()" disabled>Schedule Term Change</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: SUCCESS — TERM CHANGE ===== -->
+  <div id="screen-success-term" class="screen">
+    <div class="success-screen">
+      <div class="success-screen__icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--ui-succ-200)" stroke="var(--ui-succ)" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="var(--ui-succ)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="success-screen__title">Term Change Scheduled</div>
+      <div class="success-screen__desc">Your certificate will renew at the new term on your maturity date. You can modify or cancel this decision anytime before then.</div>
+      <div class="success-screen__details">
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Account</span>
+          <span class="success-screen__detail-value">****1234</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Balance</span>
+          <span class="success-screen__detail-value" id="term-success-balance">$25,000.00</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Effective Date</span>
+          <span class="success-screen__detail-value" style="font-weight: 700;" data-date="maturity">September 15, 2026</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">New Term</span>
+          <span class="success-screen__detail-value" id="term-success-term">—</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">New Rate</span>
+          <span class="success-screen__detail-value" style="color: var(--success);" id="term-success-rate">—</span>
+        </div>
+        <div class="success-screen__detail">
+          <span class="success-screen__detail-label">Projected Earnings</span>
+          <span class="success-screen__detail-value" style="color: var(--success);" id="term-success-earnings">—</span>
+        </div>
+        <div class="success-screen__detail" id="term-success-funds-row" style="display: none;">
+          <span class="success-screen__detail-label">Funds Added</span>
+          <span class="success-screen__detail-value" id="term-success-funds">—</span>
+        </div>
+      </div>
+      <div style="background: var(--ui-grey-06); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; text-align: left;">
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5; margin-bottom: 6px;"><strong>Disclosure:</strong> The Annual Percentage Yield (APY) is accurate as of today's date and is subject to change at the institution's discretion prior to the effective date. Early withdrawal penalties apply if funds are withdrawn before the new maturity date. Your certificate will earn interest at the disclosed rate beginning on the effective date. Federally insured by NCUA.</p>
+        <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.5;">You may modify or cancel this scheduled action at any time before <span data-date="maturity">September 15, 2026</span> without penalty.</p>
+      </div>
+      <button class="btn btn--primary" onclick="showScreen('screen-exit')">Return to Accounts</button>
     </div>
   </div>
 
@@ -804,7 +848,7 @@ input, select { font-family: inherit; }
     <button class="nav-back" onclick="showScreen('screen-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to options</button>
     <div class="cert-card">
       <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px;">Build a Certificate Ladder</h3>
-      <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 20px;">Split your $25,000 across multiple terms for regular access to funds at competitive rates.</p>
+      <p id="ladder-intro-text" style="font-size: 14px; color: var(--gray-600); margin-bottom: 20px;">Split your $25,000 across multiple terms for regular access to funds at competitive rates.</p>
 
       <div class="ladder-timeline">
         <div class="ladder-item">
@@ -1347,6 +1391,11 @@ function selectAccount(el) {
   const parent = el.closest('.account-list');
   parent.querySelectorAll('.account-item').forEach(a => a.classList.remove('account-item--selected'));
   el.classList.add('account-item--selected');
+
+  // Re-validate if this is within the add-funds screen
+  if (el.closest('#screen-add-funds')) {
+    updateAddFunds();
+  }
 }
 
 // ===== MEETING TYPE SELECTOR =====
@@ -1433,27 +1482,105 @@ function selectTimeSlot(el) {
   el.classList.add('term-option--selected');
 }
 
+// ===== CONFIRM TERM CHANGE =====
+function confirmTermChange() {
+  const selectedOpt = document.querySelector('#term-grid .term-option--selected');
+  if (!selectedOpt) return;
+
+  const termText = selectedOpt.querySelector('.term-option__months').textContent;
+  const rateText = selectedOpt.querySelector('.term-option__rate').textContent;
+  const earningsText = selectedOpt.querySelector('.term-option__earnings').textContent.replace('Earn ~', '');
+
+  const addInput = document.getElementById('term-add-amount');
+  const addAmount = addInput ? parseMoney(addInput.value) : 0;
+  const totalBalance = BASE_BALANCE + addAmount;
+
+  // Populate success screen
+  document.getElementById('term-success-balance').textContent = '$' + totalBalance.toLocaleString() + '.00';
+  document.getElementById('term-success-term').textContent = termText.replace('mo', ' months');
+  document.getElementById('term-success-rate').textContent = rateText;
+  document.getElementById('term-success-earnings').textContent = earningsText;
+
+  // Show funds added row if applicable
+  const fundsRow = document.getElementById('term-success-funds-row');
+  const fundsValue = document.getElementById('term-success-funds');
+  if (addAmount > 0) {
+    fundsRow.style.display = 'flex';
+    const source = document.getElementById('term-fund-source');
+    const sourceLabel = source ? source.options[source.selectedIndex].text : 'Internal account';
+    fundsValue.textContent = '$' + addAmount.toLocaleString() + ' from ' + sourceLabel;
+  } else {
+    fundsRow.style.display = 'none';
+  }
+
+  showScreen('screen-success-term');
+}
+
 // ===== ADD FUNDS UPDATE =====
 function updateAddFunds() {
   const input = document.getElementById('add-funds-amount');
   const addAmount = parseMoney(input.value);
   const newBalance = BASE_BALANCE + addAmount;
+  const warningEl = document.getElementById('add-funds-balance-warning');
 
-  // Check balance limit for internal accounts
+  // Update account item availability based on entered amount
+  const accountItems = document.querySelectorAll('#screen-add-funds .account-item');
+  const accountBalances = [12450, 8200, null]; // null = external (unlimited)
+  
+  accountItems.forEach((item, i) => {
+    const bal = accountBalances[i];
+    if (bal !== null && addAmount > bal) {
+      // Disable this account — insufficient funds
+      item.style.opacity = '0.5';
+      item.style.pointerEvents = 'none';
+      item.style.cursor = 'not-allowed';
+      // Add "Insufficient" label if not already there
+      if (!item.querySelector('.insufficient-label')) {
+        const label = document.createElement('div');
+        label.className = 'insufficient-label';
+        label.style.cssText = 'font-size: 11px; color: var(--ui-err); font-weight: 600; margin-top: 2px;';
+        label.textContent = 'Insufficient balance';
+        item.querySelector('.account-item__info').appendChild(label);
+      }
+      // If this item was selected, deselect it and show warning
+      if (item.classList.contains('account-item--selected')) {
+        item.classList.remove('account-item--selected');
+        if (warningEl) {
+          warningEl.style.display = 'block';
+          warningEl.textContent = 'The selected account has insufficient funds ($' + bal.toLocaleString() + ' available). Please choose another source or reduce the amount.';
+        }
+      }
+    } else {
+      // Enable this account
+      item.style.opacity = '1';
+      item.style.pointerEvents = 'auto';
+      item.style.cursor = 'pointer';
+      const insuffLabel = item.querySelector('.insufficient-label');
+      if (insuffLabel) insuffLabel.remove();
+    }
+  });
+
+  // Check if the currently selected account has sufficient funds
   const selectedAccount = document.querySelector('#screen-add-funds .account-item--selected');
-  const isExternal = selectedAccount && selectedAccount.querySelector('.account-item__number')?.textContent.includes('another institution');
-  if (!isExternal && selectedAccount) {
-    const balText = selectedAccount.querySelector('.account-item__balance')?.textContent || '';
-    const availBal = parseMoney(balText);
-    const warningEl = document.getElementById('add-funds-balance-warning');
-    if (addAmount > availBal) {
-      if (warningEl) { warningEl.style.display = 'block'; warningEl.textContent = 'Exceeds available balance of $' + availBal.toLocaleString(); }
-      input.value = formatMoney(availBal);
-      updateAddFunds();
-      return;
+  if (selectedAccount) {
+    const isExternal = selectedAccount.querySelector('.account-item__number')?.textContent.includes('another institution');
+    if (!isExternal) {
+      const balText = selectedAccount.querySelector('.account-item__balance')?.textContent || '';
+      const availBal = parseMoney(balText);
+      if (addAmount > availBal) {
+        if (warningEl) {
+          warningEl.style.display = 'block';
+          warningEl.textContent = 'Amount exceeds available balance of $' + availBal.toLocaleString() + '. Please reduce the amount or select a different source.';
+        }
+      } else {
+        if (warningEl) warningEl.style.display = 'none';
+      }
     } else {
       if (warningEl) warningEl.style.display = 'none';
     }
+  } else {
+    // No account selected — clear warning only if all were deselected due to insufficient funds
+    // Keep the warning visible so user knows to pick a valid source
   }
 
   // Update "Adding" line
@@ -1594,6 +1721,10 @@ function updateLadderAddFunds() {
     feedbackEl.style.display = 'block';
     textEl.innerHTML = 'Adding <strong>$' + addAmount.toLocaleString() + '</strong> increases your ladder to <strong>$' + newTotal.toLocaleString() + ' total</strong> — distributed proportionally across all splits';
 
+    // Update intro text to reflect new total
+    const introEl = document.getElementById('ladder-intro-text');
+    if (introEl) introEl.textContent = 'Split your $' + newTotal.toLocaleString() + ' across multiple terms for regular access to funds at competitive rates.';
+
     // Update ladder item amounts proportionally
     const splits = [0.2, 0.2, 0.3, 0.3]; // proportion per split
     const amounts = document.querySelectorAll('.ladder-item__amount');
@@ -1615,6 +1746,8 @@ function updateLadderAddFunds() {
   } else {
     feedbackEl.style.display = 'none';
     // Reset to defaults
+    const introEl = document.getElementById('ladder-intro-text');
+    if (introEl) introEl.textContent = 'Split your $25,000 across multiple terms for regular access to funds at competitive rates.';
     const defaultAmounts = ['$5,000', '$5,000', '$7,500', '$7,500'];
     const amounts = document.querySelectorAll('.ladder-item__amount');
     defaultAmounts.forEach((amt, i) => { if (amounts[i]) amounts[i].textContent = amt; });

@@ -790,3 +790,77 @@ README changes:
 - Framed as: "transforms certificate maturity from a defensive retention play into an offensive growth strategy"
 
 Pushed to GitHub.
+
+
+
+---
+
+[Message 96 - User]
+(New session) I need help working on a project that you've stopped responding to and I'm not sure why. I enter feedback here and nothing is happening.
+
+---
+
+[Message 97 - Assistant]
+Acknowledged the issue. Explained this is a new session (no memory of prior sessions). Asked for project details or GitHub repo URL.
+
+---
+
+[Message 98 - User]
+MaturitySync
+
+---
+
+[Message 99 - Assistant]
+Asked for more context — repo URL, GitHub username/org, what was being worked on.
+
+---
+
+[Message 100 - User]
+Clone the github repository jdundon-code/MaturitySync
+
+---
+
+[Message 101 - Assistant]
+Cloned https://github.com/jdundon-code/MaturitySync.git. Read the full conversation log (95 prior messages) and README to get fully caught up on the project state. Confirmed all completed work and signaled readiness to continue.
+
+---
+
+[Message 102 - User]
+Reported 3 bugs in the demo (decision-hub.html):
+1. The Schedule Term Change button isn't doing anything.
+2. Under Build a Certificate Ladder, the amount doesn't update to reflect the additional deposit (confusing since ladder breakdown is correct).
+3. For Schedule & Renew, was able to enter $10,000 and select Savings which only has $8,200. Savings should be disabled if amount exceeds balance, or user should be prompted to update.
+
+---
+
+[Message 103 - Assistant]
+Fixed all 3 bugs in demo/decision-hub.html:
+
+**Bug 1 — Schedule Term Change button not working:**
+- Root cause: Button had `onclick="showScreen('screen-success-renew')"` which navigated to the generic renewal success screen. The button also started `disabled` and only enabled after `selectTerm()` was called.
+- Fix: Created a dedicated `screen-success-term` HTML screen with dynamic fields (balance, term, rate, earnings, funds added). Changed the button to call `confirmTermChange()` — a new JS function that populates the success screen with the selected term details before navigating to it.
+
+**Bug 2 — Ladder Builder total amount not updating:**
+- Root cause: `updateLadderAddFunds()` updated the ladder item amounts and summary totals but did NOT update the introductory paragraph that says "Split your $25,000 across multiple terms."
+- Fix: Added `id="ladder-intro-text"` to the paragraph. Updated `updateLadderAddFunds()` to dynamically change the text to reflect the new total (e.g., "Split your $35,000 across multiple terms"). Also resets to $25,000 when add-funds is cleared.
+
+**Bug 3 — Add Funds source validation (Savings exceeding balance):**
+- Root cause: The old `updateAddFunds()` function silently capped the input to the available balance, which was confusing UX.
+- Fix: Completely rewrote validation approach:
+  - When user enters an amount, accounts with insufficient balance are visually disabled (opacity 0.5, pointer-events: none) and tagged with "Insufficient balance" label.
+  - If the currently selected account becomes insufficient after an amount change, it's deselected and a clear warning message is shown: "The selected account has insufficient funds ($X available). Please choose another source or reduce the amount."
+  - External Account (ACH) is never disabled (unlimited funding source).
+  - `selectAccount()` now re-triggers validation when user switches sources.
+
+All changes in: demo/decision-hub.html
+
+---
+
+[Message 104 - User]
+Also needs conversation_log.txt updated with this session's work.
+
+---
+
+[Message 105 - Assistant]
+Updated conversation_log.txt with Messages 96–105 documenting the new session, bug reports, and all fixes applied. Pushed to GitHub.
+
