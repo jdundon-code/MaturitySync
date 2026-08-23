@@ -237,6 +237,12 @@ The standalone HTML demo works directly in your Chrome browser without any serve
 
 If given more time to expand beyond the Phase 1 MVP, the following additions would be prioritized:
 
+- **External Funding & Add Funds to All Actions:** The current MVP only supports adding funds from internal linked accounts to a renewal. Future iterations would add:
+  - **External fund transfers** (ACH pull from accounts at other institutions) to fund renewals, term changes, and ladders — turning maturity into a deposit *acquisition* event, not just retention.
+  - **Add funds to Change Term** — let members increase their balance when selecting a different term.
+  - **Add funds to Ladder Builder** — let members contribute additional funds (internal or external) when constructing a ladder, increasing total invested across the splits.
+  - This transforms every maturity action into a potential deposit growth moment.
+
 - **Live DBP Integrations:** Replace the Mock DBP Adapter with live API connectors.
 
 - **Rate Change Notifications:** If the FI changes the rate *after* a member has scheduled their maturity decision, notify the member (via push and/or email) that the rate underlying their scheduled action has changed. The notification returns them to the Decision Hub with updated figures, giving them the opportunity to revise, confirm, or cancel their selection before the maturity date. This is a critical trust feature — members must never feel surprised on their effective date by a rate they didn't agree to.
