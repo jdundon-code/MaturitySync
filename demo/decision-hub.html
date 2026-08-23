@@ -674,7 +674,7 @@ input, select { font-family: inherit; }
             <span class="routing-feedback" style="display: none; font-size: 11px;"></span>
           </div>
           <div style="margin-bottom: 8px;">
-            <input type="text" class="form-input" placeholder="Account number" style="font-size: 13px; padding: 8px 10px;">
+            <input type="text" class="form-input acct-number-input" placeholder="Account number" style="font-size: 13px; padding: 8px 10px;" required oninput="validateExternalForm(this)">
           </div>
           <div style="margin-bottom: 8px;">
             <select class="form-input form-select" style="font-size: 13px; padding: 8px 10px;">
@@ -798,7 +798,7 @@ input, select { font-family: inherit; }
           </div>
           <div class="form-group" style="margin-bottom: 10px;">
             <label style="font-size: 12px;">Account number</label>
-            <input type="text" class="form-input" placeholder="Account number" style="font-size: 14px;">
+            <input type="text" class="form-input acct-number-input" placeholder="Account number" style="font-size: 14px;" required oninput="validateExternalForm(this)">
           </div>
           <div class="form-group" style="margin-bottom: 10px;">
             <label style="font-size: 12px;">Account type</label>
@@ -929,7 +929,7 @@ input, select { font-family: inherit; }
             <span class="routing-feedback" style="display: none; font-size: 11px;"></span>
           </div>
           <div style="margin-bottom: 8px;">
-            <input type="text" class="form-input" placeholder="Account number" style="font-size: 13px; padding: 8px 10px;">
+            <input type="text" class="form-input acct-number-input" placeholder="Account number" style="font-size: 13px; padding: 8px 10px;" required oninput="validateExternalForm(this)">
           </div>
           <div style="margin-bottom: 8px;">
             <select class="form-input form-select" style="font-size: 13px; padding: 8px 10px;">
@@ -1436,11 +1436,10 @@ document.addEventListener('DOMContentLoaded', function() {
 function validateRoutingNumber(input) {
   const num = input.value.replace(/\D/g, '');
   const feedback = input.parentElement.querySelector('.routing-feedback');
-  const linkBtn = input.closest('[id$="-setup"], [id="external-account-setup"]')?.querySelector('button');
 
   if (num.length === 0) {
     if (feedback) feedback.style.display = 'none';
-    if (linkBtn) linkBtn.disabled = true;
+    updateLinkButtonState(input);
     return;
   }
 
@@ -1450,7 +1449,7 @@ function validateRoutingNumber(input) {
       feedback.textContent = 'Routing number must be 9 digits (' + num.length + '/9)';
       feedback.style.color = 'var(--ui-warn)';
     }
-    if (linkBtn) linkBtn.disabled = true;
+    updateLinkButtonState(input);
     return;
   }
 
@@ -1464,15 +1463,52 @@ function validateRoutingNumber(input) {
       feedback.textContent = '✓ Valid routing number';
       feedback.style.color = 'var(--ui-succ)';
     }
-    if (linkBtn) linkBtn.disabled = false;
   } else {
     if (feedback) {
       feedback.style.display = 'block';
       feedback.textContent = 'Invalid routing number — please check and re-enter';
       feedback.style.color = 'var(--ui-err)';
     }
-    if (linkBtn) linkBtn.disabled = true;
   }
+  updateLinkButtonState(input);
+}
+
+// ===== EXTERNAL ACCOUNT FORM VALIDATION =====
+function validateExternalForm(input) {
+  updateLinkButtonState(input);
+}
+
+function updateLinkButtonState(triggerInput) {
+  const container = triggerInput.closest('[id$="-setup"], [id="external-account-setup"]');
+  if (!container) return;
+
+  const linkBtn = container.querySelector('button');
+  if (!linkBtn) return;
+
+  // Check routing number: must be 9 digits and valid checksum
+  const routingInput = container.querySelector('input[maxlength="9"]');
+  const routingNum = routingInput ? routingInput.value.replace(/\D/g, '') : '';
+  let routingValid = false;
+  if (routingNum.length === 9) {
+    const d = routingNum.split('').map(Number);
+    const checksum = (3*(d[0]+d[3]+d[6]) + 7*(d[1]+d[4]+d[7]) + (d[2]+d[5]+d[8])) % 10;
+    routingValid = (checksum === 0);
+  }
+
+  // Check account number: must not be empty
+  const acctInput = container.querySelector('.acct-number-input');
+  const acctNum = acctInput ? acctInput.value.trim() : '';
+  const acctValid = acctNum.length > 0;
+
+  // Show required hint on account number if user has started filling the form
+  if (acctInput && routingValid && !acctValid) {
+    acctInput.style.borderColor = 'var(--ui-warn)';
+  } else if (acctInput) {
+    acctInput.style.borderColor = '';
+  }
+
+  // Enable button only when both are valid
+  linkBtn.disabled = !(routingValid && acctValid);
 }
 
 // ===== TIME SLOT SELECTOR =====
