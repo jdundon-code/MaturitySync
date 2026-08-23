@@ -656,16 +656,18 @@ input, select { font-family: inherit; }
           <label style="font-size: 13px; font-weight: 600; color: var(--gray-700); margin: 0;">Add funds to this certificate? <span style="font-weight: 400; color: var(--tertiaryText);">(optional)</span></label>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-          <input type="text" class="form-input" placeholder="$0" style="max-width: 140px; margin: 0;">
+          <input type="text" class="form-input money-input" id="term-add-amount" placeholder="$0" value="$0" style="max-width: 140px; margin: 0;" oninput="updateTermAddFunds()">
           <select class="form-input form-select" style="flex: 1; margin: 0;">
             <option>Checking ****5678</option>
             <option>Savings ****9012</option>
             <option>External account (ACH)</option>
           </select>
         </div>
-        <div class="tier-nudge" style="margin-top: 8px;">
-          <span class="tier-nudge__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
-          Add $5,000+ to reach the Premium rate tier for your selected term
+        <div id="term-add-funds-feedback" style="margin-top: 8px;">
+          <div class="tier-nudge">
+            <span class="tier-nudge__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+            Add $5,000+ to reach the Premium rate tier for your selected term
+          </div>
         </div>
       </div>
 
@@ -684,7 +686,7 @@ input, select { font-family: inherit; }
       
       <div class="form-group">
         <label>Amount to Add</label>
-        <input type="text" class="form-input" id="add-funds-amount" value="$5,000" oninput="updateAddFunds()">
+        <input type="text" class="form-input money-input" id="add-funds-amount" value="$5,000" oninput="updateAddFunds()">
         <div class="tier-nudge">
           <span class="tier-nudge__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
           Add $5,000 to reach the $30,000+ Premium tier at <strong>&nbsp;4.50% APY</strong>
@@ -844,16 +846,18 @@ input, select { font-family: inherit; }
           <label style="font-size: 13px; font-weight: 600; color: var(--gray-700); margin: 0;">Increase total invested? <span style="font-weight: 400; color: var(--tertiaryText);">(optional)</span></label>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-          <input type="text" class="form-input" placeholder="$0" value="$10,000" style="max-width: 140px; margin: 0;">
+          <input type="text" class="form-input money-input" id="ladder-add-amount" placeholder="$0" value="$0" style="max-width: 140px; margin: 0;" oninput="updateLadderAddFunds()">
           <select class="form-input form-select" style="flex: 1; margin: 0;">
             <option>Checking ****5678</option>
             <option>Savings ****9012</option>
             <option>External account (ACH)</option>
           </select>
         </div>
-        <div style="background: var(--infoStatusBG); border: 1px solid var(--ui-primary-160); border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 8px; display: flex; align-items: center; gap: 8px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-          <span style="font-size: 12px; color: var(--infoStatusLabel);">Adding $10,000 increases your ladder to <strong>$35,000 total</strong> — distributed proportionally across all splits</span>
+        <div id="ladder-add-funds-feedback" style="margin-top: 8px; display: none;">
+          <div style="background: var(--infoStatusBG); border: 1px solid var(--ui-primary-160); border-radius: var(--radius-sm); padding: 10px 14px; display: flex; align-items: center; gap: 8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span id="ladder-feedback-text" style="font-size: 12px; color: var(--infoStatusLabel);"></span>
+          </div>
         </div>
       </div>
 
@@ -1318,6 +1322,120 @@ function selectTimeSlot(el) {
 // ===== ADD FUNDS UPDATE =====
 function updateAddFunds() {
   // Simplified demo — in production this would recalculate rates, tiers, etc.
+}
+
+// ===== CURRENCY FORMATTING =====
+function parseMoney(str) {
+  return parseInt((str || '0').replace(/[^0-9]/g, ''), 10) || 0;
+}
+
+function formatMoney(cents) {
+  return '$' + cents.toLocaleString('en-US');
+}
+
+// Auto-format all money inputs on blur
+document.addEventListener('focusout', function(e) {
+  if (e.target && e.target.classList && e.target.classList.contains('money-input')) {
+    const val = parseMoney(e.target.value);
+    e.target.value = formatMoney(val);
+  }
+});
+
+// ===== RATE TIERS (mirrors mock DBP data) =====
+const RATE_TIERS = [
+  { term: 6, min: 1000, max: 9999, rate: 3.75 },
+  { term: 6, min: 10000, max: 24999, rate: 4.00 },
+  { term: 6, min: 25000, max: null, rate: 4.15 },
+  { term: 12, min: 1000, max: 9999, rate: 4.00 },
+  { term: 12, min: 10000, max: 24999, rate: 4.25 },
+  { term: 12, min: 25000, max: 49999, rate: 4.35 },
+  { term: 12, min: 50000, max: null, rate: 4.50 },
+  { term: 18, min: 1000, max: 24999, rate: 4.20 },
+  { term: 18, min: 25000, max: null, rate: 4.35 },
+  { term: 24, min: 1000, max: 24999, rate: 4.25 },
+  { term: 24, min: 25000, max: null, rate: 4.40 },
+  { term: 36, min: 1000, max: 24999, rate: 4.30 },
+  { term: 36, min: 25000, max: null, rate: 4.45 },
+  { term: 60, min: 1000, max: 24999, rate: 4.35 },
+  { term: 60, min: 25000, max: null, rate: 4.50 },
+];
+
+function getRateForBalance(term, balance) {
+  const tiers = RATE_TIERS.filter(t => t.term === term && t.min <= balance && (!t.max || t.max >= balance));
+  return tiers.length ? tiers[tiers.length - 1].rate : 0;
+}
+
+const BASE_BALANCE = 25000;
+
+// ===== CHANGE TERM: ADD FUNDS RECALC =====
+function updateTermAddFunds() {
+  const input = document.getElementById('term-add-amount');
+  const addAmount = parseMoney(input.value);
+  const newBalance = BASE_BALANCE + addAmount;
+  const feedbackEl = document.getElementById('term-add-funds-feedback');
+
+  // Update term grid to reflect new balance rates
+  const termOptions = document.querySelectorAll('#term-grid .term-option');
+  const terms = [6, 12, 18, 24, 36, 60];
+  termOptions.forEach((opt, i) => {
+    const term = terms[i];
+    const rate = getRateForBalance(term, newBalance);
+    const earnings = Math.round(newBalance * (rate / 100) * (term / 12));
+    opt.querySelector('.term-option__rate').textContent = rate.toFixed(2) + '% APY';
+    opt.querySelector('.term-option__earnings').textContent = 'Earn ~$' + earnings.toLocaleString();
+  });
+
+  // Update feedback
+  if (addAmount > 0 && addAmount >= 5000) {
+    feedbackEl.innerHTML = '<div style="background: var(--successStatusBG); border: 1px solid var(--successStatusBorder); border-radius: var(--radius-sm); padding: 10px 14px; display: flex; align-items: center; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ui-succ)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg><span style="font-size: 12px; color: var(--successStatusLabel);"><strong>Premium tier unlocked!</strong> New balance: $' + newBalance.toLocaleString() + ' — rates above reflect your upgraded tier.</span></div>';
+  } else if (addAmount > 0) {
+    const needed = 5000 - addAmount;
+    feedbackEl.innerHTML = '<div class="tier-nudge"><span class="tier-nudge__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Add $' + needed.toLocaleString() + ' more to reach the Premium rate tier</div>';
+  } else {
+    feedbackEl.innerHTML = '<div class="tier-nudge"><span class="tier-nudge__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Add $5,000+ to reach the Premium rate tier for your selected term</div>';
+  }
+}
+
+// ===== LADDER: ADD FUNDS RECALC =====
+function updateLadderAddFunds() {
+  const input = document.getElementById('ladder-add-amount');
+  const addAmount = parseMoney(input.value);
+  const newTotal = BASE_BALANCE + addAmount;
+  const feedbackEl = document.getElementById('ladder-add-funds-feedback');
+  const textEl = document.getElementById('ladder-feedback-text');
+
+  if (addAmount > 0) {
+    feedbackEl.style.display = 'block';
+    textEl.innerHTML = 'Adding <strong>$' + addAmount.toLocaleString() + '</strong> increases your ladder to <strong>$' + newTotal.toLocaleString() + ' total</strong> — distributed proportionally across all splits';
+
+    // Update ladder item amounts proportionally
+    const splits = [0.2, 0.2, 0.3, 0.3]; // proportion per split
+    const amounts = document.querySelectorAll('.ladder-item__amount');
+    splits.forEach((pct, i) => {
+      if (amounts[i]) amounts[i].textContent = '$' + Math.round(newTotal * pct).toLocaleString();
+    });
+
+    // Update summary
+    const summaryValues = document.querySelectorAll('.ladder-summary__value');
+    if (summaryValues[0]) summaryValues[0].textContent = '$' + newTotal.toLocaleString();
+    // Recalc total earnings (weighted)
+    const rates = [4.00, 4.25, 4.40, 4.45];
+    const terms = [6, 12, 24, 36];
+    let totalEarnings = 0;
+    splits.forEach((pct, i) => {
+      totalEarnings += (newTotal * pct) * (rates[i] / 100) * (terms[i] / 12);
+    });
+    if (summaryValues[3]) summaryValues[3].textContent = '$' + Math.round(totalEarnings).toLocaleString();
+  } else {
+    feedbackEl.style.display = 'none';
+    // Reset to defaults
+    const defaultAmounts = ['$5,000', '$5,000', '$7,500', '$7,500'];
+    const amounts = document.querySelectorAll('.ladder-item__amount');
+    defaultAmounts.forEach((amt, i) => { if (amounts[i]) amounts[i].textContent = amt; });
+    const summaryValues = document.querySelectorAll('.ladder-summary__value');
+    if (summaryValues[0]) summaryValues[0].textContent = '$25,000';
+    if (summaryValues[3]) summaryValues[3].textContent = '$2,881';
+  }
 }
 
 // ===== KEYBOARD NAVIGATION =====
