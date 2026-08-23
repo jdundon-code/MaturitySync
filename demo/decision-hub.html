@@ -602,7 +602,7 @@ input, select { font-family: inherit; }
     <button class="nav-back" onclick="showScreen('screen-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to options</button>
     <div class="cert-card">
       <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">Select a New Term</h3>
-      <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 16px;">Choose the term that best fits your goals. Rates shown for a $25,000 balance.</p>
+      <p id="term-balance-label" style="font-size: 14px; color: var(--gray-600); margin-bottom: 16px;">Choose the term that best fits your goals. Rates shown for a $25,000 balance.</p>
       <div class="term-grid" id="term-grid">
         <div class="term-option" onclick="selectTerm(this, 6, '4.00', '500')">
           <div class="term-option__months">6 mo</div>
@@ -709,6 +709,7 @@ input, select { font-family: inherit; }
       <div class="form-group">
         <label>Amount to Add</label>
         <input type="text" class="form-input money-input" id="add-funds-amount" value="$5,000" oninput="updateAddFunds()">
+        <span id="add-funds-balance-warning" style="display: none; font-size: 11px; color: var(--ui-err); margin-top: 4px;"></span>
         <div class="tier-nudge">
           <span class="tier-nudge__icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
           Add $5,000 to reach the $30,000+ Premium tier at <strong>&nbsp;4.50% APY</strong>
@@ -859,9 +860,6 @@ input, select { font-family: inherit; }
         </div>
       </div>
 
-      <p style="font-size: 12px; color: var(--gray-500); margin-top: 12px; text-align: center;">
-        In the full product, you can adjust individual split amounts and terms.
-      </p>
 
       <!-- Add Funds to Ladder (optional) -->
       <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-200);">
@@ -1330,10 +1328,17 @@ function selectTerm(el, months, rate, earnings) {
   document.querySelectorAll('.term-option').forEach(t => t.classList.remove('term-option--selected'));
   el.classList.add('term-option--selected');
   
+  // Recalculate based on current add-funds amount
+  const addInput = document.getElementById('term-add-amount');
+  const addAmount = addInput ? parseMoney(addInput.value) : 0;
+  const newBalance = BASE_BALANCE + addAmount;
+  const actualRate = getRateForBalance(months, newBalance) || parseFloat(rate);
+  const actualEarnings = Math.round(newBalance * (actualRate / 100) * (months / 12));
+
   document.getElementById('term-selection-summary').style.display = 'block';
   document.getElementById('selected-term-text').textContent = months + ' months';
-  document.getElementById('selected-rate-text').textContent = rate + '% APY';
-  document.getElementById('selected-earnings-text').textContent = '~$' + earnings;
+  document.getElementById('selected-rate-text').textContent = actualRate.toFixed(2) + '% APY';
+  document.getElementById('selected-earnings-text').textContent = '~$' + actualEarnings.toLocaleString();
   document.getElementById('btn-confirm-term').disabled = false;
 }
 
@@ -1429,13 +1434,30 @@ function updateAddFunds() {
   const addAmount = parseMoney(input.value);
   const newBalance = BASE_BALANCE + addAmount;
 
+  // Check balance limit for internal accounts
+  const selectedAccount = document.querySelector('#screen-add-funds .account-item--selected');
+  const isExternal = selectedAccount && selectedAccount.querySelector('.account-item__number')?.textContent.includes('another institution');
+  if (!isExternal && selectedAccount) {
+    const balText = selectedAccount.querySelector('.account-item__balance')?.textContent || '';
+    const availBal = parseMoney(balText);
+    const warningEl = document.getElementById('add-funds-balance-warning');
+    if (addAmount > availBal) {
+      if (warningEl) { warningEl.style.display = 'block'; warningEl.textContent = 'Exceeds available balance of $' + availBal.toLocaleString(); }
+      input.value = formatMoney(availBal);
+      updateAddFunds();
+      return;
+    } else {
+      if (warningEl) warningEl.style.display = 'none';
+    }
+  }
+
   // Update "Adding" line
   const addingEl = document.getElementById('add-funds-adding');
   if (addingEl) addingEl.textContent = '+ $' + addAmount.toLocaleString() + '.00';
 
   // Update "New Balance" line
   const newBalEl = document.getElementById('add-funds-new-balance');
-  if (newBalEl) newBalEl.textContent = '$' + newBalance.toLocaleString() + '.00';
+  if (newBalEl) newBalEl.textContent = '$' + (BASE_BALANCE + addAmount).toLocaleString() + '.00';
 }
 
 // ===== CURRENCY FORMATTING =====
@@ -1482,11 +1504,30 @@ function getRateForBalance(term, balance) {
 const BASE_BALANCE = 25000;
 
 // ===== CHANGE TERM: ADD FUNDS RECALC =====
+const INTERNAL_BALANCES = { checking: 12450, savings: 8200 };
+
 function updateTermAddFunds() {
   const input = document.getElementById('term-add-amount');
+  const sourceSelect = document.getElementById('term-fund-source');
   const addAmount = parseMoney(input.value);
+  const source = sourceSelect ? sourceSelect.value : 'checking';
+
+  // Balance cap for internal accounts
+  if (source !== 'external') {
+    const maxBal = INTERNAL_BALANCES[source] || 99999999;
+    if (addAmount > maxBal) {
+      input.value = formatMoney(maxBal);
+      updateTermAddFunds();
+      return;
+    }
+  }
+
   const newBalance = BASE_BALANCE + addAmount;
   const feedbackEl = document.getElementById('term-add-funds-feedback');
+
+  // Update balance label
+  const balLabel = document.getElementById('term-balance-label');
+  if (balLabel) balLabel.textContent = 'Choose the term that best fits your goals. Rates shown for a $' + newBalance.toLocaleString() + ' balance.';
 
   // Update term grid to reflect new balance rates
   const termOptions = document.querySelectorAll('#term-grid .term-option');
@@ -1524,7 +1565,20 @@ function updateTermAddFunds() {
 // ===== LADDER: ADD FUNDS RECALC =====
 function updateLadderAddFunds() {
   const input = document.getElementById('ladder-add-amount');
+  const sourceSelect = document.getElementById('ladder-fund-source');
   const addAmount = parseMoney(input.value);
+  const source = sourceSelect ? sourceSelect.value : 'checking';
+
+  // Balance cap for internal accounts
+  if (source !== 'external') {
+    const maxBal = INTERNAL_BALANCES[source] || 99999999;
+    if (addAmount > maxBal) {
+      input.value = formatMoney(maxBal);
+      updateLadderAddFunds();
+      return;
+    }
+  }
+
   const newTotal = BASE_BALANCE + addAmount;
   const feedbackEl = document.getElementById('ladder-add-funds-feedback');
   const textEl = document.getElementById('ladder-feedback-text');
