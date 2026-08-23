@@ -1602,25 +1602,23 @@ function confirmTermChange() {
   showScreen('screen-success-term');
 }
 
-// ===== ADD FUNDS UPDATE =====
-function updateAddFunds() {
-  const input = document.getElementById('add-funds-amount');
-  const addAmount = parseMoney(input.value);
-  const newBalance = BASE_BALANCE + addAmount;
-  const warningEl = document.getElementById('add-funds-balance-warning');
+// ===== SHARED: ACCOUNT AVAILABILITY VALIDATION =====
+// Disables account items with insufficient balance, adds "Insufficient balance" label,
+// deselects if currently selected becomes ineligible. Consistent behavior across all screens.
+function validateAccountAvailability(containerSelector, amount, onDeselect) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
 
-  // Update account item availability based on entered amount
-  const accountItems = document.querySelectorAll('#screen-add-funds .account-item');
+  const accountItems = container.querySelectorAll('.account-item');
   const accountBalances = [12450, 8200, null]; // null = external (unlimited)
-  
+
   accountItems.forEach((item, i) => {
     const bal = accountBalances[i];
-    if (bal !== null && addAmount > bal) {
+    if (bal !== null && amount > bal) {
       // Disable this account — insufficient funds
       item.style.opacity = '0.5';
       item.style.pointerEvents = 'none';
       item.style.cursor = 'not-allowed';
-      // Add "Insufficient" label if not already there
       if (!item.querySelector('.insufficient-label')) {
         const label = document.createElement('div');
         label.className = 'insufficient-label';
@@ -1628,13 +1626,10 @@ function updateAddFunds() {
         label.textContent = 'Insufficient balance';
         item.querySelector('.account-item__info').appendChild(label);
       }
-      // If this item was selected, deselect it and show warning
+      // If this item was selected, deselect it
       if (item.classList.contains('account-item--selected')) {
         item.classList.remove('account-item--selected');
-        if (warningEl) {
-          warningEl.style.display = 'block';
-          warningEl.textContent = 'The selected account has insufficient funds ($' + bal.toLocaleString() + ' available). Please choose another source or reduce the amount.';
-        }
+        if (onDeselect) onDeselect(true);
       }
     } else {
       // Enable this account
@@ -1643,6 +1638,22 @@ function updateAddFunds() {
       item.style.cursor = 'pointer';
       const insuffLabel = item.querySelector('.insufficient-label');
       if (insuffLabel) insuffLabel.remove();
+    }
+  });
+}
+
+// ===== ADD FUNDS UPDATE =====
+function updateAddFunds() {
+  const input = document.getElementById('add-funds-amount');
+  const addAmount = parseMoney(input.value);
+  const newBalance = BASE_BALANCE + addAmount;
+  const warningEl = document.getElementById('add-funds-balance-warning');
+
+  // Update account item availability based on entered amount
+  validateAccountAvailability('#screen-add-funds .account-list', addAmount, function(deselected) {
+    if (deselected && warningEl) {
+      warningEl.style.display = 'block';
+      warningEl.textContent = 'The selected account has insufficient funds. Please choose another source or reduce the amount.';
     }
   });
 
@@ -1664,9 +1675,6 @@ function updateAddFunds() {
     } else {
       if (warningEl) warningEl.style.display = 'none';
     }
-  } else {
-    // No account selected — clear warning only if all were deselected due to insufficient funds
-    // Keep the warning visible so user knows to pick a valid source
   }
 
   // Update "Adding" line
@@ -1729,17 +1737,11 @@ const INTERNAL_BALANCES = { checking: 12450, savings: 8200 };
 function updateTermAddFunds() {
   const input = document.getElementById('term-add-amount');
   const addAmount = parseMoney(input.value);
-  const source = termSelectedSource || 'checking';
 
-  // Balance cap for internal accounts
-  if (source !== 'external') {
-    const maxBal = INTERNAL_BALANCES[source] || 99999999;
-    if (addAmount > maxBal) {
-      input.value = formatMoney(maxBal);
-      updateTermAddFunds();
-      return;
-    }
-  }
+  // Disable/enable account items based on entered amount (consistent with Add Funds screen)
+  validateAccountAvailability('#term-account-list', addAmount, function(deselected) {
+    if (deselected) termSelectedSource = '';
+  });
 
   const newBalance = BASE_BALANCE + addAmount;
   const feedbackEl = document.getElementById('term-add-funds-feedback');
@@ -1785,17 +1787,11 @@ function updateTermAddFunds() {
 function updateLadderAddFunds() {
   const input = document.getElementById('ladder-add-amount');
   const addAmount = parseMoney(input.value);
-  const source = ladderSelectedSource || 'checking';
 
-  // Balance cap for internal accounts
-  if (source !== 'external') {
-    const maxBal = INTERNAL_BALANCES[source] || 99999999;
-    if (addAmount > maxBal) {
-      input.value = formatMoney(maxBal);
-      updateLadderAddFunds();
-      return;
-    }
-  }
+  // Disable/enable account items based on entered amount (consistent with Add Funds screen)
+  validateAccountAvailability('#ladder-account-list', addAmount, function(deselected) {
+    if (deselected) ladderSelectedSource = '';
+  });
 
   const newTotal = BASE_BALANCE + addAmount;
   const feedbackEl = document.getElementById('ladder-add-funds-feedback');
