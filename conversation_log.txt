@@ -749,3 +749,21 @@ Updated README Chromebook instructions based on real troubleshooting:
 Also committed: pino-pretty added to package.json, drizzle-kit version bump, .env auto-loading in scripts, uuid→crypto.randomUUID().
 
 All pushed to GitHub.
+
+
+---
+
+[Message 92 - User]
+One additional thought. At the top of the list for future considerations, let's add the ability to add external funds to renew, and also add the ability to add funds (internal and external) to renew, change the term, and build a ladder.
+
+---
+
+[Message 93 - Assistant]
+Added as the #1 future consideration in the README, above Live DBP Integrations:
+
+- External fund transfers (ACH pull from other institutions) to fund renewals, term changes, and ladders
+- Add funds to Change Term (not just Renew)
+- Add funds to Ladder Builder (increase total invested across splits)
+- Framed as: "transforms every maturity action into a potential deposit growth moment" and turns maturity into a deposit acquisition event, not just retention
+
+Pushed to GitHub.
