@@ -669,9 +669,18 @@ input, select { font-family: inherit; }
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
             <span style="font-size: 12px; color: var(--infoStatusLabel);"><strong>Link an external account</strong> to transfer funds from another institution.</span>
           </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-            <input type="text" class="form-input" placeholder="Routing #" style="font-size: 13px; padding: 8px 10px;">
-            <input type="text" class="form-input" placeholder="Account #" style="font-size: 13px; padding: 8px 10px;">
+          <div style="margin-bottom: 8px;">
+            <input type="text" class="form-input" placeholder="Routing number (9 digits)" style="font-size: 13px; padding: 8px 10px; margin-bottom: 4px;" maxlength="9" oninput="validateRoutingNumber(this)">
+            <span class="routing-feedback" style="display: none; font-size: 11px;"></span>
+          </div>
+          <div style="margin-bottom: 8px;">
+            <input type="text" class="form-input" placeholder="Account number" style="font-size: 13px; padding: 8px 10px;">
+          </div>
+          <div style="margin-bottom: 8px;">
+            <select class="form-input form-select" style="font-size: 13px; padding: 8px 10px;">
+              <option>Checking</option>
+              <option>Savings</option>
+            </select>
           </div>
           <p style="font-size: 11px; color: var(--tertiaryText); margin-bottom: 8px;">Two micro-deposits will verify this account (1–2 business days). ACH pull initiates on your maturity date.</p>
           <button class="btn btn--sm btn--primary" style="width: auto;" onclick="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;gap:8px;\'><svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'var(--ui-succ)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M8 12l3 3 5-5\'/></svg><span style=\'font-size:12px;color:var(--successStatusLabel);font-weight:600;\'>External account linked — verification pending</span></div>'">Link Account</button>
@@ -739,7 +748,8 @@ input, select { font-family: inherit; }
           </div>
           <div class="form-group" style="margin-bottom: 10px;">
             <label style="font-size: 12px;">Routing number</label>
-            <input type="text" class="form-input" placeholder="9 digits" style="font-size: 14px;">
+            <input type="text" class="form-input" placeholder="9 digits" style="font-size: 14px;" maxlength="9" oninput="validateRoutingNumber(this)">
+            <span class="routing-feedback" style="display: none; font-size: 11px; margin-top: 4px;"></span>
           </div>
           <div class="form-group" style="margin-bottom: 10px;">
             <label style="font-size: 12px;">Account number</label>
@@ -850,7 +860,7 @@ input, select { font-family: inherit; }
       </div>
 
       <p style="font-size: 12px; color: var(--gray-500); margin-top: 12px; text-align: center;">
-        ↕ Adjust amounts and terms to customize your ladder
+        In the full product, you can adjust individual split amounts and terms.
       </p>
 
       <!-- Add Funds to Ladder (optional) -->
@@ -872,9 +882,18 @@ input, select { font-family: inherit; }
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ui-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
             <span style="font-size: 12px; color: var(--infoStatusLabel);"><strong>Link an external account</strong> to transfer funds from another institution.</span>
           </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-            <input type="text" class="form-input" placeholder="Routing #" style="font-size: 13px; padding: 8px 10px;">
-            <input type="text" class="form-input" placeholder="Account #" style="font-size: 13px; padding: 8px 10px;">
+          <div style="margin-bottom: 8px;">
+            <input type="text" class="form-input" placeholder="Routing number (9 digits)" style="font-size: 13px; padding: 8px 10px; margin-bottom: 4px;" maxlength="9" oninput="validateRoutingNumber(this)">
+            <span class="routing-feedback" style="display: none; font-size: 11px;"></span>
+          </div>
+          <div style="margin-bottom: 8px;">
+            <input type="text" class="form-input" placeholder="Account number" style="font-size: 13px; padding: 8px 10px;">
+          </div>
+          <div style="margin-bottom: 8px;">
+            <select class="form-input form-select" style="font-size: 13px; padding: 8px 10px;">
+              <option>Checking</option>
+              <option>Savings</option>
+            </select>
           </div>
           <p style="font-size: 11px; color: var(--tertiaryText); margin-bottom: 8px;">Two micro-deposits will verify this account (1–2 business days). ACH pull initiates on your maturity date.</p>
           <button class="btn btn--sm btn--primary" style="width: auto;" onclick="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;gap:8px;\'><svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'var(--ui-succ)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M8 12l3 3 5-5\'/></svg><span style=\'font-size:12px;color:var(--successStatusLabel);font-weight:600;\'>External account linked — verification pending</span></div>'">Link Account</button>
@@ -1341,6 +1360,60 @@ function showExternalFlow(show) {
 function showExternalFlowFor(elementId, show) {
   const el = document.getElementById(elementId);
   if (el) el.style.display = show ? 'block' : 'none';
+}
+
+// Attach change listeners after DOM is ready (backup for onchange attributes)
+document.addEventListener('DOMContentLoaded', function() {
+  const termSource = document.getElementById('term-fund-source');
+  if (termSource) {
+    termSource.addEventListener('change', function() {
+      showExternalFlowFor('term-external-setup', this.value === 'external');
+    });
+  }
+  const ladderSource = document.getElementById('ladder-fund-source');
+  if (ladderSource) {
+    ladderSource.addEventListener('change', function() {
+      showExternalFlowFor('ladder-external-setup', this.value === 'external');
+    });
+  }
+});
+
+// ===== ROUTING NUMBER VALIDATION =====
+function validateRoutingNumber(input) {
+  const num = input.value.replace(/\D/g, '');
+  const feedback = input.parentElement.querySelector('.routing-feedback');
+
+  if (num.length === 0) {
+    if (feedback) feedback.style.display = 'none';
+    return;
+  }
+
+  if (num.length !== 9) {
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.textContent = 'Routing number must be 9 digits';
+      feedback.style.color = 'var(--ui-err)';
+    }
+    return;
+  }
+
+  // ABA routing number checksum validation
+  const d = num.split('').map(Number);
+  const checksum = (3*(d[0]+d[3]+d[6]) + 7*(d[1]+d[4]+d[7]) + (d[2]+d[5]+d[8])) % 10;
+
+  if (checksum === 0) {
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.textContent = '✓ Valid routing number';
+      feedback.style.color = 'var(--ui-succ)';
+    }
+  } else {
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.textContent = 'Invalid routing number — please check and re-enter';
+      feedback.style.color = 'var(--ui-err)';
+    }
+  }
 }
 
 // ===== TIME SLOT SELECTOR =====
