@@ -683,7 +683,7 @@ input, select { font-family: inherit; }
             </select>
           </div>
           <p style="font-size: 11px; color: var(--tertiaryText); margin-bottom: 8px;">Two micro-deposits will verify this account (1–2 business days). ACH pull initiates on your maturity date.</p>
-          <button class="btn btn--sm btn--primary" style="width: auto;" onclick="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;gap:8px;\'><svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'var(--ui-succ)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M8 12l3 3 5-5\'/></svg><span style=\'font-size:12px;color:var(--successStatusLabel);font-weight:600;\'>External account linked — verification pending</span></div>'">Link Account</button>
+          <button class="btn btn--sm btn--primary" style="width: auto;" disabled onclick="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;gap:8px;\'><svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'var(--ui-succ)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M8 12l3 3 5-5\'/></svg><span style=\'font-size:12px;color:var(--successStatusLabel);font-weight:600;\'>External account linked — verification pending</span></div>'">Link Account</button>
         </div>
         <div id="term-add-funds-feedback" style="margin-top: 8px;">
           <div class="tier-nudge">
@@ -764,7 +764,7 @@ input, select { font-family: inherit; }
             </select>
           </div>
           <p style="font-size: 11px; color: var(--tertiaryText); line-height: 1.4; margin-bottom: 10px;">Two small deposits will be sent to verify the account (1–2 business days). The ACH transfer will be initiated on your maturity date once verified.</p>
-          <button class="btn btn--sm btn--primary" style="width: auto;" onclick="document.getElementById('external-account-setup').innerHTML='<div style=\'display:flex;align-items:center;gap:8px;\'><svg width=\'16\' height=\'16\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'var(--ui-succ)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M8 12l3 3 5-5\'/></svg><span style=\'font-size:13px;color:var(--successStatusLabel);font-weight:600;\'>External account linked — verification deposits pending</span></div>'">Link This Account</button>
+          <button class="btn btn--sm btn--primary" style="width: auto;" disabled onclick="document.getElementById('external-account-setup').innerHTML='<div style=\'display:flex;align-items:center;gap:8px;\'><svg width=\'16\' height=\'16\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'var(--ui-succ)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M8 12l3 3 5-5\'/></svg><span style=\'font-size:13px;color:var(--successStatusLabel);font-weight:600;\'>External account linked — verification deposits pending</span></div>'">Link This Account</button>
         </div>
       </div>
 
@@ -894,7 +894,7 @@ input, select { font-family: inherit; }
             </select>
           </div>
           <p style="font-size: 11px; color: var(--tertiaryText); margin-bottom: 8px;">Two micro-deposits will verify this account (1–2 business days). ACH pull initiates on your maturity date.</p>
-          <button class="btn btn--sm btn--primary" style="width: auto;" onclick="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;gap:8px;\'><svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'var(--ui-succ)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M8 12l3 3 5-5\'/></svg><span style=\'font-size:12px;color:var(--successStatusLabel);font-weight:600;\'>External account linked — verification pending</span></div>'">Link Account</button>
+          <button class="btn btn--sm btn--primary" style="width: auto;" disabled onclick="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;gap:8px;\'><svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'var(--ui-succ)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><path d=\'M8 12l3 3 5-5\'/></svg><span style=\'font-size:12px;color:var(--successStatusLabel);font-weight:600;\'>External account linked — verification pending</span></div>'">Link Account</button>
         </div>
         <div id="ladder-add-funds-feedback" style="margin-top: 8px; display: none;">
           <div style="background: var(--infoStatusBG); border: 1px solid var(--ui-primary-160); border-radius: var(--radius-sm); padding: 10px 14px; display: flex; align-items: center; gap: 8px;">
@@ -1325,14 +1325,14 @@ function showScreen(screenId) {
 
 // ===== TERM SELECTOR =====
 function selectTerm(el, months, rate, earnings) {
-  document.querySelectorAll('.term-option').forEach(t => t.classList.remove('term-option--selected'));
+  document.querySelectorAll('#term-grid .term-option').forEach(t => t.classList.remove('term-option--selected'));
   el.classList.add('term-option--selected');
   
   // Recalculate based on current add-funds amount
   const addInput = document.getElementById('term-add-amount');
   const addAmount = addInput ? parseMoney(addInput.value) : 0;
-  const newBalance = BASE_BALANCE + addAmount;
-  const actualRate = getRateForBalance(months, newBalance) || parseFloat(rate);
+  const newBalance = (typeof BASE_BALANCE !== 'undefined' ? BASE_BALANCE : 25000) + addAmount;
+  const actualRate = (typeof getRateForBalance === 'function') ? (getRateForBalance(months, newBalance) || parseFloat(rate)) : parseFloat(rate);
   const actualEarnings = Math.round(newBalance * (actualRate / 100) * (months / 12));
 
   document.getElementById('term-selection-summary').style.display = 'block';
@@ -1387,18 +1387,21 @@ document.addEventListener('DOMContentLoaded', function() {
 function validateRoutingNumber(input) {
   const num = input.value.replace(/\D/g, '');
   const feedback = input.parentElement.querySelector('.routing-feedback');
+  const linkBtn = input.closest('[id$="-setup"], [id="external-account-setup"]')?.querySelector('button');
 
   if (num.length === 0) {
     if (feedback) feedback.style.display = 'none';
+    if (linkBtn) linkBtn.disabled = true;
     return;
   }
 
   if (num.length !== 9) {
     if (feedback) {
       feedback.style.display = 'block';
-      feedback.textContent = 'Routing number must be 9 digits';
-      feedback.style.color = 'var(--ui-err)';
+      feedback.textContent = 'Routing number must be 9 digits (' + num.length + '/9)';
+      feedback.style.color = 'var(--ui-warn)';
     }
+    if (linkBtn) linkBtn.disabled = true;
     return;
   }
 
@@ -1412,12 +1415,14 @@ function validateRoutingNumber(input) {
       feedback.textContent = '✓ Valid routing number';
       feedback.style.color = 'var(--ui-succ)';
     }
+    if (linkBtn) linkBtn.disabled = false;
   } else {
     if (feedback) {
       feedback.style.display = 'block';
       feedback.textContent = 'Invalid routing number — please check and re-enter';
       feedback.style.color = 'var(--ui-err)';
     }
+    if (linkBtn) linkBtn.disabled = true;
   }
 }
 
@@ -1462,11 +1467,13 @@ function updateAddFunds() {
 
 // ===== CURRENCY FORMATTING =====
 function parseMoney(str) {
-  return parseInt((str || '0').replace(/[^0-9]/g, ''), 10) || 0;
+  // Handle values like "$8,200.00" — take integer part only
+  const cleaned = (str || '0').replace(/[^0-9.]/g, '');
+  return Math.floor(parseFloat(cleaned)) || 0;
 }
 
-function formatMoney(cents) {
-  return '$' + cents.toLocaleString('en-US');
+function formatMoney(val) {
+  return '$' + val.toLocaleString('en-US');
 }
 
 // Auto-format all money inputs on blur
