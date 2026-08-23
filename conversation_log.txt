@@ -767,3 +767,26 @@ Added as the #1 future consideration in the README, above Live DBP Integrations:
 - Framed as: "transforms every maturity action into a potential deposit growth moment" and turns maturity into a deposit acquisition event, not just retention
 
 Pushed to GitHub.
+
+
+---
+
+[Message 94 - User]
+Actually, let's build this out as part of the MVP: External Funding & Add Funds to All Actions. This functionality really emphasizes the growth component, so it is vital for the MVP.
+
+---
+
+[Message 95 - Assistant]
+Built into the demo and moved from future considerations to MVP:
+
+Demo changes:
+1. Add Funds screen: Added "External Account (ACH)" option with "Link account →" prompt alongside existing internal accounts (Checking, Savings)
+2. Change Term screen: Added optional "Add funds to this certificate?" section with amount input + source selector (Checking, Savings, External ACH) + tier nudge
+3. Ladder Builder screen: Added optional "Increase total invested?" section with amount input ($10,000 default) + source selector + info banner ("Adding $10,000 increases your ladder to $35,000 total")
+
+README changes:
+- Added "Deposit Growth by Design" section under What We Built explaining the growth strategy
+- Removed from future considerations (it's now core MVP)
+- Framed as: "transforms certificate maturity from a defensive retention play into an offensive growth strategy"
+
+Pushed to GitHub.

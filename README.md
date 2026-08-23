@@ -33,6 +33,17 @@ MaturitySync is a proactive engagement layer that sits on top of a Digital Banki
 - **The Account Holder (Member/Customer):** Digital banking users who need clear, self-serve options to renew, ladder, or withdraw maturing certificates.
 - **The FI Administrator:** Retail banking and marketing teams who need to configure campaigns, set retention pricing, and view analytics on retention success.
 
+### Deposit Growth by Design
+
+A key differentiator of MaturitySync is that **every maturity action is a deposit growth opportunity**. The MVP supports:
+
+- **Add funds to Renew** — increase balance from internal accounts or external institutions (ACH pull) when renewing at the same or different term.
+- **Add funds to Change Term** — members can contribute additional funds when selecting a new term, potentially reaching a higher rate tier.
+- **Add funds to Ladder Builder** — increase total invested across the ladder splits, growing the overall deposit relationship.
+- **External account funding (ACH)** — pull funds from accounts at other institutions directly within the maturity flow, turning a retention event into a deposit *acquisition* event.
+
+This transforms certificate maturity from a defensive retention play into an offensive growth strategy.
+
 ---
 
 ## APIs & Integrations
